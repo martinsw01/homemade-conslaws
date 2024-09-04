@@ -18,5 +18,6 @@ makedocs(
 
 deploydocs(repo="github.com/martinsw01/homemade-conslaws.jl.git")
 
-
-rm(generated_dir; recursive=true)
+if !("deploy" in ARGS)
+    rm(generated_dir; recursive=true)
+end
