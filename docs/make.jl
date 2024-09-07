@@ -11,13 +11,11 @@ makedocs(
     pages = [
         "Conservation Laws" => "index.md",
         "Theory" => [
-            "Linear transport equations" => "theory/linear_transport_eqs.md",
+            "Linear transport equations" => "$generated_dir/theory/linear_transport_eqs.md",
         ]
     ]
 )
 
-deploydocs(repo="github.com/martinsw01/homemade-conslaws.jl.git")
-
-if !("deploy" in ARGS)
-    rm(generated_dir; recursive=true)
+if "deploy" in ARGS
+    deploydocs(repo="gihub.com/martinsw01/homemade-conslaws.jl.git")
 end

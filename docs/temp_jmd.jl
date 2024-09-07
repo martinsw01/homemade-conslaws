@@ -1,33 +1,49 @@
 module TempJmd
 
-using Weave
+using Weave, Plots
 
-export weave_all_files
+export weave_all_files, temporarily_weave_all_files
 
-function find_files(dir, suffix = ".jmd")
-    files = []
-    for f in readdir(dir)
-        if isfile(joinpath(dir, f)) && endswith(f, suffix)
-            push!(files, joinpath(dir, f))
-        elseif isdir(joinpath(dir, f))
-            files = vcat(files, find_files(joinpath(dir, f)))
-        end
-    end
-    return files
+function Weave.WeavePlots.add_plots_figure(report::Weave.Report, plot::Plots.AnimatedGif, ext)
+    chunk = report.cur_chunk
+    full_name, rel_name = Weave.get_figname(report, chunk, ext = ext)
+
+    # An `AnimatedGif` has been saved somewhere temporarily, so make a copy to `full_name`.
+    cp(plot.filename, full_name; force = true)
+    push!(report.figures, rel_name)
+    report.fignum += 1
+    return full_name
 end
+
+function Base.display(report::Weave.Report, m::MIME"text/plain", plot::Plots.AnimatedGif)
+    Weave.WeavePlots.add_plots_figure(report, plot, ".gif")
+end
+
+"""
+Finds paths to all files in `dir` with a given `suffix` relative to `dir`.
+"""
+function find_files(dir, suffix = ".jmd")
+    return [joinpath(root, f)
+            for (root, dirs, files) in walkdir(dir)
+                for f in files
+                    if endswith(f, suffix)]
+end
+
 
 function weave_all_files(dir)
     files = find_files(dir)
 
-    generated_dir = dir*"/generated"
+    generated_dir = joinpath(dir, "generated")
 
     for f in files
-        out_path = generated_dir*dirname(f)[length(dir)+1:end]
+        path_relative_to_dir = relpath(dirname(f), dir)
+        out_path = joinpath(generated_dir,path_relative_to_dir)
+        cache_path = joinpath("cache", path_relative_to_dir)
         mkpath(out_path)
-        weave(f, doctype="github", out_path=out_path)
+        weave(f, doctype="github", out_path=out_path, cache=:user, cache_path=cache_path)
     end
 
-    return generated_dir
+    return relpath(generated_dir, dir)
 end
 
 end # module
