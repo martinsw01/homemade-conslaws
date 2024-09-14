@@ -10,6 +10,10 @@ macros() = Dict(
     :x => raw"\bm{\text{x}}",
     :s => raw"\sigma",
     :div => [raw"\operatorname{div}\left(#1\right)", 1],
+    :phi => raw"\varphi",
+    :eps => raw"\varepsilon",
+    :sign => raw"\operatorname{sign}",
+    :jump => [raw"\left[\!\left[ #1 \right]\!\right]", 1],
     )
 
 

@@ -12,6 +12,7 @@ makedocs(
         "Conservation Laws" => "index.md",
         "Theory" => [
             "Linear transport equations" => "$generated_dir/theory/linear_transport_eqs.md",
+            "Scalar conservation laws" => "theory/scalar_cons_laws.md",
         ]
     ]
 )
