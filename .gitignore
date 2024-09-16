@@ -25,3 +25,4 @@ docs/src/generated/
 Manifest.toml
 
 .vscode/
+docs/venv/

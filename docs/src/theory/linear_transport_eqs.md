@@ -18,32 +18,36 @@ is when the velocity field ``a`` is constant. The Cauchy problem is solved using
 
 for any ``(x,t) \in \R \times \R_+``. We see that the initial data is transported with the velocity ``a``. For more general cases, the characteristics may not be possible to solve explicitly. However, we can obtain some information of the sulutions with the following *a priori* energy estimate:
 
+```@raw html
 !!! lemma
-    Assume ``U`` is a smooth solution of the transport equation decaying to zero at infinity for all ``t \in R_+`` and ``a \in C^1(\R, \R_+)``. Then, ``U`` satisfies the energy bound
+    Assume $U$ is a smooth solution of the transport equation decaying to zero at infinity for all $t \in R_+$ and $a \in C^1(\R, \R_+)$. Then, $U$ satisfies the energy bound
 
-    ```math
+    $$
         \int_{\R} U^2(x, t) \dd x \leq e^{\norm{a}_{C^1}t} \int_\R U_0^2(x) \dd x.
-    ```
+    $$
 
-    !!! proof
-        Follows by multiplying the transport equation by ``U`` and integrating over space.
-        Then, use that ``U`` decays to zero at infinity and apply [Grönwall's inequality](https://en.wikipedia.org/wiki/Gr%C3%B6nwall%27s_inequality).
+    ??? proof
+        Follows by multiplying the transport equation by $U$ and integrating over space.
+        Then, use that $U$ decays to zero at infinity and apply [Grönwall's inequality](https://en.wikipedia.org/wiki/Gr%C3%B6nwall%27s_inequality).
+```
 
 
 The lemma shows that the energy is bounded. Using another functional, the assumptions on ``U`` can be relaxed:
 
+```@raw html
 !!! lemma
-    Assume ``U`` is a smooth bounded solution of the transport equation. Then, we have
+    Assume $U$ is a smooth bounded solution of the transport equation. Then, we have
 
-    ```math
+    $$
         \sup_{x \in \R} \abs{U(x, t)} \leq \norm{U_0}_{L^\infty(\R)}
-    ```
+    $$
 
-    for any ``t > 0``. 
+    for any $t > 0$. 
     
-    !!! proof
+    ??? proof
 
-        For any ``(x, t) \in \R \times \R_+``, there exists ``\xi \in \R`` such that ``U(x, t) = U_0(\xi)``
+        For any $(x, t) \in \R \times \R_+$, there exists $\xi \in \R$ such that $U(x, t) = U_0(\xi)$
+```
 
 
 ## Finite difference schemes for the transport equation
@@ -77,11 +81,12 @@ We consider the domain $[0, 1]$ with initial data
     U_0(x) = \sin(2\pi x)
 ```
 
-```julia; results = "hidden"
+```@example 1
 u0(x) = sin(2*pi*x)
+nothing # hide
 ```
 
-```julia; echo = false; results = "hidden"
+```@setup 1
 ENV["GKSwstype"]="nul" #https://discourse.julialang.org/t/deactivate-plot-display-to-avoid-need-for-x-server/19359/2
 using homemade_conslaws.central_difference, homemade_conslaws.upwind, homemade_conslaws.Viz
 ```
@@ -112,7 +117,7 @@ For the first time step ``n = 1``, we have
 
 Using a grid of ``50`` mesh points, simulating to time ``T = 3``, we get the following result:
 
-```julia; cache = true
+```@example 1
 x_L, x_R = 0, 1
 T = 3
 N = 100
@@ -140,22 +145,24 @@ rigorously using the the discrete energy
 We know that the exact solution have bounded energy. We say that a scheme is *energy stable*
 if ``E^n \leq E^0`` for all ``n``.
 
+```@raw html
 !!! lemma
     Let $U_j^n$ be the solutions computed with the central difference scheme. Then, we have the 
     following dicsrete energy estimate:
 
-    ```math
+    $$
         E^{n+1} = E^n + \frac{\Delta x}{2} \sum_j (U_j^{n+1} - U_j^n)^2
-    ```
+    $$
 
     Thus, the energy grows at each time step for any choice of $\Delta x$ and $\Delta t$.
 
-    !!! proof
+    ??? proof
         Similar to the proof of the continuous energy estimate and using the identity
 
-        ```math
+        $$
             d_2(d_1 - d_2) = \frac{1}{2}\qty(d_1^2 - d_2^2)
-        ```
+        $$
+```
 
 
 ### Upwind scheme
@@ -181,7 +188,7 @@ difference scheme, which will play a crucial role later.
 
 Now, we do the same numerical experiment as previously with ``a = 1``:
 
-```julia; cache = true
+```@example 1
 x_L, x_R = 0, 1
 T = 1
 N = 50
@@ -200,7 +207,7 @@ Viz.animate_solution(U,
                     x, t)
 ```
 
-```julia; cache = true
+```@example 1
 x_L, x_R = 0, 1
 T = 1
 N = 100
@@ -220,38 +227,37 @@ Viz.animate_solution(U,
 
 We see that stability depends on the relation ``\frac{\Delta t}{\Delta x}``. 
 
+```@raw html
 !!! lemma
     If the mesh parameters satisfy the condition
 
-    ```math
-        \frac{\abs{a} \Delta t}{\Delta x} \leq 1,
-    ```
+    $$\frac{\abs{a} \Delta t}{\Delta x} \leq 1,$$
 
     then the upwind solution satisfies the estimate
 
-    ```math
-        E^{n+1} \leq E^n
-    ```
+    $$E^{n+1} \leq E^n$$
 
     so the scheme is conditionally stable.
 
-    !!! proof
-        Start similarly to the proof of the unconditional unstability of the central difference scheme
-        and use the mentioned identity several times.
+    ??? proof
+        Start similarly to the proof of the unconditional unstability of the central difference scheme and use the mentioned identity several times.
+```
 
 The above condition is called A *CFL condition*. We also have ``L^1`` and ``L^\infty`` stability:
 
+```@raw html
 !!! lemma
     Assume the above CFL condition holds. Then, the solutions of the upwind scheme satisfy
 
-    ```math
+    $$
         \norm{U^{n+1}}_{L^1} \le \norm{U^n}_{L^1}, \quad
         \norm{U^{n+1}}_{L^\infty} \le \norm{U^n}_{L^\infty}.
-    ```
+    $$
 
-    !!! proof
-        The first inequality follows from ``U_j^{n+1}``being a convex combination of ``U_{j-1}^n``,
-        ``U_j^n`` and ``U_{j+1}^n``.
+    ??? proof
+        The first inequality follows from $U_j^{n+1}$being a convex combination of $U_{j-1}^n$,
+        $U_j^n$ and $U_{j+1}^n$.
+```
 
 
 ### Discontinuous initial data
@@ -265,15 +271,17 @@ We now consider the transport equation with ``a = 1`` in the domain ``[0, 1]`` w
     \end{cases}
 ```
 
-```julia; results = "hidden"
+```@example 1
 u0(x) = x .< 0.5 ? 2 : 1
 a(x, t) = 1
+
+nothing # hide
 ```
 
 This yields the discontinuous solution ``U(x, t) = U_0(x - t)``. We use the upwind scheme with ``N = 50`` and ``N = 200``
 mesh points.
 
-```julia; cache = true
+```@example 1
 x_L, x_R = 0, 1
 T = 0.25
 N = 50
@@ -290,7 +298,7 @@ Viz.animate_solution(U,
                      x, t)
 ```
 
-```julia; cache = true
+```@example 1
 x_L, x_R = 0, 1
 T = 0.25
 N = 200
