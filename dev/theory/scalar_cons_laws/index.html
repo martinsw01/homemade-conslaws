@@ -12,6 +12,8 @@
         <link rel="prev" href="../linear_transport_eqs/">
       
       
+        <link rel="next" href="../finite_volume_schemes/">
+      
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
@@ -23,6 +25,9 @@
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -41,6 +46,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/palettes.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -51,7 +58,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="conslaws-dark" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -74,7 +88,7 @@
 
   
 
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Homemade Conslaws" class="md-header__button md-logo" aria-label="Homemade Conslaws" data-md-component="logo">
       
@@ -102,6 +116,32 @@
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="conslaws-dark" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="conslaws-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -148,13 +188,59 @@
     
   </nav>
   
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Conservation Laws
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../linear_transport_eqs/" class="md-tabs__link">
+          
+  
+  Theory
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
-        
-          
         
       
       <main class="md-main" data-md-component="main">
@@ -168,8 +254,10 @@
                     
 
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Homemade Conslaws" class="md-nav__button md-logo" aria-label="Homemade Conslaws" data-md-component="logo">
       
@@ -213,15 +301,21 @@
     
     
     
+      
+        
+        
+      
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   <span class="md-ellipsis">
@@ -391,8 +485,35 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#stability-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stability estimates
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solutions-for-the-riemann-problem-for-general-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solutions for the Riemann problem for general f
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
   
 </li>
       
@@ -400,6 +521,27 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../finite_volume_schemes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Finite volume schemes
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -517,8 +659,35 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#stability-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stability estimates
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#solutions-for-the-riemann-problem-for-general-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      Solutions for the Riemann problem for general f
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
   
 </li>
       
@@ -609,7 +778,7 @@ we get a discontinuity in the solution. This can also happen for smooth initial 
 <p>This needs to hold for all test functions and <span class="arithmatex">\(U^+, U^-\)</span> are smooth on <span class="arithmatex">\(\gamma\)</span>, so we get the <em>Rankine-Hugoniot condition</em></p>
 <div class="arithmatex">\[
 \begin{equation}
-    s(t) \qty(U^+ - U^-) = f(U^+) - f(U^-) \label{eq:rankine_hugoniot}
+    s(t) \qty(U^+ - U^-) = f(U^+) - f(U^-) \label{eq:rankine_hugoniot} \tag{RH}
 \end{equation}
 \]</div>
 <p>where <span class="arithmatex">\(U^\pm\)</span> are evaluated on <span class="arithmatex">\((\gamma(t),t)\)</span>.</p>
@@ -622,14 +791,14 @@ U(x, t) = \begin{cases}
     U^-(x,t), &amp; x &gt; \gamma(t)
 \end{cases}
 \]</div>
-<p>where <span class="arithmatex">\(U^\pm \in C^1(\R \times \R_+)\)</span>. Then, <span class="arithmatex">\(U\)</span> solves <span class="arithmatex">\((\ref{eq:scalar_cons_law})\)</span> weakly if and only if</p>
+<p>where <span class="arithmatex">\(U^\pm \in C^1(\R \times \R_+)\)</span>. Then, <span class="arithmatex">\(U\)</span> solves <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> weakly if and only if</p>
 <ul>
 <li><span class="arithmatex">\(U^\pm\)</span> solves it in the classical sense, and</li>
-<li>the shock speed <span class="arithmatex">\(s(t)\)</span> satisfies the Rankine-Hugoniot condition <span class="arithmatex">\((\ref{eq:rankine_hugoniot})\)</span> at <span class="arithmatex">\(x = \gamma(t)\)</span>.</li>
+<li>the shock speed <span class="arithmatex">\(s(t)\)</span> satisfies the Rankine-Hugoniot condition <span class="arithmatex">\(\eqref{eq:rankine_hugoniot}\)</span> at <span class="arithmatex">\(x = \gamma(t)\)</span>.</li>
 </ul>
 </div>
 <h3 id="lax-entropy-condition">Lax entropy condition</h3>
-<p>We consider again the Burgers' equation <span class="arithmatex">\((\ref{eq:burgers})\)</span> on the Riemann problem with <span class="arithmatex">\(U_L = 1\)</span> and <span class="arithmatex">\(U_R = 0\)</span>. The yields the shock speed</p>
+<p>We consider again the Burgers' equation <span class="arithmatex">\(\eqref{eq:burgers}\)</span> on the Riemann problem with <span class="arithmatex">\(U_L = 1\)</span> and <span class="arithmatex">\(U_R = 0\)</span>. The yields the shock speed</p>
 <div class="arithmatex">\[
     s(t) = \frac{\frac{U_R^2}{2} - \frac{U_L^2}{2}}{U_R - U_L} \equiv \frac{1}{2}
 \]</div>
@@ -642,7 +811,7 @@ U(x, t) = \begin{cases}
     \end{cases} \label{eq:riemann_solution_1}
 \end{equation}
 \]</div>
-<p>This satisfies <span class="arithmatex">\((\ref{eq:weak_scalar_cons_law})\)</span> and we see that the characteristsics flow into the shock. </p>
+<p>This satisfies <span class="arithmatex">\(\eqref{eq:weak_scalar_cons_law}\)</span> and we see that the characteristsics flow into the shock. </p>
 <p>Next, consider the Riemann problem with <span class="arithmatex">\(U_L = 0\)</span> and <span class="arithmatex">\(U_R = 1\)</span>. Then, the characteristics do not fill the plane. However, we see that </p>
 <div class="arithmatex">\[
 \begin{equation}
@@ -652,7 +821,7 @@ U(x, t) = \begin{cases}
     \end{cases} \label{eq:riemann_solution_2}
 \end{equation}
 \]</div>
-<p>is a solution of the weak formulation <span class="arithmatex">\((\ref{eq:weak_scalar_cons_law})\)</span>. However, one can easily construct another solution</p>
+<p>is a solution of the weak formulation <span class="arithmatex">\(\eqref{eq:weak_scalar_cons_law}\)</span>. However, one can easily construct another solution</p>
 <div class="arithmatex">\[
 \begin{equation}
     U(x, t) = \begin{cases}
@@ -662,7 +831,7 @@ U(x, t) = \begin{cases}
     \end{cases} \label{eq:riemann_solution_3}
 \end{equation}
 \]</div>
-<p>This nonuniqueness is implicit in the weak formulation, so we need to impose extra conditions. Observe that the charachteristics of <span class="arithmatex">\((\ref{eq:riemann_solution_1})\)</span> flow into the shock, while the characteristics of <span class="arithmatex">\((\ref{eq:riemann_solution_2})\)</span> and <span class="arithmatex">\((\ref{eq:riemann_solution_3})\)</span> flow out from the shock. Intuitively, information should always flow from the initial data. This is the case for <span class="arithmatex">\((\ref{eq:riemann_solution_1})\)</span>, but not for the other two. For the Burgers' equation, this requirement can be expressed as</p>
+<p>This nonuniqueness is implicit in the weak formulation, so we need to impose extra conditions. Observe that the charachteristics of <span class="arithmatex">\(\eqref{eq:riemann_solution_1}\)</span> flow into the shock, while the characteristics of <span class="arithmatex">\(\eqref{eq:riemann_solution_2}\)</span> and <span class="arithmatex">\(\eqref{eq:riemann_solution_3}\)</span> flow out from the shock. Intuitively, information should always flow from the initial data. This is the case for <span class="arithmatex">\(\eqref{eq:riemann_solution_1}\)</span>, but not for the other two. For the Burgers' equation, this requirement can be expressed as</p>
 <div class="arithmatex">\[
 U^- &gt; s &gt; U^+.
 \]</div>
@@ -701,11 +870,13 @@ V'(x/t) = \qty(f')^{-1}(x/t).
 \]</div>
 <p>Then we can construct a weak solution satisfying the Lax entropy condition by</p>
 <div class="arithmatex">\[
-U(x, t) = \begin{cases}
-    U_L, &amp; x \le f'(U_L) t \\
-    (f')^{-1}(x/t), &amp; f'(U_L) t &lt; x \le f'(U_R) t \\
-    U_R, &amp; x &gt; f'(U_R) t.
-\end{cases}
+\begin{equation}
+    U(x, t) = \begin{cases}
+        U_L, &amp; x \le f'(U_L) t \\
+        (f')^{-1}(x/t), &amp; f'(U_L) t &lt; x \le f'(U_R) t \\
+        U_R, &amp; x &gt; f'(U_R) t.
+    \end{cases} \label{eq:rarefaction_solution}
+\end{equation}
 \]</div>
 <h2 id="entropy-solutions">Entropy solutions</h2>
 <p>The entropy condition is a local condition at shocks, so it may be difficoult to apply it in proofs of global stability estimates. We will here derive an equivalent global condition.</p>
@@ -720,7 +891,7 @@ U(x, t) = \begin{cases}
 <div class="arithmatex">\[
 q(U) = \int_0^U f'(v) \nu'(v) \dd v.
 \]</div>
-<p>We call <span class="arithmatex">\((\eta, q)\)</span> an <em>entropy pair</em> and respectively the <em>entropy function</em> and the <em>entropy flux</em>. Note that <span class="arithmatex">\(q' = f' \nu'\)</span>. Then, multiplying <span class="arithmatex">\((\ref{eq:convection-diffusion})\)</span> with <span class="arithmatex">\(\eta'(U^\eps)\)</span>, we get</p>
+<p>We call <span class="arithmatex">\((\eta, q)\)</span> an <em>entropy pair</em> and respectively the <em>entropy function</em> and the <em>entropy flux</em>. Note that <span class="arithmatex">\(q' = f' \nu'\)</span>. Then, multiplying <span class="arithmatex">\(\eqref{eq:convection-diffusion}\)</span> with <span class="arithmatex">\(\eta'(U^\eps)\)</span>, we get</p>
 <div class="arithmatex">\[
 \eta(U^\eps)_t + q(U^\eps)_x = \eps \eta(U^\eps)_{xx} - \eps \eta''(U^\eps) (U^\eps_x)^2.
 \]</div>
@@ -740,10 +911,10 @@ q(U) = \int_0^U f'(v) \nu'(v) \dd v.
 \]</div>
 <div class="admonition definition">
 <p class="admonition-title">Definition (Entropy solution)</p>
-<p>A function <span class="arithmatex">\(U \in L^\infty(\R \times \R_+)\)</span> is an <em>entropy solution</em> of <span class="arithmatex">\((\ref{eq:scalar_cons_law})\)</span> if both</p>
+<p>A function <span class="arithmatex">\(U \in L^\infty(\R \times \R_+)\)</span> is an <em>entropy solution</em> of <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> if both</p>
 <ul>
-<li><span class="arithmatex">\(U\)</span> is a weak solution of <span class="arithmatex">\((\ref{eq:scalar_cons_law})\)</span>, and</li>
-<li><span class="arithmatex">\(U\)</span> satisfies the entropy condition <span class="arithmatex">\((\ref{eq:entropy_condition})\)</span> for all entropy pairs <span class="arithmatex">\((\eta, q)\)</span>.</li>
+<li><span class="arithmatex">\(U\)</span> is a weak solution of <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span>, and</li>
+<li><span class="arithmatex">\(U\)</span> satisfies the entropy condition <span class="arithmatex">\(\eqref{eq:entropy_condition}\)</span> for all entropy pairs <span class="arithmatex">\((\eta, q)\)</span>.</li>
 </ul>
 </div>
 <h3 id="kruzkov-entropy-condition">Kruzkov Entropy Condition</h3>
@@ -765,10 +936,10 @@ q(U) = \int_0^U f'(v) \nu'(v) \dd v.
 <p class="admonition-title">Lemma</p>
 <p>Let <span class="arithmatex">\(U \in L^\infty(\R \times \R_+)\)</span>.</p>
 <div class="arithmatex">\[
-U \text{ is an entropy solution of } (\ref{eq:scalar_cons_law}) \iff U \text{ satisfies } (\ref{eq:kruzkov_entropy_condition})
+U \text{ is an entropy solution of } \eqref{eq:scalar_cons_law} \iff U \text{ satisfies } \eqref{eq:kruzkov_entropy_condition}
 \]</div>
-<div class="admonition proof">
-<p class="admonition-title">Proof</p>
+<details class="proof">
+<summary>Proof</summary>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"><span class="arithmatex">\(\implies\)</span></label><label for="__tabbed_1_2"><span class="arithmatex">\(\impliedby\)</span></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -778,7 +949,7 @@ U \text{ is an entropy solution of } (\ref{eq:scalar_cons_law}) \iff U \text{ sa
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Weak solution</label><label for="__tabbed_2_2">Entropy condition</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<p>Let <span class="arithmatex">\(a, b \in \R\)</span>. such that <span class="arithmatex">\(a \le U \le b\)</span> a.e. in <span class="arithmatex">\(\R \times \R_+\)</span>. Then, selecting <span class="arithmatex">\(c=a\)</span>, we get by <span class="arithmatex">\((\ref{eq:kruzkov_entropy_condition})\)</span></p>
+<p>Let <span class="arithmatex">\(a, b \in \R\)</span>. such that <span class="arithmatex">\(a \le U \le b\)</span> a.e. in <span class="arithmatex">\(\R \times \R_+\)</span>. Then, selecting <span class="arithmatex">\(c=a\)</span>, we get by <span class="arithmatex">\(\eqref{eq:kruzkov_entropy_condition}\)</span></p>
 <div class="arithmatex">\[
 U_t + f(U)_x \leq 0 \quad \text{a.e. in } \R \times \R_+.
 \]</div>
@@ -800,11 +971,11 @@ U_t + f(U)_x = 0 \quad \text{a.e. in } \R \times \R_+.
 </div>
 </div>
 </div>
-</div>
+</details>
 </div>
 <div class="admonition theorem">
 <p class="admonition-title">Theorem</p>
-<p>Let <span class="arithmatex">\(\gamma \in C^1(\R_+)\)</span> be a curve and <span class="arithmatex">\(s = \gamma'\)</span> be its speed. Assume <span class="arithmatex">\(U \in L^\infty(\R \times \R_+)\)</span> is a weak solution of <span class="arithmatex">\((\ref{eq:scalar_cons_law})\)</span> of the form</p>
+<p>Let <span class="arithmatex">\(\gamma \in C^1(\R_+)\)</span> be a curve and <span class="arithmatex">\(s = \gamma'\)</span> be its speed. Assume <span class="arithmatex">\(U \in L^\infty(\R \times \R_+)\)</span> is a weak solution of <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> of the form</p>
 <div class="arithmatex">\[
 U(x, t) = \begin{cases}
     U^-(x, t), &amp; x &lt; \gamma(t) \\
@@ -821,8 +992,228 @@ U(x, t) = \begin{cases}
 </li>
 <li>
 <p>For all <span class="arithmatex">\(v \in (U^-, U^+)\)</span>, we have</p>
-<div class="arithmatex">\[\frac{f(v) - f(U^-)}{v - U^-} \le s \le \frac{f(v) - f(U^+)}{v - U^+}\]</div>
-<p>along <span class="arithmatex">\(s\)</span>.</p>
+<div class="arithmatex">\[
+\begin{equation}
+    \frac{f(v) - f(U^-)}{v - U^-} \ge s \ge \frac{f(v) - f(U^+)}{v - U^+} \label{eq:oleinik-E} \tag{OCD}
+\end{equation}
+\]</div>
+<p>along <span class="arithmatex">\(x = \gamma(t)\)</span>. Also called the <em>Oleinik codition</em> <span class="arithmatex">\(E\)</span>.</p>
+</li>
+<li>
+<p>If <span class="arithmatex">\(f\)</span> is convex/concave, then</p>
+<div class="arithmatex">\[f'(U^-) \ge s \ge f'(U^+)\]</div>
+<p>along <span class="arithmatex">\(x = \gamma(t)\)</span>.</p>
+</li>
+</ol>
+<details class="proof">
+<summary>Proof</summary>
+<p>The other direction is left as an exercise for the reader.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">1. <span class="arithmatex">\(\implies\)</span> 2.</label><label for="__tabbed_3_2">2. <span class="arithmatex">\(\implies\)</span> 3.</label><label for="__tabbed_3_3">3. <span class="arithmatex">\(\implies\)</span> 4.</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="arithmatex">\(U\)</span> is an entropy solution, so we have that</p>
+<div class="arithmatex">\[\abs{U - c}_t + \sign(U - c) [f(U) - f(c)]_x \le 0 \quad \forall c \in \R.\]</div>
+<p>Now, define</p>
+<div class="arithmatex">\[\Omega_{&gt;c} := \qty{(x, t) \in \Omega \mid U(x, t) &gt; c}\]</div>
+<p>and similarly for <span class="arithmatex">\(\Omega_{&lt;c}\)</span>. Now, we can integrate the above inequality, split it into the two regions and use the divergence theorem for both regions. All the terms will cancel except for those at the shock curve:</p>
+<div class="arithmatex">\[0 \ge \int_\gamma \qty(U^+ \nu^t + f(U^+) \nu^x) \phi \dd t + \int_\gamma \qty(U^- \nu^t + f(U^-) \nu^x) \phi \dd t\]</div>
+<p>Now, this holds for all test functions <span class="arithmatex">\(\phi\)</span>, so we get</p>
+<div class="arithmatex">\[\jump{q(U)} - s\jump{U} \le 0.\]</div>
+</div>
+<div class="tabbed-block">
+<p>We have</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \jump{\eta(U)} &amp;= \int_{U^-}^{U^+} \eta'(v) \dd v \\
+    &amp;= \eval[\nu'(v) (v-U^-)|_{U^-}^{U^+} - \int_{U^-}^{U^+} \nu''(v) (v-U^-) \dd v \\
+    &amp;= \eta' \jump{U} - \int_{U^-}^{U^+} \nu''(v) (v-U^-) \dd v.
+\end{aligned}
+\]</div>
+<p>Similiarly, and with a few more steps, we get</p>
+<div class="arithmatex">\[\jump{q(U)} = \eta'(U^+) \jump{f(U)} - \int_{U^-}^{U^+} \nu''(v) (f(v) - f(U^-)) \dd v.\]</div>
+<p>Now, we can use 2. and <span class="arithmatex">\(\eqref{eq:rankine_hugoniot}\)</span> to get</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    0 &amp; \ge \jump{q(U)} - s\jump{U} \\
+    &amp; = \eta'(U^+) \Big(\underbrace{\jump{f(U)} - s\jump{U}}_0\Big) - \int_{U^-}^{U^+} \nu''(v) \Big(s(v - U^-) - (f(v) - f(U^-))\Big) \dd v.
+\end{aligned}
+\]</div>
+<p>Now, this must hold for all entrpy pairs <span class="arithmatex">\((\eta, q)\)</span>, we end up with</p>
+<div class="arithmatex">\[s \le \frac{f(v) - f(U^-)}{v - U^-} \quad \forall\ v\]</div>
+<p>and similarly for the other inequality with <span class="arithmatex">\(U^+\)</span>.</p>
+</div>
+<div class="tabbed-block">
+<p>Follows by taking the limit <span class="arithmatex">\(v \to U^\pm\)</span>.</p>
+</div>
+</div>
+</div>
+</details>
+</div>
+<h3 id="stability-estimates">Stability estimates</h3>
+<p>We can now integrate the entropy condition <span class="arithmatex">\(\eqref{eq:entropy_condition}\)</span> over space to get stability estimates on solutions. We get that the entropy decreases in time:</p>
+<div class="arithmatex">\[0 \ge \int_\R \eta(U)_t + q(U)_x \dd x = \dv{t} \int_\R \eta(U) \dd x\]</div>
+<p>Thus, we get the bound</p>
+<div class="arithmatex">\[\int_\R \eta(U) \dd x \le \int_\R \eta(U_0) \dd x.\]</div>
+<p>Notably, for <span class="arithmatex">\(\eta(U) = \abs{U}^p\)</span>, we get <span class="arithmatex">\(L^p\)</span> bounds</p>
+<div class="arithmatex">\[\norm{U(\cdot, t)}_{L^p(\R)} \le \norm{U_0}_{L^p(\R)}.\]</div>
+<p>This holds for all <span class="arithmatex">\(p \ge 1\)</span>, so taking the limit <span class="arithmatex">\(p \to \infty\)</span>, we get the maximum principle</p>
+<div class="arithmatex">\[
+\begin{equation}
+    \norm{U(\cdot, t)}_{L^\infty(\R)} \le \norm{U_0}_{L^\infty(\R)} \label{eq:max_principle} \tag{MP}
+\end{equation}
+\]</div>
+<p>We now have a bound on the amplitude, but we can also derive a bound on the derivate, i.e. the oscillations in <span class="arithmatex">\(U\)</span>.</p>
+<div class="admonition definition">
+<p class="admonition-title">Definition (Total variation)</p>
+<p>Let <span class="arithmatex">\(g\)</span> be defined on <span class="arithmatex">\([a, b]\)</span>. The <em>total variation</em> of <span class="arithmatex">\(g\)</span> is defined as</p>
+<div class="arithmatex">\[\norm{g}_{TV([a,b])} = \sup_{\mathcal P} \sum_{j=1}^{N-1} \abs{g(x_{j+1}) - g(x_j)}\]</div>
+<p>For differentiable <span class="arithmatex">\(g\)</span>, this reduces to the <span class="arithmatex">\(L^1\)</span> norm of the derivative:</p>
+<div class="arithmatex">\[\norm{g'}_{TV([a,b])} = \int_a^b \abs{\dv{g}{x}} \dd x.\]</div>
+<p>This is inly a seminorm (all constant functions have zero total variation). The <em>bounded variation</em>, however is a norm:</p>
+<div class="arithmatex">\[\norm{g}_{BV([a,b])} = \norm{g}_{L^1([a,b])} + \norm{g'}_{TV([a,b])}.\]</div>
+<p>The space of functions of bounded variation on <span class="arithmatex">\(\R\)</span> is</p>
+<div class="arithmatex">\[BV(\R) = \qty{g \in L^1(\R) \mid \norm{g}_{BV(\R)} &lt; \infty}.\]</div>
+</div>
+<div class="admonition theorem">
+<p class="admonition-title">Theorem</p>
+<p>Assume <span class="arithmatex">\(f \in C^1(\R)\)</span> and <span class="arithmatex">\(U_0 \in L^1(\R) \cap L^\infty(\R)\)</span>.</p>
+<p>Then, there exists a unique entropy soluiton of <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> such that</p>
+<ol>
+<li>
+<p><span class="arithmatex">\(L^1\)</span>-bound:</p>
+<div class="arithmatex">\[\norm{U(\cdot, t)}_{L^1(\R)} \le \norm{U_0}_{L^1(\R)}\]</div>
+</li>
+<li>
+<p><span class="arithmatex">\(L^\infty\)</span>-bound:</p>
+<div class="arithmatex">\[\norm{U(\cdot, t)}_{L^\infty(\R)} \le \norm{U_0}_{L^\infty(\R)}\]</div>
+</li>
+<li>
+<p>Total variation bound:</p>
+<div class="arithmatex">\[U_0 \in BV(\R) \implies \norm{U(\cdot, t)}_{TV(\R)} \le \norm{U_0}_{TV(\R)}\]</div>
+</li>
+<li>
+<p>Time continuity:</p>
+<div class="arithmatex">\[U_0 \in BV(\R) \implies \norm{U(\cdot, t) - U(\cdot, s)}_{L^1(\R)} \le |t-s| M \norm{U_0}_{TV(\R)}\]</div>
+<ul>
+<li><span class="arithmatex">\(M = M(U_0) := \max_{\underline{u} \le u \le \overline{u}} \abs{f'(u)}\)</span></li>
+<li><span class="arithmatex">\(\displaystyle \underline{u} = \essinf_\R U_0\)</span></li>
+<li><span class="arithmatex">\(\displaystyle \overline{u} = \esssup_\R U_0\)</span>.</li>
+</ul>
+</li>
+<li>
+<p><span class="arithmatex">\(L^1\)</span>-stability:</p>
+<div class="arithmatex">\[\norm{U(\cdot, t) - V(\cdot, t)}_{L^1(\R)} \le \norm{U_0 - V_0}_{L^1(\R)} \quad \forall t \ge 0\]</div>
+</li>
+<li>
+<p>Local <span class="arithmatex">\(L^1\)</span>-stability:</p>
+<div class="arithmatex">\[\int_a^b \abs{U(x, t) - V(x, t)} \dd x \le \int_{a-Mt}^{b+Mt} \abs{U_0(x) - V_0(x)} \dd x \quad \forall t \ge 0, a &lt; b\]</div>
+<ul>
+<li><span class="arithmatex">\(M = \max\{M(U_0), M(V_0)\}\)</span>.</li>
+</ul>
+</li>
+<li>
+<p>Monotonicity: if we have <span class="arithmatex">\(U_0 \le V_0\)</span> almost everywhere in <span class="arithmatex">\(\R\)</span>, then</p>
+</li>
+</ol>
+<div class="arithmatex">\[U(\cdot, t) \le V(\cdot, t) \quad \text{a.e. in } \R\]</div>
+<details class="proof" open="open">
+<summary>Proof</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:9"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><input id="__tabbed_4_5" name="__tabbed_4" type="radio" /><input id="__tabbed_4_6" name="__tabbed_4" type="radio" /><input id="__tabbed_4_7" name="__tabbed_4" type="radio" /><input id="__tabbed_4_8" name="__tabbed_4" type="radio" /><input id="__tabbed_4_9" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Existence</label><label for="__tabbed_4_2">Uniqueness</label><label for="__tabbed_4_3">1.</label><label for="__tabbed_4_4">2.</label><label for="__tabbed_4_5">3.</label><label for="__tabbed_4_6">4.</label><label for="__tabbed_4_7">5.</label><label for="__tabbed_4_8">6.</label><label for="__tabbed_4_9">7.</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Let <span class="arithmatex">\(U^\eps\)</span> solve <span class="arithmatex">\(\eqref{eq:convection-diffusion})\)</span> and let <span class="arithmatex">\(U = \lim_{\eps \to 0} U^\eps\)</span> be a limit. Then, we have seen that <span class="arithmatex">\(U\)</span> satisfies the entropy condition <span class="arithmatex">\(\eqref{eq:entropy_condition}\)</span>. Additionally, from the maximum principle <span class="arithmatex">\(\eqref{eq:max_principle}\)</span>, we get that <span class="arithmatex">\(U\)</span> is an entropy solution.</p>
+</div>
+<div class="tabbed-block">
+<p>Follows from 5. Set <span class="arithmatex">\(V_0 = U_0\)</span>. Then, we get that <span class="arithmatex">\(U(\cdot, t) = V(\cdot, t)\)</span> almost everywhere in <span class="arithmatex">\(\R\)</span> for all <span class="arithmatex">\(t \ge 0\)</span>.</p>
+</div>
+<div class="tabbed-block">
+<p>Follows from 5. by setting <span class="arithmatex">\(V_0 = 0\)</span>. Then, <span class="arithmatex">\(V\)</span> must be zero.</p>
+</div>
+<div class="tabbed-block">
+<p>This is the maximum principle <span class="arithmatex">\(\eqref{eq:max_principle}\)</span>.</p>
+</div>
+<div class="tabbed-block">
+<p>Follows from 5. by setting <span class="arithmatex">\(V_0(x) = U_0(x+h)\)</span>. Then, we have that</p>
+<div class="arithmatex">\[\int_\R \abs{U(x, t) - U(x+h, t)} \dd x \le \int_\R \abs{U_0(x) - U_0(x+h)} \dd x\]</div>
+<p>for all <span class="arithmatex">\(h &gt; 0\)</span>. Then, dividing by <span class="arithmatex">\(h\)</span>, and taking the limit <span class="arithmatex">\(h \to 0\)</span>, we get the desired result.</p>
+</div>
+<div class="tabbed-block">
+<p>A discrete version of time continuity will be shown later for monotone finite volume schemes. The convergence of these to the entropy solution will then yield the result.</p>
+</div>
+<div class="tabbed-block">
+<p>Follows from 5. by taking the limit <span class="arithmatex">\((a, b) \to (-\infty, \infty)\)</span>.</p>
+</div>
+<div class="tabbed-block">
+<p>Let <span class="arithmatex">\(U, V\)</span> be two entropy solutions of <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> with initial data <span class="arithmatex">\(U_0, V_0\)</span>. Then, it follows that</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \partial_t \eta(U; c) + \partial_x q(U; c) &amp;\le 0 &amp;&amp; \forall c \in \R \\
+    \partial_t \eta(d; V) + \partial_x q(d; V) &amp;\le 0 &amp;&amp; \forall d \in \R.
+\end{aligned}
+\]</div>
+<p>Thus, using the chain rule, we get</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \partial_t \eta(U; V) &amp; = \partial_t \eval{\eta(U; c)}_{c=V} + \partial_t \eval{\eta(d; V)}_{d=U} \\
+    &amp; \le - \partial_x \eval{q(U; c)}_{c=V} - \partial_x \eval{q(d; V)}_{d=U} \\
+    &amp; = - \partial_x q(U; V)
+\end{aligned}
+\]</div>
+<p>Equivalently,</p>
+<div class="arithmatex">\[\partial_t \eta(U; V) + \partial_x q(U; V) \le 0.\]</div>
+<p>Now, integrating over the trapezoid</p>
+<div class="arithmatex">\[\{(x, t) : 0 \le t \le T, a - M(T-t) \le x \le b + M(T-t)\}\]</div>
+<p>we get</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    0 \le &amp; \int_0^T \int_{x_L(t)}^{x_R(t)} \partial_t \eta(U; V) + \partial_x q(U; V) \dd x \dd t \\
+    =&amp; -\int_{a-MT}^{b+MT} |U_0 - V_0| \dd x + \int_{a}^{b} |U(x, T) - V(x, T)| \dd x \\
+    &amp; - \int_0^T [q(U; V) - M\eta(U; V)](x_L(t), t) \dd t
+    - \int_0^T [q(U; V) - M\eta(U; V)](x_R(t), t) \dd t
+\end{aligned}
+\]</div>
+<p>Notice that <span class="arithmatex">\(q(U; V) - M\eta(U; V) = |U-V| \qty(\frac{q(U; V)}{|U-V|} - M) \le 0\)</span>, so we have</p>
+<div class="arithmatex">\[\int_{a}^{b} |U(x, T) - V(x, T)| \dd x \le \int_{a-MT}^{b+MT} |U_0 - V_0| \dd x.\]</div>
+</div>
+<div class="tabbed-block">
+<p>By <span class="arithmatex">\(\eqref{eq:conservation_law}\)</span>, we have the conservation</p>
+<div class="arithmatex">\[\int_\R U(x, t) \dd x = \int_\R U_0(x) \dd x \quad \forall\ t &gt; 0\]</div>
+<p>Therefore, we have that</p>
+<div class="arithmatex">\[\int_\R (u - V)^+ \dd x \le \int_\R (U_0 - V_0)^+ \dd x.\]</div>
+<p>Then, we can conclude with</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    U_0(x) &amp;\le V_0(x) &amp; \implies (U_0(x) - V_0(x))^+ = 0 \\
+    &amp; \implies 0 \le \int_\R (U - V)^+ \dd x \le 0 \\
+    &amp; \implies U(\cdot, t) \le V(\cdot, t) \quad \text{a.e. in } \R.
+\end{aligned}
+\]</div>
+</div>
+</div>
+</div>
+</details>
+</div>
+<h2 id="solutions-for-the-riemann-problem-for-general-f">Solutions for the Riemann problem for general f</h2>
+<p>We can now use <span class="arithmatex">\(\eqref{eq:oleinik-E}\)</span> to solve the Riemann problem for general <span class="arithmatex">\(f \in C^1(\R)\)</span> not necessarily convex. This condition is equivalent to </p>
+<blockquote>
+<p>The chord joining <span class="arithmatex">\((U_L, f(U_L))\)</span> and <span class="arithmatex">\((U_R, f (U_R))\)</span> must lie below the graph of the function <span class="arithmatex">\(f\)</span> between these points when <span class="arithmatex">\(U_L &lt; U_R\)</span>. Similarly, it must lie above the graph when <span class="arithmatex">\(U_L &gt; U_R\)</span>.</p>
+</blockquote>
+<p>Assume without loss of generality that <span class="arithmatex">\(U_L &lt; U_R\)</span>. Let <span class="arithmatex">\(f_c\)</span> be the lower convex envelope of <span class="arithmatex">\(f\)</span>:</p>
+<div class="arithmatex">\[f_c(x):= \sup_g \qty{g(x) \mid g \text{ convex}, g \le f}\]</div>
+<p>Now, the interval <span class="arithmatex">\([U_L, U_R]\)</span> can be divided into two parts. One part is where <span class="arithmatex">\(f_c = f\)</span>, and the other is where <span class="arithmatex">\(f_c &lt; f\)</span>. In the second part, <span class="arithmatex">\(f_c\)</span> is affine. We now use shocks in the affine region and rarefaction waves in the complement. Then, the solution is <span class="arithmatex">\(\eqref{eq:rarefaction_solution}\)</span> with <span class="arithmatex">\(f\)</span> replaced by <span class="arithmatex">\(f_c\)</span>. For <span class="arithmatex">\(U_L &gt; U_R\)</span>, we instead use the upper convex envelope. Now, we often get rarefaction waves followed by shocks and vice versa. This is called a <em>composite wave</em>.</p>
+<h2 id="summary">Summary <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></h2>
+<p>Solutions of the conservation law <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> may develop discontinuities or shock waves, even for smooth initial data. Consequently, weak solutions are sought. Shock speeds are computed with the Rankine–Hugoniot condition <span class="arithmatex">\(\eqref{eq:rankine_hugoniot}\)</span>.</p>
+<ul>
+<li>Weak solutions are not necessarily unique. Entropy conditions like Oleinik’s condition E <span class="arithmatex">\(\eqref{eq:oleinik-E}\)</span>
+ have to be imposed. Self-similar continuous solutions or rarefaction waves have to be considered.</li>
+<li>Explicit solutions for the Riemann problem (even for non-convex fluxes) can be constructed in terms of shocks, rarefaction waves and compound shocks.</li>
+<li>Entropy solutions exist, are unique and are stable in <span class="arithmatex">\(L^1\)</span> with respect to the initial data. Furthermore, the entropy solutions satisfy an <span class="arithmatex">\(L^\infty\)</span> estimate, <span class="arithmatex">\(L^p\)</span> estimates and are Total Variation Diminishing (TVD)—that is, the total variation decreases in time.</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>https://www.uio.no/studier/emner/matnat/math/MAT-IN9240/h17/pensumliste/numcl_notes.pdf&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div>
@@ -874,7 +1265,7 @@ U(x, t) = \begin{cases}
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "navigation.instant"], "search": "../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
       <script src="../../assets/javascripts/bundle.56dfad97.min.js"></script>

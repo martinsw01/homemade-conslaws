@@ -25,7 +25,10 @@ window.MathJax = {
         "bm": [
           "{\\boldsymbol{#1}}",
           1
-        ]
+        ],
+        "esssup": "\\operatorname*{ess\\,sup}",
+        "essinf": "\\operatorname*{ess\\,inf}",
+        "Cell": "\\mathcal{C}",
       },
       "tags": "ams"
     },
