@@ -9,6 +9,7 @@ makedocs(
         "Theory" => [
             "Linear transport equations" => "theory/linear_transport_eqs.md",
             "Scalar conservation laws" => "theory/scalar_cons_laws.md",
+            "Finite volume schemes" => "theory/finite_volume_schemes.md",
         ]
     ]
 )
