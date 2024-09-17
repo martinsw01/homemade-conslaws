@@ -4,9 +4,27 @@ docs_dir: "build"
 
 theme:
   name: material
+  palette:
+    # scheme: conslaws
+    - media: "(prefers-color-scheme: dark)"
+      scheme: conslaws-dark
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: conslaws-light
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+    # primary: custom
   features:
     - content.tabs.link # Proof and theorem/lemma/... are on the same tab
     - navigation.instant
+    - navigation.tabs
+    - navigation.tabs.sticky
+
 
 nav:
   - Conservation Laws: "index.md"
@@ -23,6 +41,8 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 
+extra_css:
+  - stylesheets/palettes.css
 
 extra_javascript:
   - javascripts/mathjax.js
