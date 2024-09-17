@@ -2,6 +2,26 @@
     --md-hue:266;
 }
 
+.tooltip-math {
+    padding: 0.5rem;
+    color: var(--md-default-fg-color);
+    border-radius: .2rem;
+    position: absolute;
+    z-index: 1000;
+    display: none;
+}
+
+[data-md-color-scheme=conslaws-dark] .tooltip-math {
+    background-color: hsl(var(--md-hue), 15%, 17%);
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+[data-md-color-scheme=conslaws-light] .tooltip-math {
+    /* background-color: hsl(var(--md-hue), 62%, 10%); */
+    background-color: var(--md-default-bg-color);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
 [data-md-color-scheme=conslaws-dark] {
     --md-primary-fg-color:hsl(var(--md-hue), 62%, 20%);
     --md-accent-fg-color:hsl(var(--md-hue), 100%, 80%);
