@@ -3,12 +3,20 @@
 }
 
 .tooltip-math {
-    padding: 0.5rem;
+    /* padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem; */
     color: var(--md-default-fg-color);
     border-radius: .2rem;
     position: absolute;
     z-index: 1000;
     display: none;
+    /* font-size: 1rem; */
+}
+
+.md-typeset .admonition,.md-typeset details{
+	font-size: inherit;
 }
 
 [data-md-color-scheme=conslaws-dark] .tooltip-math {
