@@ -1,0 +1,47 @@
+.md-typeset .admonition.proof,
+.md-typeset details.proof,
+.md-typeset .admonition.claim,
+.md-typeset details.claim {
+  border-color: rgb(182, 182, 182);
+  /* background-color: rgba(182, 182, 182, 0.1); */
+}
+
+.md-typeset .proof > .admonition-title,
+.md-typeset .proof > summary,
+.md-typeset .claim > .admonition-title,
+.md-typeset .claim > summary {
+    background-color: rgba(182, 182, 182, 0.1);
+    padding-left: .6rem; /* Use the same padding on the left as on the right */
+}
+
+
+.md-typeset .claim > summary {
+    font-weight: normal;
+}
+
+
+.md-typeset .claim > .admonition-title::before,
+.md-typeset .claim > summary::before,
+.md-typeset .proof > .admonition-title::before,
+.md-typeset .proof > summary::before {
+  width: 0; /* Hide icon */
+}
+
+.claim:not([open])::after,
+.proof:not([open])::after {
+    content: "";
+}
+
+.claim, .proof {
+    position: relative;
+}
+
+
+.claim::after,
+.proof::after {
+    content: "◻";
+    position: absolute;
+    bottom: 0.6rem;
+    right: 0.8rem;
+    font-size: 113.1%;
+}

@@ -45,6 +45,10 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/palettes.css
+  - stylesheets/admonitions/theorem.css
+  - stylesheets/admonitions/lemma.css
+  - stylesheets/admonitions/definition.css
+  - stylesheets/admonitions/claim.css
 
 extra_javascript:
   - javascripts/math_tooltips.js
