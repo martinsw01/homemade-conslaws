@@ -9,9 +9,9 @@ function addTooltip(refElement) {
     let equation = findEquationByLabel(label);
     if (equation) {
         let tooltip = createTooltip(equation);
-        refElement.appendChild(tooltip);
-        refElement.addEventListener("mouseover", () => displayTooltip(tooltip));
-        refElement.addEventListener("mouseout", () => hideTooltip(tooltip));
+        document.getElementsByTagName("p")[0].parentElement.appendChild(tooltip);
+        refElement.addEventListener("mouseenter", (ev) => displayTooltipAndUpdatePosition(tooltip, ev.target));
+        refElement.addEventListener("mouseleave", () => hideTooltip(tooltip));
     } else {
         console.error("Equation not found with label: " + label);
     } 
@@ -19,7 +19,7 @@ function addTooltip(refElement) {
 
 function findRefElements() {
     let refElements = document.getElementsByClassName("MathJax_ref");
-    return Array.from(refElements).map(getParent).filter(isAnchor);
+    return Array.from(refElements).map(getParent).filter(isAnchor).filter(isNotDulpicateRefElement);
 };
 function getParent(element) {
     return element.parentElement;
@@ -28,6 +28,9 @@ function isAnchor(element) {
     return element.tagName === "A";
 };
 
+function isNotDulpicateRefElement(element) {
+    return element.parentElement.parentElement.parentElement.tagName !== "MJX-ASSISTIVE-MML";
+};
 
 function findEquationByLabel(label) {
     let labelElement = getLabelElement(label);
@@ -42,7 +45,7 @@ function getLabelElement(label) {
     return document.getElementById(labelId);
 };
 function getMathElement(labelElement) {
-    return labelElement.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+    return labelElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
 };
 
 
@@ -54,19 +57,41 @@ function getRefLabel(refElement) {
 };
 
 
-function createTooltip(equation) {
+function createTooltip(equationElement) {
     let tooltip = document.createElement("div");
-    tooltip.className = "tooltip-math";
-    tooltip.innerHTML = equation.outerHTML;
+    tooltip.className = "tooltip-math arithmatex";
+    tooltip.innerHTML = equationElement.innerHTML;
+    removeLabel(tooltip);
     return tooltip;
 }
+function removeLabel(mathElement) {
+    let labelElement = mathElement.children[0].children[0].children[0].children[1];
+    mathElement.children[0].children[0].children[0].removeChild(labelElement);
+};
 
 
-function displayTooltip(tooltip) {
+function displayTooltipAndUpdatePosition(tooltip, refElement) {
     tooltip.style.display = "block";
+    setTooltipPosition(tooltip, refElement);
 }
 function hideTooltip(tooltip) {
     tooltip.style.display = "none";
+}
+function setTooltipPosition(tooltip, refElement) {
+    let refRect = refElement.getBoundingClientRect();
+    let tooltipRect = tooltip.getBoundingClientRect();
+    tooltip.style.left = calcLeft(refRect, tooltipRect) + "px";
+    tooltip.style.top = calcTop(refRect, tooltipRect) + "px";
+}
+function calcLeft(refRect, tooltipRect) {
+    if (refRect.left + tooltipRect.width > window.innerWidth) {
+        return window.innerWidth - tooltipRect.width;
+    } else {
+        return refRect.left;
+    }
+}
+function calcTop(refRect, tooltipRect) {
+    return window.scrollY + refRect.bottom + 10
 }
 
 
