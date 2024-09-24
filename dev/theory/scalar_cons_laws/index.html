@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.35">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.06209087.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -868,7 +868,7 @@ U(x, t) = \begin{cases}
 <div class="arithmatex">\[
 U(x, t) = V\qty(\frac{x}{t}).
 \]</div>
-<p>Substituting this into the conservation law <span class="arithmatex">\(\ref{eq:scalar_cons_law}\)</span>, we get</p>
+<p>Substituting this into the conservation law <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span>, we get</p>
 <div class="arithmatex">\[
 (f'(V(\xi)) - \xi) V'(\xi) = 0.
 \]</div>
@@ -1124,7 +1124,7 @@ U(x, t) = \begin{cases}
 </li>
 </ol>
 <div class="arithmatex">\[U(\cdot, t) \le V(\cdot, t) \quad \text{a.e. in } \R\]</div>
-<details class="proof" open="open">
+<details class="proof">
 <summary>Proof</summary>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:9"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><input id="__tabbed_4_5" name="__tabbed_4" type="radio" /><input id="__tabbed_4_6" name="__tabbed_4" type="radio" /><input id="__tabbed_4_7" name="__tabbed_4" type="radio" /><input id="__tabbed_4_8" name="__tabbed_4" type="radio" /><input id="__tabbed_4_9" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Existence</label><label for="__tabbed_4_2">Uniqueness</label><label for="__tabbed_4_3">1.</label><label for="__tabbed_4_4">2.</label><label for="__tabbed_4_5">3.</label><label for="__tabbed_4_6">4.</label><label for="__tabbed_4_7">5.</label><label for="__tabbed_4_8">6.</label><label for="__tabbed_4_9">7.</label></div>
 <div class="tabbed-content">
@@ -1184,7 +1184,7 @@ U(x, t) = \begin{cases}
 <div class="arithmatex">\[\int_{a}^{b} |U(x, T) - V(x, T)| \dd x \le \int_{a-MT}^{b+MT} |U_0 - V_0| \dd x.\]</div>
 </div>
 <div class="tabbed-block">
-<p>By <span class="arithmatex">\(\eqref{eq:conservation_law}\)</span>, we have the conservation</p>
+<p>By <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span>, we have the conservation</p>
 <div class="arithmatex">\[\int_\R U(x, t) \dd x = \int_\R U_0(x) \dd x \quad \forall\ t &gt; 0\]</div>
 <p>Therefore, we have that</p>
 <div class="arithmatex">\[\int_\R (u - V)^+ \dd x \le \int_\R (U_0 - V_0)^+ \dd x.\]</div>
@@ -1208,7 +1208,7 @@ U(x, t) = \begin{cases}
 </blockquote>
 <p>Assume without loss of generality that <span class="arithmatex">\(U_L &lt; U_R\)</span>. Let <span class="arithmatex">\(f_c\)</span> be the lower convex envelope of <span class="arithmatex">\(f\)</span>:</p>
 <div class="arithmatex">\[f_c(x):= \sup_g \qty{g(x) \mid g \text{ convex}, g \le f}\]</div>
-<p>Now, the interval <span class="arithmatex">\([U_L, U_R]\)</span> can be divided into two parts. One part is where <span class="arithmatex">\(f_c = f\)</span>, and the other is where <span class="arithmatex">\(f_c &lt; f\)</span>. In the second part, <span class="arithmatex">\(f_c\)</span> is affine. We now use shocks in the affine region and rarefaction waves in the complement. Then, the solution is <span class="arithmatex">\(\eqref{eq:rarefaction_solution}\)</span> with <span class="arithmatex">\(f\)</span> replaced by <span class="arithmatex">\(f_c\)</span>. For <span class="arithmatex">\(U_L &gt; U_R\)</span>, we instead use the upper convex envelope. Now, we often get rarefaction waves followed by shocks and vice versa. This is called a <em>composite wave</em>.</p>
+<p>Now, the interval <span class="arithmatex">\([U_L, U_R]\)</span> can be divided into two parts. One part is where <span class="arithmatex">\(f_c = f\)</span>, and the other is where <span class="arithmatex">\(f_c &lt; f\)</span>. In the second part, <span class="arithmatex">\(f_c\)</span> is affine. We now use shocks in the affine region and rarefaction waves in the complement. Then, the solution is <span class="arithmatex">\(\eqref{eq:rarefaction_solution}\)</span> with <span class="arithmatex">\(f\)</span> replaced by <span class="arithmatex">\(f_c\)</span>. For <span class="arithmatex">\(U_L &gt; U_R\)</span>, we instead use the upper convex envelope. Now, we often get rarefaction waves followed by shocks and vice versa. This is called a <em>compound wave</em>.</p>
 <h2 id="summary">Summary <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></h2>
 <p>Solutions of the conservation law <span class="arithmatex">\(\eqref{eq:scalar_cons_law}\)</span> may develop discontinuities or shock waves, even for smooth initial data. Consequently, weak solutions are sought. Shock speeds are computed with the Rankine–Hugoniot condition <span class="arithmatex">\(\eqref{eq:rankine_hugoniot}\)</span>.</p>
 <ul>
