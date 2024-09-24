@@ -206,7 +206,7 @@ $$
 U(x, t) = V\qty(\frac{x}{t}).
 $$
 
-Substituting this into the conservation law $\ref{eq:scalar_cons_law}$, we get
+Substituting this into the conservation law $\eqref{eq:scalar_cons_law}$, we get
 
 $$
 (f'(V(\xi)) - \xi) V'(\xi) = 0.
@@ -507,7 +507,7 @@ We now have a bound on the amplitude, but we can also derive a bound on the deri
 
     $$U(\cdot, t) \le V(\cdot, t) \quad \text{a.e. in } \R$$
 
-    ???+ proof
+    ??? proof
         === "Existence"
             Let $U^\eps$ solve $\eqref{eq:convection-diffusion})$ and let $U = \lim_{\eps \to 0} U^\eps$ be a limit. Then, we have seen that $U$ satisfies the entropy condition $\eqref{eq:entropy_condition}$. Additionally, from the maximum principle $\eqref{eq:max_principle}$, we get that $U$ is an entropy solution.
         === "Uniqueness"
@@ -570,7 +570,7 @@ We now have a bound on the amplitude, but we can also derive a bound on the deri
             $$\int_{a}^{b} |U(x, T) - V(x, T)| \dd x \le \int_{a-MT}^{b+MT} |U_0 - V_0| \dd x.$$
 
         === "7."
-            By $\eqref{eq:conservation_law}$, we have the conservation
+            By $\eqref{eq:scalar_cons_law}$, we have the conservation
 
             $$\int_\R U(x, t) \dd x = \int_\R U_0(x) \dd x \quad \forall\ t > 0$$
 
@@ -599,7 +599,7 @@ Assume without loss of generality that $U_L < U_R$. Let $f_c$ be the lower conve
 
 $$f_c(x):= \sup_g \qty{g(x) \mid g \text{ convex}, g \le f}$$
 
-Now, the interval $[U_L, U_R]$ can be divided into two parts. One part is where $f_c = f$, and the other is where $f_c < f$. In the second part, $f_c$ is affine. We now use shocks in the affine region and rarefaction waves in the complement. Then, the solution is $\eqref{eq:rarefaction_solution}$ with $f$ replaced by $f_c$. For $U_L > U_R$, we instead use the upper convex envelope. Now, we often get rarefaction waves followed by shocks and vice versa. This is called a *composite wave*.
+Now, the interval $[U_L, U_R]$ can be divided into two parts. One part is where $f_c = f$, and the other is where $f_c < f$. In the second part, $f_c$ is affine. We now use shocks in the affine region and rarefaction waves in the complement. Then, the solution is $\eqref{eq:rarefaction_solution}$ with $f$ replaced by $f_c$. For $U_L > U_R$, we instead use the upper convex envelope. Now, we often get rarefaction waves followed by shocks and vice versa. This is called a *compound wave*.
 
 ## Summary [^1]
 
