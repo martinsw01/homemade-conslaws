@@ -48,7 +48,7 @@ extra_css:
   - stylesheets/admonitions/theorem.css
   - stylesheets/admonitions/lemma.css
   - stylesheets/admonitions/definition.css
-  - stylesheets/admonitions/claim.css
+  - stylesheets/admonitions/proof.css
 
 extra_javascript:
   - javascripts/math_tooltips.js
