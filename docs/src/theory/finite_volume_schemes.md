@@ -218,7 +218,8 @@ we know the solution is a shock wave at $x = 1/2t$.
 
 ```@setup 1
 ENV["GKSwstype"]="nul" #https://discourse.julialang.org/t/deactivate-plot-display-to-avoid-need-for-x-server/19359/2
-using homemade_conslaws.Godunov, homemade_conslaws.Viz
+using homemade_conslaws.FiniteVolumes: godunov_scheme, lax_friedrichs_scheme, rusanov_scheme
+using homemade_conslaws.Viz: animate_solution
 ```
 
 ```@example 1
@@ -233,11 +234,11 @@ U0 = x_mid .< 0
 BC(t, U) = [1;; 0]
 dt = 0.1 # max time step
 T = 1
-U, t = Godunov.godunovmethod(f, df, ω, U0, BC, dx, dt, T)
+U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
 
-Viz.animate_solution((U,),
-                    "Approximate solution",
-                    x_mid, t)
+animate_solution((U,),
+                 "Approximate solution",
+                 x_mid, t)
 ```
 
 The numerical solution approxumates this well, having a sharp shock at ``x = 1/2t``. Further, it seems stable without any oscillations. Next, for the initial condition
@@ -256,11 +257,11 @@ we expect a rarefaction wave between the curves ``x = -t`` and ``x = t``:
 ```@example 1
 U0 = (x_mid .> 0) * 2 .-1
 BC(t, U) = [-1;; 1]
-U, t = Godunov.godunovmethod(f, df, ω, U0, BC, dx, dt, T)
+U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
 
-Viz.animate_solution((U,),
-                    "Approximate solution",
-                    x_mid, t)
+animate_solution((U,),
+                 "Approximate solution",
+                 x_mid, t)
 ```
 
 For a more complicated example, ``U_0 = \sin(4\pi x)``, we expect a compound wave:
@@ -268,11 +269,11 @@ For a more complicated example, ``U_0 = \sin(4\pi x)``, we expect a compound wav
 ```@example 1
 U0 = sin.(4π*x_mid)
 BC(t, U) = [0;; 0]
-U, t = Godunov.godunovmethod(f, df, ω, U0, BC, dx, dt, T)
+U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
 
-Viz.animate_solution((U,),
-                    "Approximate solution",
-                    x_mid, t)
+animate_solution((U,),
+                 "Approximate solution",
+                 x_mid, t)
 ```
 
 ```@raw html
@@ -370,14 +371,13 @@ The solutions are stable and non-oscillatory. Unlike the Roe scheme, it also app
 ```
 
 ```@example 1
-using homemade_conslaws.LaxFriedrichs   # hide
 U0 = x_mid .< 0     # hide
 BC(t, U) = [1;; 0]  # hide
 dt = 0.1 # max time step    # hide
 T = 1   # hide
-U, t = LaxFriedrichs.lax_friedrichs_method(f, df, U0, BC, dx, dt, T)    # hide
+U, t = lax_friedrichs_scheme(f, df, U0, BC, dx, dt, T)    # hide
 
-Viz.animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
+animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
 ```
 
 ```@raw html
@@ -407,18 +407,32 @@ For the same problem as above with get
 ```
 
 ```@example 1
-using homemade_conslaws.Rusanov   # hide
-U, t = Rusanov.rusanov_method(f, df, U0, BC, dx, dt, T)    # hide
+U, t = rusanov_scheme(f, df, U0, BC, dx, dt, T)    # hide
 
-Viz.animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
+animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
 ```
 
 and with the initial data $\eqref{eq:initial_condition_rarefaction}$, we get
 
 ```@example 1
-U0 = (x_mid .> 0) * 2 .-1
-BC(t, U) = [-1;; 1]
-U, t = Rusanov.rusanov_method(f, df, U0, BC, dx, dt, T)
+U0 = (x_mid .> 0) * 2 .-1 # hide
+BC(t, U) = [-1;; 1] # hide
+U, t = rusanov_scheme(f, df, U0, BC, dx, dt, T) # hide
 
-Viz.animate_solution((U,), "Approximation", x_mid, t)
+animate_solution((U,), "Approximation", x_mid, t) # hide
+```
+
+### Comparison
+
+```@example 1
+U0 = x_mid .< 0     # hide
+BC(t, U) = [1;; 0] # hide
+
+U_Rus, t = rusanov_scheme(f, df, U0, BC, dx, dt, T) # hide
+U_LxF, _ = lax_friedrichs_scheme(f, df, U0, BC, dx, dt, T) # hide
+U_God, _ = godunov_scheme(f, df, ω, U0, BC, dx, dt, T) # hide
+
+animate_solution((U_Rus, U_LxF, U_God, x_mid' .< 0.5t), # hide
+                 ["Rusanov" "Lax-Friedrichs" "Godunov" "Exact"], # hide
+                 x_mid, t) # hide
 ```
