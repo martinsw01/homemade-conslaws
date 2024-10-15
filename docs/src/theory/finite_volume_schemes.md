@@ -320,10 +320,13 @@ $$
 Notice that this is just the linear transport equation with the explicit solution
 
 $$
-F_{j+1/2}^n = F^\text{Roe}(U_j^n, U_{j+1}^n) = \begin{cases}
-    f(U_j^n), & \hat A_{j+1/2} \ge 0 \\
-    f(U_{j+1}^n), & \hat A_{j+1/2} < 0.
-\end{cases}
+\begin{equation}
+    F_{j+1/2}^n = F^\text{Roe}(U_j^n, U_{j+1}^n) = \begin{cases}
+        f(U_j^n), & \hat A_{j+1/2} \ge 0 \\
+        f(U_{j+1}^n), & \hat A_{j+1/2} < 0.
+    \end{cases}
+    \label{eq:roe_flux}
+\end{equation}
 $$
 
 The numerical scheme $\eqref{eq:cell_average_update}$ with this flux is called the *Roe* or *Murman-Roe* scheme. This preserves shocks well, but fails at rarefaction waves, for example our usual test case with initial data $\eqref{eq:initial_condition_rarefaction}$.
@@ -435,4 +438,205 @@ U_God, _ = godunov_scheme(f, df, ω, U0, BC, dx, dt, T) # hide
 animate_solution((U_Rus, U_LxF, U_God, x_mid' .< 0.5t), # hide
                  ["Rusanov" "Lax-Friedrichs" "Godunov" "Exact"], # hide
                  x_mid, t) # hide
+```
+
+
+```@raw html
+## Consistent, conservative and monotone schemes
+
+### Conservative schemes
+
+A numerical scheme approximating $\eqref{eq:conservation_law}$ can be formulated as
+
+$$
+\begin{equation}
+    U_j^{n+1} = H(U_{j-p}^n, \dots, U_{j+p}^n) \label{eq:general_scheme}
+\end{equation}
+$$
+
+for some update function $H$ depending on the $2p+1$ points stencil $\{U_{j-p}^n, \dots, U_{j+p}^n\}$ for the scheme. Until now, we have worked with $3$-stencil schemes, i.e. $p=1$. 
+
+???+ definition "Definition (Conservative shceme)"
+    The generic scheme $\eqref{eq:general_scheme}$ approximating $\eqref{eq:conservation_law}$ is called *conservative* if
+
+    $$\sum_j U_j^{n+1} = \sum_j U_j^n,$$
+
+    ignoring the boundary conditions.
+
+
+???+ theorem
+    Assume $H(0, \dots, 0) = 0$. 
+
+    $$
+    \begin{gather*}
+        \eqref{eq:general_scheme} \text{ is conservative } \\
+        \Updownarrow \\
+        \text{There is a function } F_{j+1/2}^n = F(U_{j-p}^n, \dots, U_{j+p}^n) \text{ such that \eqref{eq:general_scheme} can be written as } \eqref{eq:cell_average_update}.
+    \end{gather*}
+    $$
+
+    ??? proof
+        === "$\impliedby$"
+            Then, we have
+
+            $$U_j^{n+1} = H(U_{j-p}^n, \dots, U_{j+p}^n) = U_j^n - \frac{\Delta t}{\Delta x}\qty(F_{j+1/2}^n - F_{j-1/2}^n).$$
+
+            This yields a telescoping sum
+
+            $$
+            \begin{aligned}
+                \sum_j U_j^{n+1} &= \sum_j \qty[U_j^n - \frac{\Delta t}{\Delta x}\qty(F_{j+1/2}^n - F_{j-1/2}^n)] \\
+                &= \sum_j U_j^n
+            \end{aligned}
+            $$
+
+
+
+### Consistent schemes
+
+We now cinsider numerical fluxes $F_{j+1/2}^n$ defined on $2p+1$ stencils
+
+$$
+\begin{equation}
+    F_{j+1/2}^n = F(U_{j-p}^n, \dots, U_{j+p}^n) \label{eq:numerical_flux}
+\end{equation}
+$$
+
+!!! definition "Definition (Consistency)"
+    The numerical flux $\eqref{eq:numerical_flux}$ is *consistent* if $F(U, \dots, U) = f(U)$ for all $U \in \R$.
+
+!!! example
+    All the numerical fluxes disussed above are consistent. Take for example Lax-Friedrichs:
+
+    $$F^\text{LxF}(U, U) = \frac{f(U) + f(U)}{2} - \frac{\Delta x}{2\Delta t}(U - U) = f(U).$$
+
+However, conservation and consistency does not imply stability or convergence. Take for example the Roe flux $\eqref{eq:roe_flux}$, which is trivially consistent but does not converge for certain problems.
+
+
+### Monotone schemes
+
+Recall that entropy solutions to the conservation law $\eqref{eq:conservation_law}$ are monotinicity preserving. It would therefore be desirable to have numerical schemes that have a discrete version of this property.
+
+!!! definition "Definition (Monotone scheme)"
+    The numericals scheme $\eqref{eq:general_scheme}$ is *monotone* if it is non-decreasing in each argument, i.e. $(\nabla H)_i \ge 0$ for all $i$.
+
+
+!!! lemma
+    Let $F$ be a locally Lipschitz continuous two-point numerical flux. Then we have
+
+    $$\eqref{eq:godunov} \text{ is monotone} \iff \begin{aligned}
+        a & \mapsto F(a, b) \text{ is non-decreasing for fixed } b \\
+        b & \mapsto F(a, b) \text{ is non-increasing for fixed } a.
+    \end{aligned}$$
+
+    and we get the following CFL type condition
+
+    $$\abs{\pdv{F}{a}(v,w)} + \abs{\pdv{F}{b}(u,v)} \le \frac{\Delta x}{\Delta t} \quad \forall u, v, w.$$
+
+
+One cannowuse monotoicity to differentiate between robust and possibly non-robust schemes. For example, the Roe scheme is not monotone.
+
+## Stability properties of monotone schemes
+
+Recall that the entropy solutions of $\eqref{eq:conservation_law}$ have
+
+1. $L^\infty$ bound
+2. $L^p$ bounds
+3. $TV$ bound
+
+and satisfy time constinuity. We will show that monotone schemes have these properties.
+
+### L<sup>∞</sup> bound
+
+!!! lemma
+    Let $U_j^n$ be the approximate solution using a consistent, monotone scheme of the form $\eqref{eq:general_scheme}$. Then we have
+
+    $$\min\{U_{j-p}^n, \dots, U_{j+p}^n\} \le U_j^{n+1} \le \max\{U_{j-p}^n, \dots, U_{j+p}^n\},$$
+
+    and in particular
+
+    $$\min_i U_j^0 \le U_j^n \le \max_i U_j^0 \quad \forall n,j$$
+
+    ??? proof
+        Let $\overline U_j^n = \max\{U_{j-p}^n, \dots, U_{j+p}^n\}$ be the maximum of the stencil. Now, as $\eqref{eq:general_scheme}$ is monotone, we have
+
+        $$
+        \begin{aligned}
+            U_j^{n+1} &= H(U_{j-p}^n, \dots, U_{j+p}^n) \\
+            &\le H(\overline U_{j-p}^n, U_{j-p+1}^n, \dots, U_{j+p}^n) \\
+            &\vdots \\
+            &\le H(\overline U_{j-p}^n, \dots, \overline U_{j+p}^n) \\
+            &= \overline U_j^n.
+        \end{aligned}
+        $$
+
+        Similarly, we get the minimum principle.
+
+        Propagating this through time, we get the last claim too.
+
+
+### Entropy-inequalities and Lᵖ bounds
+
+In the continuous case, we used the entropy inequality to obtain $L^p$ bounds. We will use discrete counterpart to the Kruzkov entropy inequality. The *Crandall-Majda numerical entropy flux* is given by
+
+$$Q_{j+1/2}^n = Q(U_j^n, U_{j+1}^n) = F(U_j^n \lor k, U_{j+1}^n \lor k) - F(U_j^n \land k, U_{j+1}^n \land k),$$
+
+where $a \lor b = \max\{a, b\}$ and $a \land b = \min\{a, b\}$. For consistent numerical fluxes, we see that this entropy flux is consistent with the Kruskov entropy flux:
+
+$$
+\begin{aligned}
+    Q(U, U) &= f(U \lor k) - f(U \land k) \\
+    &= \sign(U - k)\qty[f(U) - f(k)] \\
+    &= q(U; k).
+\end{aligned}
+$$
+
+!!! lemma "Lemma (Crandall-Majda [CM80])"
+    Let $U_j^n$ be the approximate solution using a consistent, conservative, monotone scheme of the form $\eqref{eq:general_scheme}$. Then we have
+
+    $$\abs{U_j^{n+1} - k}  - \abs{U_j^n - k} + \frac{\Delta t}{\Delta x}\qty(Q_{j+1/2}^n - Q_{j-1/2}^n) \le 0 \quad \forall n,j.$$
+
+    Moreover, if $U_0 \in L^1(\R)$, then
+
+    $$\sum_j \abs{U_j^n} \Delta x \le \norm{U_0}_{L^1{\R}}.$$
+
+    ??? proof
+        The scheme is conservative, so we have
+
+        $$
+        \begin{aligned}
+            H(U_{j-p}^n \lor k, &\dots, U_{j+p}^n \lor k) \\
+            & = U_j^n + \frac{\Delta t}{\Delta x}\qty(F(U_{j-p}^n \lor k, \dots, U_{j+p}^n \lor k) - F(U_{j-p}^n \land k, \dots, U_{j+p}^n \land k)). \\
+        \end{aligned}
+        $$
+
+        and similarly for the minimum. Taking their difference, we get
+
+        $$
+        \begin{aligned}
+            H(U_{j-p}^n \lor k, &\dots, U_{j+p}^n \lor k)
+            - H(U_{j-p}^n \land k, \dots, U_{j+p}^n \land k) \\
+            & = U_j^n \lor k - U_j^n \land k
+            - \frac{\Delta t}{\Delta x}\qty(Q_{j+1/2}^n - Q_{j-1/2}^n) \\
+            &= \abs{U_j^{n+1} - k}  - \frac{\Delta t}{\Delta x}\qty(Q_{j+1/2}^n - Q_{j-1/2}^n)
+        \end{aligned}
+        $$
+
+        Further, by monotonicity, we have
+
+        $$H(U_{j-p}^n \lor k, \dots, U_{j+p}^n \lor k) \ge \begin{matrix}
+            U_j^{n+1} \\ k
+        \end{matrix}
+        \ge H(U_{j-p}^n \land k, \dots, U_{j+p}^n \land k),$$
+
+        so inserting into the above equation, we get the first claim.
+
+        Now, let $k=0$ and sum over $j$ to get the second claim.
+
+
+### TV bound
+
+If we We define the discrete version of the total variation as
+
+$$\norm{U^n}_{TV(\R)} = \sum_j \abs{U_j^n - U_{j-1}^n}.$$
 ```
