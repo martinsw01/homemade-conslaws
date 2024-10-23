@@ -14,6 +14,8 @@ window.MathJax = {
         1
       ],
       "R": "\\mathbb{R}",
+      "N": "\\mathbb{N}",
+      "O": "\\mathcal{O}",
       "sign": "\\operatorname{sign}",
       "s": "\\sigma",
       "phi": "\\varphi",
@@ -29,6 +31,10 @@ window.MathJax = {
       "esssup": "\\operatorname*{ess\\,sup}",
       "essinf": "\\operatorname*{ess\\,inf}",
       "Cell": "\\mathcal{C}",
+      "Dx": "\\Delta x",
+      "Dt": "\\Delta t",
+      "supp": "\\operatorname{supp}",
+      "minmod": "\\operatorname{minmod}",
     },
     "tags": "ams"
   },
