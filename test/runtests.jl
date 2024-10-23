@@ -8,6 +8,9 @@ using Test
     @testset "Simulator tests" begin
         include("simulator_test.jl")
     end
+    @testset "Runge kutta 2 tests" begin
+        include("rk2_test.jl")
+    end
 end
 
 nothing

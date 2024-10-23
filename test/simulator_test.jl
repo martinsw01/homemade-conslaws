@@ -19,7 +19,7 @@ using homemade_conslaws
 
     grid.cells[:] = [1., 0.5, 0.]
 
-    simulate!(simulator, T, dt, [])
+    simulate!(simulator, T, dt)
 
     expected_cells = [15/16, 3/4, 5/16]
 
@@ -42,7 +42,7 @@ end
     timestepper = ForwardEuler()
     simulator = Simulator(system, grid, timestepper, 0.)
 
-    simulate!(simulator, T, max_dt, [])
+    simulate!(simulator, T, max_dt)
 
     expected_cells = [297 / 320, 5 / 6, 629 / 960]
 
@@ -65,7 +65,7 @@ end
 
     grid.cells[:] = [1., 0.5, 0.]
 
-    simulate!(simulator, T, max_dt, [])
+    simulate!(simulator, T, max_dt)
 
     expected_cells = [945 / 1024 , 105 / 128, 663 / 1024]
 
