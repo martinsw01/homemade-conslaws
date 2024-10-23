@@ -10,6 +10,7 @@ makedocs(
             "Linear transport equations" => "theory/linear_transport_eqs.md",
             "Scalar conservation laws" => "theory/scalar_cons_laws.md",
             "Finite volume schemes" => "theory/finite_volume_schemes.md",
+            "Second order schemes" => "theory/2nd_order_schemes.md",
         ]
     ]
 )
