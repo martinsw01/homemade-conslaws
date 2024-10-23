@@ -456,7 +456,7 @@ $$
 
 for some update function $H$ depending on the $2p+1$ points stencil $\{U_{j-p}^n, \dots, U_{j+p}^n\}$ for the scheme. Until now, we have worked with $3$-stencil schemes, i.e. $p=1$. 
 
-???+ definition "Definition (Conservative shceme)"
+!!! definition "Definition (Conservative shceme)"
     The generic scheme $\eqref{eq:general_scheme}$ approximating $\eqref{eq:conservation_law}$ is called *conservative* if
 
     $$\sum_j U_j^{n+1} = \sum_j U_j^n,$$
@@ -464,7 +464,7 @@ for some update function $H$ depending on the $2p+1$ points stencil $\{U_{j-p}^n
     ignoring the boundary conditions.
 
 
-???+ theorem
+!!! theorem
     Assume $H(0, \dots, 0) = 0$. 
 
     $$
@@ -476,6 +476,66 @@ for some update function $H$ depending on the $2p+1$ points stencil $\{U_{j-p}^n
     $$
 
     ??? proof
+        === "$\implies$"
+            Define
+
+            $$G(U_{-p}, \dots, U_p) := \frac{\Dx}{\Dt}(U_0 - H(U_{-p}, \dots, U_p)).$$
+
+            By conservation, we have that
+
+            $$\sum_j G(U_{j-p}^n, \dots, U_{j+p}^n) = \frac{\Dx}{\Dt}\sum_j (U_j^n - H(U_{j-p}^n, \dots, U_{j+p}^n)) = 0$$
+
+            for any sequence $\{U_j^n\}_j$.
+            
+            === "$F_{i+1/2}$"
+                Now, define the sequence
+
+                $$V_j^n :=  \begin{cases}
+                    0, & j -i \le -p \lor j-i < p \\
+                    U_j^n, & \text{otherwise}.
+                \end{cases}$$
+
+                Then, we have
+
+                $$
+                \begin{aligned}
+                    0 &= \sum_j G(V_{j-p}^n, \dots, V_{j+p}^n) \\
+                    &= \underbrace{G(0, \dots, 0, U_{1-p-i}^n) + \dots + G(0, U_{1-p-i}^n, \dots, U_{p-i}^n)}_{F_{i+1/2}} \\
+                    &\quad + \underbrace{G(U_{1-p-i}^n, \dots, U_{p-i}^n, 0) + \dots + G(U_{-p-i}^n, 0, \dots, 0)}_B
+                \end{aligned}
+                $$
+
+            === "$F_{i-1/2}$"
+                Now, define the sequence
+
+                $$W_j^n :=  \begin{cases}
+                    0, & j -i < -p \lor j-i < p \\
+                    U_j^n, & \text{otherwise}.
+                \end{cases}$$
+
+                Then, we have
+
+                $$
+                \begin{aligned}
+                    0 &= \sum_j G(W_{j-p}^n, \dots, W_{j+p}^n) \\
+                    &= \underbrace{G(0, \dots, 0, U_{-p-i}^n) + \dots + G(0, U_{-p-i}^n, \dots, U_{p-i}^n)}_{F_{i-1/2}} \\
+                    &\quad + G(U_{-p-i}^n, \dots, U_{p-i}^n) \\
+                    &\quad + \underbrace{G(U_{1-p-i}^n, \dots, U_{p-i}^n, 0) + \dots + G(U_{-p-i}^n, 0, \dots, 0)}_B
+                \end{aligned}
+                $$
+
+            ---
+
+            This results in the form $\eqref{eq:godunov}$:
+
+            $$
+            \begin{aligned}
+                F_{i+1/2} + B &= F_{i-1/2} + G(U_{-p-i}^n, \dots, U_{p-i}^n) + B \\
+                F_{i+1/2} - F_{i-1/2} &= \frac{\Dx}{\Dt}(U_i^n - H(U_{i-p}^n, \dots, U_{i+p}^n)) \\
+                U_i^{n+1} &= U_i^n - \frac{\Dt}{\Dx}(F_{i+1/2} - F_{i-1/2}).
+            \end{aligned}
+            $$
+
         === "$\impliedby$"
             Then, we have
 
@@ -494,7 +554,7 @@ for some update function $H$ depending on the $2p+1$ points stencil $\{U_{j-p}^n
 
 ### Consistent schemes
 
-We now cinsider numerical fluxes $F_{j+1/2}^n$ defined on $2p+1$ stencils
+We now consider numerical fluxes $F_{j+1/2}^n$ defined on $2p+1$ stencils
 
 $$
 \begin{equation}
@@ -531,7 +591,11 @@ Recall that entropy solutions to the conservation law $\eqref{eq:conservation_la
 
     and we get the following CFL type condition
 
-    $$\abs{\pdv{F}{a}(v,w)} + \abs{\pdv{F}{b}(u,v)} \le \frac{\Delta x}{\Delta t} \quad \forall u, v, w.$$
+    $$
+    \begin{equation}
+        \abs{\pdv{F}{a}(v,w)} + \abs{\pdv{F}{b}(u,v)} \le \frac{\Delta x}{\Delta t} \quad \forall u, v, w. \label{eq:monotone_CFL}
+    \end{equation}
+    $$
 
 
 One cannowuse monotoicity to differentiate between robust and possibly non-robust schemes. For example, the Roe scheme is not monotone.
@@ -592,13 +656,17 @@ $$
 $$
 
 !!! lemma "Lemma (Crandall-Majda [CM80])"
-    Let $U_j^n$ be the approximate solution using a consistent, conservative, monotone scheme of the form $\eqref{eq:general_scheme}$. Then we have
+    Let $U_j^n$ be the approximate solution using a consistent, conservative, monotone scheme of the form $\eqref{eq:general_scheme}$. Then we have the discrete entropy inequality
 
-    $$\abs{U_j^{n+1} - k}  - \abs{U_j^n - k} + \frac{\Delta t}{\Delta x}\qty(Q_{j+1/2}^n - Q_{j-1/2}^n) \le 0 \quad \forall n,j.$$
+    $$
+    \begin{equation}
+        \abs{U_j^{n+1} - k}  - \abs{U_j^n - k} + \frac{\Delta t}{\Delta x}\qty(Q_{j+1/2}^n - Q_{j-1/2}^n) \le 0 \quad \forall n,j. \label{eq:discrete_entropy_inequality}
+    \end{equation}
+    $$
 
     Moreover, if $U_0 \in L^1(\R)$, then
 
-    $$\sum_j \abs{U_j^n} \Delta x \le \norm{U_0}_{L^1{\R}}.$$
+    $$\sum_j \abs{U_j^n} \Delta x \le \norm{U_0}_{L^1(\R)}.$$
 
     ??? proof
         The scheme is conservative, so we have
@@ -636,7 +704,405 @@ $$
 
 ### TV bound
 
-If we We define the discrete version of the total variation as
+If we interpret the cell averages as step functions, then the total variation reduces to the sum of the jumps:
 
 $$\norm{U^n}_{TV(\R)} = \sum_j \abs{U_j^n - U_{j-1}^n}.$$
+
+We can rewrite the finite volume scheme $\eqref{eq:godunov}$ in the incremental form
+
+$$
+\begin{equation}
+    U_j^{n+1} = U_j^n + C_{j+1/2} \qty(U_{j+1}^n - U_j^n) - D_{j-1/2} \qty(U_j^n - U_{j-1}^n)
+    \label{eq:incremental_form}
+\end{equation}
+$$
+
+where
+
+$$C_{j+1/2}^n = \frac{\Delta t}{\Delta x} \frac{f(U_j^n) - F_{j+1/2}^n}{U_{j+1}^n - U_j^n},
+\quad D_{j+1/2}^n = \frac{\Delta t}{\Delta x} \frac{f(U_{j+1}^n) - F_{j+1/2}}{U_{j+1}^n - U_j^n}.$$
+
+Then, wecanuse the following result:
+
+!!! lemma "Hartem's Lemma [Har83]"
+    Let $U_j^n$ be computed with $\eqref{eq:incremental_form}$.
+
+    1. If $C_{j+1/2}^n, D_{j+1/2}^n \ge 0$ and $C_{j+1/2}^n + D_{j+1/2}^n \le 1$ for all $n, j$, then
+
+        $$\norm{U^{n+1}}_{TV(\R)} \le \norm{U^n}_{TV(\R)}.$$
+
+    2. If $C_{j+1/2}^n, D_{j-1/2}^n \ge 0$ and $C_{j+1/2}^n + D_{j-1/2}^n \le 1$ for all $n, j$, then
+
+        $$\norm{U^{n+1}}_{L^\infty} \le \norm{U^n}_{L^\infty}.$$
+
+    ??? proof
+        === "1."
+            Using $\eqref{eq:incremental_form}$, we get the difference
+
+            $$
+            \begin{aligned}
+                U_{j+1}^{n+1} - U_j^{n+1}
+                \le& \qty(1-C_{j+1/2}^n - D_{j+1/2}^n)\qty(U_{j+1}^n - U_j^n) \\
+                &+ C_{j+3/2}^n \qty(U_{j+2}^n - U_{j+1}^n) \\
+                &+ D_{j-1/2}^n \qty(U_j^n - U_{j-1}^n).
+            \end{aligned}
+            $$
+
+            Taking the absolute value, we get the inequality
+
+            $$
+            \begin{aligned}
+                \abs{U_{j+1}^{n+1} - U_j^{n+1}}
+                &\le \qty(1-C_{j+1/2}^n - D_{j+1/2}^n)\abs{U_{j+1}^n - U_j^n} \\
+                &\quad + C_{j+3/2}^n \abs{U_{j+2}^n - U_{j+1}^n} \\
+                &\quad + D_{j-1/2}^n \abs{U_j^n - U_{j-1}^n}.
+            \end{aligned}
+            $$
+
+            Summing over $j$, we get a telescoping sum, resulting in
+
+            $$\sum_j \abs{U_{j+1}^{n+1} - U_j^{n+1}} \le \sum_j \abs{U_{j+1}^n - U_j^n}.$$
+
+        === "2."
+            Rewriting $\eqref{eq:incremental_form}$ as
+
+            $$U_j^{n+1} = C_{j+1/2}^n U_{j+1}^n
+            + \qty(1 - C_{j+1/2}^n - D_{j-1/2}^n) U_j^n
+            + D_{j-1/2}^n U_{j-1}^n,$$
+
+            we see that $U_j^{n+1}$ is a convex combination of $U_{j-1}^n, U_j^n, U_{j+1}^n$. Thus, $U_j^{n+1}$ is bounded by the maximum and minimum of these values, so we get the claim.
+
+
+It turns out that consistent, conservative, monotone schemes satisfies these criteria, so we can use this lemma to show that the schemes are TVD.
+
+!!! lemma
+    Monotone, consistent, conservative 3-point schemes are TVD under the CFL condition $\eqref{eq:monotone_CFL}$.
+
+    ??? proof
+        The coefficients are positive:
+        
+        $$
+        \begin{align*}
+            C_{j+1/2}^n &= \frac{\Delta t}{\Delta x} \frac{f(U_j^n) - F_{j+1/2}^n}{U_{j+1}^n - U_j^n} \\
+            &= \frac{\Delta t}{\Delta x} \frac{F(U_j^n, U_j^n) - F_{j+1/2}^n}{U_{j+1}^n - U_j^n}
+            \tag*{(Consistency)} \\
+            &\ge 0
+            \tag*{(Monotonicity)}
+        \end{align*}
+        $$
+
+        Similarly for $D_{j-1/2}^n$. Further, we have
+
+        $$
+        \begin{align*}
+            C_{j+1/2}^n &= \frac{\Delta t}{\Delta x} \frac{F(U_j^n, U_j^n) - F_{j+1/2}^n}{U_{j+1}^n - U_j^n} \\
+            & \le \frac{\Delta t}{\Delta x} \norm{\pdv{F}{a}}_{L^\infty}
+            \tag*{(Lipschitz flux)}
+        \end{align*}
+        $$
+
+        and similarly for $D_{j-1/2}^n$. Then, under the CFL condition $\eqref{eq:monotone_CFL}$, we get 
+
+        $$1 - C_{j+1/2}^n - D_{j-1/2}^n \ge 1 - \frac{\Delta x}{\Delta t} \qty(\abs{\pdv{F}{a}} + \abs{\pdv{F}{b}}) \ge 0.$$
+
+
+### Time continuity
+
+In the continuous case, we have the time continuity property
+
+$$\norm{U(\cdot, t) - U(\cdot, s)}_{L^1(\R)} \le |t-s| \norm{f}_{\text{Lip}} \norm{U_0}_{TV(\R)}.$$
+
+We can show that the discrete solution has a similar property.
+
+!!! lemma
+    Let $U_j^n$ computed using  consistent, conservative and monotone scheme with Lipschitz continuous numerical fluxe $F=F(a,b)$ whose Lipschitz constant is $C_F$. Then we get
+
+    $$\Delta x \sum_j \abs{U_j^n - U_j^m} \le 2C_F \abs{t^n - t^m} \norm{U_0}_{TV(\R)}.$$
+
+    ??? proof
+        Taking the absolute value of $\eqref{eq:godunov}$ and summing over $j$, we get
+
+        $$
+        \begin{aligned}
+            \Delta x \sum_j \abs{U_j^{n+1} - U_j^n}
+            &= \Delta t \sum_j \abs{F_{j+1/2}^n - F_{j-1/2}^n} \\
+            &\le \Delta t \sum_j \abs{F(U_j^n, U_{j+1}^n) - F(U_j^n, U_j^n)} \\
+            & \quad + \Delta t \sum_j \abs{F(U_j^n, U_j^n) - F(U_{j-1}^n, U_j^n)} \\
+            & \le \Delta t \sum_j C_F \abs{U_{j+1}^n - U_j^n} + \Delta t \sum_j C_F \abs{U_j^n - U_{j-1}^n} \\
+            &= 2C_F \Delta t \sum_j \abs{U_{j+1}^n - U_j^n}.
+        \end{aligned}
+        $$
+
+        Now, taking the difference from $k=n$ to $k=m$ and using the TVD property, we get
+
+        $$
+        \begin{aligned}
+            \Delta x \sum_j \abs{U_j^n - U_j^m}
+            & \le \Delta x \sum_{k=n}^{m-1} \qty(\sum_j \abs{U_j^{k+1} - U_j^k}) \\
+            & \le 2C_F \Delta t \sum_{k=n}^{m-1} \norm{U^k}_{TV(\R)} \\
+            & \le 2C_F \abs{t^n - t^m} \norm{U_0}_{TV(\R)}.
+        \end{aligned}
+        $$
+
+
+## Convergence of monotone schemes
+
+We have now shown that conserative, consistent and monotone schemes are stable in $L^\infty$ and $TV$, are TVD and satisfy the discrete entropy inequality. We will use this to prove convergence. Further, Lax-Wendroff theorem shows that the limit is the entropy solution. To simplify notation, we will set
+
+$$
+\newcommand{\UDx}{U^{\Delta x}}
+\newcommand{\pDx}{\phi^{\Delta x}}
+\UDx(x, t) = U_j^n \quad \text{for } (x, t) \in \Cell_j \times [t^n, t^{n+1}).
+$$
+
+!!! theorem "Lax-Wendroff theorem"
+    Let $U_j^n$ an approxiamate solution of $\eqref{eq:conservation_law}$ using a consistent and conservative finite volume scheme. Assume that the numerical flux is differentiable and that $U_j^0$ are the cell averages of the initial data.
+
+    Assume further that
+
+    - $U_0 \in L^\infty(\R)$,
+    - $\UDx$ is uniformly bounded in $\Delta x$,
+    - there exists a function $U \in L_{\text{loc}}^1(\R \times R_+)$ such that $\UDx \to U$ in this space as $\Delta x, \Delta t \to 0$.
+
+    Then, $U$ is a weak solution of $\eqref{eq:conservation_law}$ with initial data $U_0$.
+
+    ??? proof
+        Let $\phi \in C_c^\infty(\R \times \R_+)$, be a test function. Next, sum $\eqref{eq:godunov}$ over $j, n$:
+
+        $$
+        \begin{aligned}
+            0 &= \Dx \Dt \sum_j \sum_{n=0}^\infty
+            \qty(\frac{U_j^{n+1} - U_j^n}{\Dt} + \frac{F_{j+1/2}^n - F_{j-1/2}^n}{\Dx}) \phi_j^n \\
+            &= - \Dx \sum_j U_j^0 \phi_j^0 - \Dx \sum_j \sum_{n=0}^\infty
+            \qty(U_j^{n+1} \frac{\phi_j^{n+1} - \phi_j^n}{\Dt} + F_{j+1/2}^n \frac{\phi_{j+1}^n - \phi_j^n}{\Dx})
+        \end{aligned}
+        $$
+
+        As $\phi$ has compact support, the above sum is finite. Define $\phi_j^n = \phi(x_j, t^n)$ and denote $\pDx(x, t)$ similarly to $\UDx$. Then, we can express the above sums as integrals:
+
+        $$
+        \begin{aligned}
+            0 &= \underbrace{\int_\R \UDx(x, 0) \pDx(x, 0) \dd x
+            + \int_\R \int_0^\infty \UDx(x, t + \Dt) \frac{\pDx(x, t + \Dt) - \pDx(x, t)}{\Dt} \dd t \dd x}_{I_1^{\Delta x}} \\
+            &\quad + \underbrace{\int_\R \int_0^\infty F\qty(\UDx(x, t), \UDx(x + \Dx, t)) \frac{\pDx(x + \Dx, t) - \pDx(x, t)}{\Dx} \dd t \dd x}_{I_2^{\Delta x}}.
+        \end{aligned}
+        $$
+
+        We have that $\abs{\UDx} \le \abs{U}$ and $\abs{\pDx} \le \abs{\phi}$, so we can use the dominated convergence theorem for the first two integrals $I_1^{\Delta x}$ yielding
+
+        $$I_1^{\Delta x} \xrightarrow{\Delta x, \Delta t \to 0} \int_\R U_0(x) \phi(x, 0) \dd x + \int_\R \int_0^\infty U \phi_t \dd t \dd x.$$
+
+        Next, rewrite $I_2^{\Delta x}$ as
+
+        $$
+        \begin{aligned}
+            I_2^{\Delta x} &= \underbrace{\int_\R \int_0^\infty f(\UDx(x, t)) \frac{\pDx(x + \Dx, t) - \pDx(x, t)}{\Dx} \dd t \dd x}_{I_{2,1}^{\Delta x}} \\
+            & \quad\quad + \underbrace{\int_\R \int_0^\infty \qty[F\qty(\UDx(x, t), \UDx(x + \Dx, t)) - f(\UDx(x, t))]
+            \frac{\pDx(x + \Dx, t) - \pDx(x, t)}{\Dx} \dd t \dd x}_{I_{2,2}^{\Delta x}}.
+        \end{aligned}
+        $$
+
+        ??? claim "Claim: $I_{2,2}^{\Delta x} \xrightarrow{\Delta x, \Delta t \to 0} 0$"
+            Recall that $F$ is differentiable and $U \in L^\infty(\R \times \R_+)$, so we have
+
+            $$
+            \begin{aligned}
+                & \abs{F\qty(\UDx(x, t), \UDx(x + \Dx, t)) - f(\UDx(x, t))} \\
+                & \quad\quad = \abs{F(\UDx(x, t), \UDx(x + \Dx, t)) - F(\UDx(x, t), \UDx(x, t))} \\
+                & \quad\quad \le \tilde C \abs{\UDx(x + \Dx, t) - \UDx(x, t)}.
+            \end{aligned}
+            $$
+
+            we can use the above inequality for $I_{2,2}^{\Delta x}$ to get
+
+            $$\abs{I_{2,2}^{\Delta x}} \le \tilde C \norm{\phi_x}_{L^\infty}
+            \iint_{\supp \phi_x} \abs{\UDx(x + \Dx, t) - \UDx(x, t)} \dd x \dd t$$
+
+            Using approximation by $C^\infty$ functions, we get thedesired result.
+
+            Let $\psi_l \in C^\infty(\R)$ be a sequence of functions converging to $U$ in $L_{\text{loc}}^1(\R\times \R_+)$. The integrand can be bounded by
+
+            $$
+            \begin{aligned}
+                & {\abs{\UDx(x + \Dx, t) - \psi_l(x,t)}}
+                + \abs{\UDx(x, t) - \psi_l(x,t)} \\
+                & \quad \quad \le \underbrace{\abs{\UDx(x + \Dx, t) - U(x+\Dx, t)}}_{J_1}
+                + \underbrace{\abs{U(x+\Dx, t) - \psi_l(x,t)}}_{J_2} \\
+                & \quad \quad \quad + \underbrace{\abs{\UDx(x, t) - U(x, t)}}_{J_3}
+                + \underbrace{\abs{U(x, t) - \psi_l(x,t)}}_{J_4}.
+            \end{aligned}
+            $$
+
+            By dominated convergence, $\iint_{\supp \phi_x} J_i \dd x \dd t \to 0$ as $\Delta x, \Delta t \to 0$ for $i=1,3$. By definition of $\psi_l$, the same holds for $i=4$. Convince yourself that it stays true for $i=2$.
+
+
+        Again, by diminated convergence, we get that
+
+        $$I_{2,1}^{\Delta x} \xrightarrow{\Delta x, \Delta t \to 0}
+        \int_\R \int_0^\infty f(U(x, t)) \phi_t \dd t \dd x.$$
+
+        Combining the results, we get
+
+        $$0 = \int_\R U_0(x) \phi(x, 0) \dd x + \int_\R \int_0^\infty U \phi_t + f(U) \phi_t \dd t \dd x.$$
+
+
+!!! lemma
+    Assume the same conditions as in the Lax-Wendroff theorem, including that the discrete entropy inequality $\eqref{eq:discrete_entropy_inequality}$ holds. Then,
+
+    $$U = \lim_{\Delta x, \Delta t \to 0} \UDx$$
+
+    is the entropy solution of $\eqref{eq:conservation_law}$.
+
+    ??? proof
+        The proof is almost identical to that of the Lax-Wendroff theorem. We start with the discrete entropy inequality $\eqref{eq:discrete_entropy_inequality}$ instead of $\eqref{eq:godunov}$ and use a non-negative test function $\phi$. Then, following the same steps as in the proof of the Lax-Wendroff theorem, we get
+
+        $$0 \ge I_1^{\Delta x} + I_2^{\Delta x}$$
+
+        where
+
+        $$
+        \begin{aligned}
+            I_1^{\Delta x} &= \int_\R \abs{\UDx(x, 0) - k} \pDx(x, 0) \dd x \\
+            & \quad\quad+ \int_\R \int_0^\infty \abs{\UDx(x, t + \Dt) - k} \frac{\pDx(x, t + \Dt) - \pDx(x, t)}{\Dt} \dd t \dd x, \\
+            I_2^{\Delta x} &= \int_\R \int_0^\infty Q\qty(\UDx(x, t), \UDx(x + \Dx, t)) \frac{\pDx(x + \Dx, t) - \pDx(x, t)}{\Dx} \dd t \dd x.
+        \end{aligned}
+        $$
+
+        As with in the proof of the Lax-Wendroff theorem, we have that
+
+        $$I_1^{\Delta x} \xrightarrow{\Delta x, \Delta t \to 0} \int_\R \abs{U_0(x)-k} \phi(x, 0) \dd x + \int_\R \int_0^\infty \abs{U-k} \phi_t \dd t \dd x.$$
+
+        We also rewrite $I_2^{\Delta x} = I_{2,1}^{\Delta x} + I_{2,2}^{\Delta x}$ as in Lax-Wendroff. Again,
+
+        $$I_{2,1}^{\Delta x} \xrightarrow{\Delta x, \Delta t \to 0}
+        \int_\R \int_0^\infty q(U(x, t); k) \phi_t \dd t \dd x.$$
+
+        Doing as in the proof of the Lax-Wendroff theorem, we see that $I_{2,2}^{\Delta x}$ vanishes. Combining the results, we get
+
+        $$0 \ge \int_\R \abs{U_0(x)-k} \phi(x, 0) \dd x + \int_\R \int_0^\infty \abs{U-k} \phi_t + q(U; k) \phi_t \dd t \dd x.$$
+
+
+Now, we can use monotinicity, conservation, consistency and the following two known results to show convergence.
+
+??? theorem "Ascoli's Theorem"
+    Let $(x, d_X)$ be a metric space and $K \subset X$ be relatively compact. Further, let
+
+    $$\qty{u_k : [0, T] \to K}_k$$
+
+    be a sequence of uniformly Lipschitz continuous functions, i.e.
+
+    $$d_X(u_k(t), u_k(s)) \le C \abs{t-s} \quad \forall k\in \N, t, s \in [0, T].$$
+
+    Then, there exists a subsequence $u_{k_\ell}$ converging to a Lipschitz continuous function $u$ uniformly on $[0, T]$.
+
+
+??? theorem "Helly's Theorem [Giu84, T.1.19]"
+    Let $a, b \in \R$ and $K \subset L^1([a, b])$. If there exists a number $M>0$ such that
+
+    $$\sup_{U \in K} \|U\|_{BV([a, b])} \le M,$$
+
+    then $K$ is relatively compact in $L^1([a, b])$.
+
+    ---
+
+    If additionally, $K \subset L^1(\R)$ and
+
+    $$\lim_{R\to\infty} \sup_{U\in K} \int_{\R \setminus [-R, R]} \abs{U(x)} \dd x = 0,$$
+
+    then $K$ is relatively compact in $L^1(\R)$.
+
+
+For the convergence, we define the piecewise affine (in time) function
+
+$$\UDx(x, t) = \frac{t^{n+1} - t}{\Dt} U_j^n + \frac{t - t^n}{\Dt} U_j^{n+1}, \quad x \in \Cell_j, t \in [t^n, t^{n+1}).$$
+
+!!! theorem
+    Consider the conservation law $\eqref{eq:conservation_law}$ with $f \in C^1(\R)$ and $U_0 \in BV(\R)$, and a conmsistent, conservative, monotone finite volumes scheme under the CFL condition $\eqref{eq:monotone_CFL}$. Assume further that there is some $c>0$ such that $\frac{\Dt}{\Dx} \ge c$.
+
+    Then, $\UDx \to U$ in $L^1(\R \times [0,T])$ and $U$ is the entropy solution.
+
+    ??? proof
+        Let $K = \qty{U = \UDx(\cdot, t) \mid t \in [0, T], \Dx > 0}$ be functions $U : \R \to \R$ attained at some time $t$ by the scheme.
+
+        ??? claim "Claim: The conditions of Helly's Theorem are satisfied"
+            By Crandall-Majda, we have that $K$ is bounded in $L^1(\R)$ by $\norm{U_0}_{L^1(\R)}$. We have also shown that the scheme is TVD, so $K \subset BV(\R)$.
+
+            For the second part of the theorem, we have that $U_0 \in L^1(\R)$, so
+
+            $$\forall \eps > 0 \exists\, r > 0 : \left\{\begin{aligned}
+                & \abs{U_0(x)} \le \eps \quad \forall \abs{x} > r, \\
+                & \int_{\R \setminus [-r, r]} \abs{U_0(x)} \dd x \le \eps.
+            \end{aligned}\right.$$
+
+            Additionally, by monotinicity, we have that
+
+            $$\min\qty{U_{j-1}^n, U_j^n, U_{j+1}^n} \le U_j^{n+1} \le \max\qty{U_{j-1}^n, U_j^n, U_{j+1}^n}, \quad \forall n, j.$$
+
+            So, propagating at the speed $1/c$, we get that
+
+            $$\UDx(x, t) \le \eps \quad \forall \abs{x} > R, t\in[0, T],$$
+
+            where $R = r + T/c$. Next, let $J \in \N$ be such that $R \in \Cell_J$. Then, we sum the discrete entropy inequality $\eqref{eq:discrete_entropy_inequality}$ over $\abs{j} > J$ and over $n=0,\dots,N$ for $k=0$:
+
+            $$
+            \begin{aligned}
+                \sum_{\abs{j} > J} \sum_{n=0}^N \qty(\abs{U_j^{n+1}} - \abs{U_j^n})
+                + \frac{\Dt}{\Dx} \sum_{\abs{j} > J} \sum_{n=0}^N \qty(Q_{j+1/2}^n - Q_{j-1/2}^n)
+                & \le 0 \\
+                \sum_{\abs{j} > J} \qty(\abs{U_j^{N+1}} - \abs{U_j^0})
+                + \frac{\Dt}{\Dx} \sum_{n=0}^N \qty(Q_{-J-1/2}^n - Q_{J+1/2}^n)
+                &\le 0
+            \end{aligned}
+            $$
+
+            Now, $U_j^0$ is the cell average of $U_0$, so we further get the bound
+
+            $$\Dx\sum_{\abs{j} > J} \abs{U_j^{N+1}}
+            \le \int_{\R \setminus [-R, R]} \abs{U_0} \dd x
+            + \Dt \sum_{n=0}^N \qty(\abs{Q_{-J-1/2}^n} + \abs{Q_{J+1/2}^n}).$$
+
+            Finally, for $t \in [t^m, t^{m+1})$, we have
+
+            $$
+            \begin{aligned}
+                \int_{\R \setminus [-R, R]} \abs{\UDx} \dd x
+                &\le \Dx \sum_{\abs{j} > J} \qty(\abs{U_j^m} + \abs{U_j^{m+1}}) \\
+                &\le 2\int_{\R \setminus [-R, R]} \abs{U_0} \dd x
+                + 2\Dt \sum_{n=0}^m \qty(\abs{Q_{-J-1/2}^n} + \abs{Q_{J+1/2}^n}) \\
+                &\le 2\eps + 2\Dt \sum_{n=0}^N \qty(\abs{Q_{-J-1/2}^n} + \abs{Q_{J+1/2}^n}).
+            \end{aligned}
+            $$
+
+            ??? claim "Claim: $\abs{Q_{\pm J \pm 1/2}^n} \le 2C_F\eps$"
+                Recall that $F$ is Lipschitz continuous, so
+                === "$\sign{U_J^n} = \sign{U_{J+1}^n}$"
+                    $$
+                    \begin{aligned}
+                        \abs{Q_{J+1/2}^n} &= \abs{F(U_J^n, U_{J+1}^n) - F(0, 0)} \\
+                        & \le \abs{F(U_J^n, U_{J+1}^n) - F(U_J^n, 0)} + \abs{F(U_J^n, 0) - F(0, 0)} \\
+                        & \le C_F \qty(\abs{U_{J+1}^n} + \abs{U_J^n})
+                    \end{aligned}
+                    $$
+
+                === "$\sign{U_J^n} \neq \sign{U_{J+1}^n}$"
+                    $$
+                    \begin{aligned}
+                        \abs{Q_{J+1/2}^n} &= \abs{F(U_J^n, 0) - F(0, U_{J+1}^n)} \\
+                        & \le \abs{F(U_J^n, 0) - F(0, 0)} + \abs{F(0, 0) - F(0, U_{J+1}^n)} \\
+                        & \le C_F \qty(\abs{U_J^n} + \abs{U_{J+1}^n}).
+                    \end{aligned}
+                    $$
+
+                Similarly for $Q_{-J-1/2}^n$. Recall further that $J$ is chosen such that $U_J^n, U_{J+1}^n \le \eps$ for all $n$. Hence, we get the desired result.
+
+            Then, we get the bound
+
+            $$\int_{\R \setminus [-R, R]} \abs{\UDx} \dd x \le 2\eps \qty(1 + 4C_F T)$$
+
+            independent of $t$ and $\Dx$. This proves the claim.
+
+        So $K$ is relatively compact in $L^1(\R)$. Then, by Ascoli's theorem, there exists a subsequence $\Dx'$ and $U \in L^1(\R \times [0, T])$ such that $\UDx{}^{'} \to U$. By Lax-Wendroff, $U$ is the entropy solution.
+
+        
+
 ```
