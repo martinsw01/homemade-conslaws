@@ -11,6 +11,9 @@ using Test
     @testset "Runge kutta 2 tests" begin
         include("rk2_test.jl")
     end
+    @testset "Linear reconstruction tests" begin
+        include("linear_reconstruction_test.jl")
+    end
 end
 
 nothing

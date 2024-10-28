@@ -1,26 +1,39 @@
 export RK2
 
-struct RK2 <: TimeStepper end
+struct RK2{Cells} <: TimeStepper
+    substep_buffers::Vector{Cells}
 
-number_of_substeps(::RK2) = 2
+    function RK2(grid::Grid)
+        substep_buffers = [create_buffer(grid), create_buffer(grid)]
+        new{eltype(substep_buffers)}(substep_buffers)
+    end
+end
 
-function integrate!(add_time_derivative!, grid::Grid, substep_outputs, dt, ::RK2)
-    for_each_cell(grid) do cells, dx, cell_idx
-        substep_outputs[1][cell_idx] = cells[cell_idx]
-        substep_outputs[2][cell_idx] = zero(eltype(cells))
+function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, RK2{Cells}}, compute_max_dt) where {E, R, NF, Cells}
+    timestepper = system.timestepper
+    equation = system.eq
+    F = system.numerical_flux
+    reconstruction = system.reconstruction
+
+
+    left, right = reconstruct(reconstruction, grid)
+
+    dt = compute_max_dt(equation, grid, left, right)
+
+    set_time_derivative!(timestepper.substep_buffers[1], grid, left, right, equation, F, dt)
+
+    for_each_cell(grid) do cells, i
+        timestepper.substep_buffers[1][i] = cells[i] + dt * timestepper.substep_buffers[1][i]
     end
 
-    add_time_derivative!(substep_outputs[2], dt)
+    left, right = reconstruct(reconstruction, grid, timestepper.substep_buffers[1])
 
-    for_each_cell(grid) do cells, dx, cell_idx
-        cells[cell_idx] = cells[cell_idx] + 0.5dt * substep_outputs[2][cell_idx]
-        substep_outputs[2][cell_idx] = zero(eltype(cells))
+    set_time_derivative!(timestepper.substep_buffers[2], grid, left, right, equation, F, dt)
+
+    for_each_cell(grid) do cells, i
+        timestepper.substep_buffers[2][i] = timestepper.substep_buffers[1][i] + dt * timestepper.substep_buffers[2][i]
+        cells[i] = 0.5 * (cells[i] + timestepper.substep_buffers[2][i])
     end
 
-    add_time_derivative!(substep_outputs[2], dt)
-
-    for_each_cell(grid) do cells, dx, cell_idx
-        cells[cell_idx] = substep_outputs[1][cell_idx] + dt*substep_outputs[2][cell_idx]
-    end
-    
+    return dt
 end

@@ -1,18 +1,30 @@
 export ForwardEuler
 
-struct ForwardEuler <: TimeStepper end
+struct ForwardEuler{Cells} <: TimeStepper
+    substep_buffer::Cells
 
-number_of_substeps(::ForwardEuler) = 1
+    function ForwardEuler(grid::Grid)
+        substep_buffer = create_buffer(grid)
+        new{typeof(substep_buffer)}(substep_buffer)
+    end
+end
 
 
-function integrate!(add_time_derivative!, grid::Grid, substep_outputs, dt, ::ForwardEuler)
-    for_each_cell(grid) do cells, dx, cell_idx
-        substep_outputs[1][cell_idx] = zero(eltype(cells))
+function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, ForwardEuler{Cells}}, compute_max_dt) where {E, R, NF, Cells}
+    equation = system.eq
+    timestepper = system.timestepper
+    reconstruction = system.reconstruction
+    F = system.numerical_flux
+    
+    left, right = reconstruct(reconstruction, grid)
+
+    dt = compute_max_dt(equation, grid, left, right)
+
+    set_time_derivative!(timestepper.substep_buffer, grid, left, right, equation, F, dt)
+
+    for_each_cell(grid) do cells, i
+        cells[i] = cells[i] + dt * timestepper.substep_buffer[i]
     end
 
-    add_time_derivative!(substep_outputs[1], dt)
-
-    for_each_cell(grid) do cells, dx, cell_idx
-        cells[cell_idx] = cells[cell_idx] + dt * substep_outputs[1][cell_idx]
-    end
+    return dt
 end

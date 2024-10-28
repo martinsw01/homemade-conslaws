@@ -9,3 +9,5 @@ abstract type NumericalFlux end
 abstract type System end
 
 abstract type TimeStepper end
+
+abstract type Reconstruction end

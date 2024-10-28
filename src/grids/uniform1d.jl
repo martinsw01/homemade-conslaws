@@ -1,13 +1,13 @@
 using QuadGK
 
-export UniformGrid1D
+export UniformGrid1D, for_each_cell, get_neighbour_indices, get_dx
 
-export UniformGrid1D, for_each_cell
 
-struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat} <: Grid
-    dx::Float64
+abstract type Grid1D{BC <: BoundaryCondition} <: Grid end
+
+struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat} <: Grid1D{BC}
+    dx::Float
     bc::BC
-    domain::Tuple{Float, Float}
     cells::Vector{Float}
 
     function UniformGrid1D(N, bc::BoundaryCondition, u0, domain)
@@ -16,7 +16,7 @@ struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat} <: Grid
         x = x_L:dx:x_R
         cells = _calc_average.(u0, x[1:end-1], x[2:end])
 
-        new{typeof(bc), typeof(dx)}(dx, bc, domain, cells)
+        new{typeof(bc), typeof(dx)}(dx, bc, cells)
     end
 end
 
@@ -25,66 +25,46 @@ function _calc_average(f, a, b)
     quadgk(f, a, b)[1] / (b - a)
 end
 
-
-function reduce_cells(f, grid::UniformGrid1D{BoundaryCondition, Float}, initial_value::Float) where {BoundaryCondition, Float}
-    reduce(grid.cells, init=initial_value) do acc, cell
-        f(acc, cell, grid.dx)
-    end
-end
-    
-
-
-function create_substep_buffers(grid::UniformGrid1D, num_substeps)
-    [grid.cells[:] for _ in 1:num_substeps]
-end
-    
-
-
-"""
-    for_each_cell(f, grid)
-
-Apply the function `f` to each cell in the grid, their width `dx` and the index of the cell.
-"""
-function for_each_cell end
-
-
-function for_each_cell(f, grid::UniformGrid1D)
-    for cell_idx in eachindex(grid.cells)
-        f(grid.cells, grid.dx, cell_idx)
+function reduce_cells(f, grid::Grid1D, initial_value)
+    reduce(eachindex(cells(grid)), init=initial_value) do acc, i
+        f(acc, cells(grid), i)
     end
 end
 
 
+function create_buffer(grid::Grid1D)
+    similar(cells(grid))
+end
 
-function for_each_cell(f, grid::UniformGrid1D, compute_neighbouring_indices::Function)
-    for cell_idx in eachindex(grid.cells)
-        f(grid.cells, grid.dx, cell_idx, compute_neighbouring_indices(grid.cells, cell_idx))
+
+function for_each_cell(f, grid::Grid1D)
+    for cell_idx in eachindex(cells(grid))
+        f(cells(grid), cell_idx)
     end
 end
 
 
-function for_each_cell(f, grid::UniformGrid1D{PeriodicBC, Float}, p::Integer) where {Float <: AbstractFloat}
-    N_pluss_1 = length(grid.cells)
-    for_each_cell(f, grid, 
-                  (cells, cell_idx) -> periodic_indices(N_pluss_1, cell_idx, p),
-                  )
+function get_neighbour_indices(grid::Grid1D{PeriodicBC}, cell_idx, p, q=p)
+    N = length(cells(grid))
+    DeferredRange(-p:q) do offset
+        mod1(cell_idx + offset, N)
+    end
 end
 
-periodic_indices(N, cell_idx, p) = DeferredRange(-p:p) do offset
-    mod1(cell_idx + offset, N)
+function get_neighbour_indices(grid::Grid1D{NeumannBC}, cell_idx, p, q=p)
+    N = length(cells(grid))
+    DeferredRange(-p:q) do offset
+        clamp(cell_idx + offset, 1, N)
+    end
+end
+
+function get_dx(grid::UniformGrid1D, cell_idx)
+    grid.dx
 end
 
 
-function for_each_cell(f, grid::UniformGrid1D{NeumannBC, Float}, p::Integer) where {Float <: AbstractFloat}
-    N_pluss_1 = length(grid.cells)
-    for_each_cell(f, grid,
-                  (cells, cell_idx) -> neumann_indices(N_pluss_1, cell_idx, p)
-                  )
-end
-
-
-neumann_indices(N, cell_idx, p) = DeferredRange(-p:p) do offset
-    clamp(cell_idx + offset, 1, N)
+function cells(grid::UniformGrid1D)
+    grid.cells
 end
 
 

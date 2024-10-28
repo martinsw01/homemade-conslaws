@@ -11,9 +11,11 @@ using Test
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    system = ConservedSystem(eq, grid, F)
-    timestepper = RK2()
-    simulator = Simulator(system, grid, timestepper, 0.)
+    reconstruction = NoReconstruction(grid)
+    timestepper = RK2(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
+
 
     simulate!(simulator, T, dt)
 
@@ -31,11 +33,24 @@ end
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    system = ConservedSystem(eq, grid, F)
-    timestepper = RK2()
-    simulator = Simulator(system, grid, timestepper, 0.)
+    reconstruction = NoReconstruction(grid)
+    timestepper = RK2(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
 
     simulate!(simulator, T, dt)
 
-    @test grid.cells ≈ [255/256, 263/256, 65/256, 57/256]
+
+    grid2 = UniformGrid1D(N, bc, u0, (x_L, x_R))
+    grid2.cells[:] = [1., 1., 0., 0.]
+    reconstruction2 = NoReconstruction(grid2)
+    timestepper2 = ForwardEuler(grid2)
+    system2 = ConservedSystem(eq, reconstruction2, F, timestepper2)
+    simulator2 = Simulator(system2, grid2, 0.)
+
+    simulate!(simulator2, 2*T, dt)
+
+    @test grid.cells ≈ 0.5 .* ([1., 1., 0., 0.] .+ grid2.cells)
+
+    @test grid.cells ≈ [127/128, 127/128, 33/128, 33/128]
 end

@@ -11,9 +11,10 @@ using homemade_conslaws
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    system = ConservedSystem(eq, grid, F)
-    timestepper = ForwardEuler()
-    simulator = Simulator(system, grid, timestepper, 0.)
+    reconstruction = NoReconstruction(grid)
+    timestepper = ForwardEuler(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
 
     @test grid.cells ≈ [1., 0.5, 0.] #rtol=1e-16
 
@@ -38,9 +39,10 @@ end
     T = max_dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    system = ConservedSystem(eq, grid, F)
-    timestepper = ForwardEuler()
-    simulator = Simulator(system, grid, timestepper, 0.)
+    reconstruction = NoReconstruction(grid)
+    timestepper = ForwardEuler(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
 
     simulate!(simulator, T, max_dt)
 
@@ -59,9 +61,10 @@ end
     T = 2*max_dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    system = ConservedSystem(eq, grid, F)
-    timestepper = ForwardEuler()
-    simulator = Simulator(system, grid, timestepper, 0.)
+    reconstruction = NoReconstruction(grid)
+    timestepper = ForwardEuler(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
 
     grid.cells[:] = [1., 0.5, 0.]
 
