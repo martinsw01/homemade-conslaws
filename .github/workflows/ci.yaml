@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Julia
+      uses: julia-actions/setup-julia@v2
+      with:
+        version: '1'  # Specify the Julia version you want to use
+
+    - name: Install dependencies
+      run: |
+        julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
+
+    - name: Run tests with coverage
+      run: |
+        julia -e 'using Pkg; Pkg.activate("."); Pkg.test()'
