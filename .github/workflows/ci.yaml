@@ -17,7 +17,7 @@ jobs:
     - name: Set up Julia
       uses: julia-actions/setup-julia@v2
       with:
-        version: '1'  # Specify the Julia version you want to use
+        version: '1'
 
     - name: Install dependencies
       run: |
@@ -25,4 +25,16 @@ jobs:
 
     - name: Run tests with coverage
       run: |
-        julia -e 'using Pkg; Pkg.activate("."); Pkg.test()'
+        julia -e 'using Pkg; Pkg.activate("."); Pkg.add("Coverage"); Pkg.test(coverage=true)'
+
+    - name: Process coverage
+      uses: julia-actions/julia-processcoverage@v1
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: lcov.info
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
