@@ -19,19 +19,15 @@ function main()
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    U = ElasticMatrix(reshape([Q[1] for Q in grid.cells], :, 1))
+    U = ElasticMatrix(reshape([Q[1] for Q in inner_cells(grid)], :, 1))
     t = ElasticVector([0.])
 
     function add_solution(simulator)
-        append!(U, [Q[1] for Q in grid.cells])
+        append!(U, [Q[1] for Q in inner_cells(grid)])
         append!(t, simulator.t[])
     end
 
-    println(U[1:3,1])
-
     simulate!(simulator, T, dt, [add_solution])
-
-    println(U[1:3,1])
 
     homemade_conslaws.Viz.animate_solution(
         (U',),

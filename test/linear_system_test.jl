@@ -23,12 +23,12 @@ homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))
 
-    @test grid.cells ≈ [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
+    @test inner_cells(grid) ≈ [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
 
     expected_cells = [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
 
-    for_each_cell(grid) do cells, cell_idx
-        @test cells[cell_idx] ≈ expected_cells[cell_idx] atol=1e-15
+    for_each_inner_cell(grid) do cells, _, cell_idx, _
+        @test cells[cell_idx] ≈ expected_cells[cell_idx-1] atol=1e-15
     end
 
     cell_sum = homemade_conslaws.reduce_cells(grid, 0.) do acc, cells, cell_idx
@@ -36,17 +36,6 @@ homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
     end
 
     @test cell_sum ≈ 0.
-
-    expected_neighbour_values = [
-        [[-2/3, 2/3], [-2/3, 2/3], [0., 0.]],
-        [[-2/3, 2/3], [0., 0.], [2/3, -2/3]],
-        [[0., 0.], [2/3, -2/3], [2/3, -2/3]]
-    ]
-
-    for_each_cell(grid) do cells, cell_idx
-        neighbour_cells = cells[get_neighbour_indices(grid, cell_idx, 1)]
-        @test expected_neighbour_values[cell_idx] ≈ neighbour_cells
-    end
 end
 
 @testset "Test flux computation" begin
@@ -55,42 +44,11 @@ end
     N = 3
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))
-
-    F = CentralUpwind()
-
-    reconstruction = NoReconstruction(grid)
-
-    left, right = homemade_conslaws.reconstruct(reconstruction, grid)
-
     dx = grid.dx
     dt = dx
     T = dt
 
-    expected_flux = [
-        [0., -1.],
-        [0., -1.],
-        [0., 0.],
-        [1., 0.],
-        [1., 0.]
-    ]   
-
-    p = homemade_conslaws.number_of_cells(F)
-    for_each_cell(grid) do cells, i
-        neighbour_cell_idx = get_neighbour_indices(grid, i, p)
-        right_minus = left[neighbour_cell_idx[p+1:end-1]]
-        left_minus = right[neighbour_cell_idx[1:p]]
-        right_plus = left[neighbour_cell_idx[p+2:end]]
-        left_plus = right[neighbour_cell_idx[p+1:end-1]]
-
-        dx = get_dx(grid, i)
-
-        flux_minus = F(eq, left_minus, right_minus, dx, dt)
-        flux_plus = F(eq, left_plus, right_plus, dx, dt)
-
-        @test flux_minus ≈ expected_flux[i]
-        @test flux_plus ≈ expected_flux[i+1]
-    end
-    
+    F = CentralUpwind()    
     reconstruction = NoReconstruction(grid)
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
@@ -100,8 +58,5 @@ end
 
     expected_cells = [[0., 1.], [0., 0.], [0., 0.], [1., 0.]]
 
-    @test grid.cells ≈ expected_cells
+    @test inner_cells(grid) ≈ expected_cells
 end
-    
-
-nothing

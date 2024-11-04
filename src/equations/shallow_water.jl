@@ -1,3 +1,5 @@
+using StaticArrays
+
 export ShallowWater1D
 
 struct ShallowWater1D <: Equation

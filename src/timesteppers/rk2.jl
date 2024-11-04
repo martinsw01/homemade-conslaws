@@ -26,6 +26,8 @@ function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, RK2{Cells}}, c
         timestepper.substep_buffers[1][i] = cells[i] + dt * timestepper.substep_buffers[1][i]
     end
 
+    update_bc!(timestepper.substep_buffers[1], grid, equation)
+
     left, right = reconstruct(reconstruction, grid, timestepper.substep_buffers[1])
 
     set_time_derivative!(timestepper.substep_buffers[2], grid, left, right, equation, F, dt)
@@ -34,6 +36,8 @@ function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, RK2{Cells}}, c
         timestepper.substep_buffers[2][i] = timestepper.substep_buffers[1][i] + dt * timestepper.substep_buffers[2][i]
         cells[i] = 0.5 * (cells[i] + timestepper.substep_buffers[2][i])
     end
+
+    update_bc!(grid, equation)
 
     return dt
 end
