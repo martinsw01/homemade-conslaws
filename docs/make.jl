@@ -11,6 +11,7 @@ makedocs(
             "Scalar conservation laws" => "theory/scalar_cons_laws.md",
             "Finite volume schemes" => "theory/finite_volume_schemes.md",
             "Second order schemes" => "theory/2nd_order_schemes.md",
+            "Nonlinear hyperbolic systems" => "theory/nonlinear_hyperbolic_systems.md"
         ]
     ]
 )
