@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../finite_volume_schemes/">
+        <link rel="prev" href="../2nd_order_schemes/">
       
-      
-        <link rel="next" href="../nonlinear_hyperbolic_systems/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -20,7 +18,7 @@
     
     
       
-        <title>Second order schemes - Homemade Conslaws</title>
+        <title>Nonlinear hyperbolic systems in one dimension - Homemade Conslaws</title>
       
     
     
@@ -82,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#second-order-schemes" class="md-skip">
+        <a href="#nonlinear-hyperbolic-systems-in-one-dimension" class="md-skip">
           Skip to content
         </a>
       
@@ -118,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Second order schemes
+              Nonlinear hyperbolic systems in one dimension
             
           </span>
         </div>
@@ -408,6 +406,27 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../2nd_order_schemes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Second order schemes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -424,7 +443,7 @@
           
   
   <span class="md-ellipsis">
-    Second order schemes
+    Nonlinear hyperbolic systems in one dimension
   </span>
   
 
@@ -435,7 +454,7 @@
         
   
   <span class="md-ellipsis">
-    Second order schemes
+    Nonlinear hyperbolic systems in one dimension
   </span>
   
 
@@ -457,19 +476,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#order-of-convergence" class="md-nav__link">
+  <a href="#structural-properties" class="md-nav__link">
     <span class="md-ellipsis">
-      Order of convergence
+      Structural properties
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Order of convergence">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple solutions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#lax-wendroff-scheme" class="md-nav__link">
+  <a href="#rarefaction-waves" class="md-nav__link">
     <span class="md-ellipsis">
-      Lax-Wendroff scheme
+      Rarefaction waves
     </span>
   </a>
   
@@ -477,48 +505,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rea-algorithm" class="md-nav__link">
-    <span class="md-ellipsis">
-      REA Algorithm
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="REA Algorithm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#second-order-reconstruction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Second order reconstruction
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#source-of-oscillations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Source of oscillations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#minmod-limiter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Minmod limiter
-    </span>
-  </a>
   
 </li>
       
@@ -526,27 +512,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../nonlinear_hyperbolic_systems/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Nonlinear hyperbolic systems in one dimension
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -586,19 +551,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#order-of-convergence" class="md-nav__link">
+  <a href="#structural-properties" class="md-nav__link">
     <span class="md-ellipsis">
-      Order of convergence
+      Structural properties
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Order of convergence">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simple solutions">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#lax-wendroff-scheme" class="md-nav__link">
+  <a href="#rarefaction-waves" class="md-nav__link">
     <span class="md-ellipsis">
-      Lax-Wendroff scheme
+      Rarefaction waves
     </span>
   </a>
   
@@ -606,48 +580,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rea-algorithm" class="md-nav__link">
-    <span class="md-ellipsis">
-      REA Algorithm
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="REA Algorithm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#second-order-reconstruction" class="md-nav__link">
-    <span class="md-ellipsis">
-      Second order reconstruction
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#source-of-oscillations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Source of oscillations
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#minmod-limiter" class="md-nav__link">
-    <span class="md-ellipsis">
-      Minmod limiter
-    </span>
-  </a>
   
 </li>
       
@@ -666,89 +598,115 @@
                   
 
 
-<p><a id='Second-order-schemes'></a></p>
-<p><a id='Second-order-schemes-1'></a></p>
-<h1 id="second-order-schemes">Second order schemes</h1>
+<h1 id="nonlinear-hyperbolic-systems-in-one-dimension">Nonlinear hyperbolic systems in one dimension</h1>
+<p>Most equations of the form</p>
 <div class="arithmatex">\[
+\newcommand{\U}{\mathbf{U}}
+\newcommand{\f}{\mathbf{f}}
+\newcommand{\r}{\mathbf{r}}
 \begin{equation}
-    U_t + f(U)_x = 0 \label{eq:conservation_law}
+    \begin{aligned}
+        \partial_t \U + \partial_x \f(\U) &amp;= 0 \\
+        \U(x, 0) &amp;= \U_0(x)
+    \end{aligned} \label{eq:nonlinear_hyperbolic_system}
 \end{equation}
 \]</div>
-<p>The schemes we have seen this far has slow convergence. We can improve the convergence by using higher order schemes.</p>
-<h2 id="order-of-convergence">Order of convergence</h2>
-<p>For a <span class="arithmatex">\((2p+1)\)</span>-point scheme with update function <span class="arithmatex">\(H\)</span> and <span class="arithmatex">\(\lambda \equiv \frac{\Dt}{\Dx}\)</span>, we define the truncation error as usual as</p>
-<div class="arithmatex">\[\tau_j^n := U(x_j, t_{n+1}) - H(U_{j-p}^n, \dots, U_{j+p}^n).\]</div>
-<p>We call it <span class="arithmatex">\(q\)</span>-th order accurate if <span class="arithmatex">\(q \in \N\)</span> is the largest integer such that</p>
-<div class="arithmatex">\[\tau_j^n = \O(\Dt^{q+1}) \quad \forall j, n.\]</div>
-<div class="admonition lemma">
-<p class="admonition-title">Lemma</p>
-<p>If <span class="arithmatex">\(U \in C^2\)</span> is the exact solution and <span class="arithmatex">\(H\)</span> is a consistent, conservative <span class="arithmatex">\(3\)</span>-point FVM, then the scheme is at least first order accurate.</p>
-<details class="proof">
-<summary>Proof</summary>
-<p>Follows as usual from Taylor expansion.</p>
-</details>
-</div>
-<div class="admonition example">
-<p class="admonition-title">Example</p>
+<p>from physics are nonlinear hyperbolic systems. We will now look at </p>
 <ul>
-<li>Both Lax-Friedrichs and Engquist-Osher use <span class="arithmatex">\(C^2\)</span> numerical fluxes, and are thus first order accurate.</li>
-<li>Godunov is not, so we cannot use the lemma on it. However, one can still show that it is of first order accuracy.</li>
+<li>structural properties and</li>
+<li>well-posedness,</li>
 </ul>
-</div>
-<p>Kuznetsov [GR91] shows that monotone schemes has an order of convergence of at least <span class="arithmatex">\(1/2\)</span>:</p>
-<div class="arithmatex">\[\norm{U^{\Dx} - U}_{L^1(\R)} \le C \Dx^{1/2}.\]</div>
-<h3 id="lax-wendroff-scheme">Lax-Wendroff scheme</h3>
-<p>For weak solutions, one cannot use Taylor expansions to find the error. However, we can use it to design schemes that formally are better than first order. Let <span class="arithmatex">\(U\)</span> be a smooth solution. Then, we have</p>
-<div class="arithmatex">\[U_tt = \qty(f'(U)U_x)_x.\]</div>
-<p>Inserting into the taylor expansion yields</p>
-<div class="arithmatex">\[U(x_j, t_{n+1}) = U(x_j, t_n) + \Dt U_t(x_j, t_n) + \frac{\Dt^2}{2} \qty(f'(U)U_x)_x + \O(\Dt^3).\]</div>
-<p>The last two term are approximated by</p>
+<p>in particular, for the Riemann problem</p>
 <div class="arithmatex">\[
-\begin{aligned}
-    f(U)_x &amp;= \frac{f(U_{j+1}) - f(U_{j-1})}{2\Dx} + \O(\Dx^3) \\
-    \qty(f'(U)U_x)_x &amp;= \frac{1}{\Dx} \qty(a_{j+1/2}^n \frac{f(U_{j+1}^n) - f(U_j^n)}{\Dx}
-    - a_{j-1/2}^n \frac{f(U_j^n) - f(U_{j-1}^n)}{\Dx}) + \O(\Dx^3),
-\end{aligned}
+\begin{equation}
+    \begin{aligned}
+        \partial_t \U + \partial_x \f(\U) &amp;= 0 \\
+        \U(x, 0) &amp;= \begin{cases}
+            \U_L, &amp; x &lt; 0 \\
+            \U_R, &amp; x &gt; 0,
+        \end{cases}
+    \end{aligned} \label{eq:riemann_problem} \tag{RP}
+\end{equation}
 \]</div>
-<p>yielding the Lax-Wendroff scheme</p>
-<div class="arithmatex">\[U_j^{n+1} = U_j^n - \frac{\Dt}{2\Dx} \Big(f(U_{j+1}^n) - f(U_{j-1}^n)\Big)
-+ \frac{\Dt^2}{2\Dx^2} \qty(a_{j+1/2}^n \frac{f(U_{j+1}^n) - f(U_j^n)}{\Dx}
-- a_{j-1/2}^n \frac{f(U_j^n) - f(U_{j-1}^n)}{\Dx}),\]</div>
-<p>where <span class="arithmatex">\(a_{j+1/2}^n = f'\qty(\frac{U_j^n + U_{j+1}^n}{2})\)</span> is an approximation of <span class="arithmatex">\(f'(U_{j+1/2}^n)\)</span>. Alternatively, the numerical flux can be written as</p>
-<div class="arithmatex">\[F_{j+1/2}^n = F^{\text{LxW}}(U_j^n, U_{j+1}^n) = \frac{f(U_j^n) + f(U_{j+1}^n)}{2} - a_{j+1/2}^n \frac{\Dt}{2\Dx} \qty(f(U_{j+1}^n) - f(U_j^n)).\]</div>
-<p>Numerical experiments show that the Lax-Wendroff scheme is second order accurate for smooth soluitons. Additionally, the discontinuities are sharper than for first order schemes. However, there are heavy oscillations near the shocks.</p>
-<h2 id="rea-algorithm">REA Algorithm</h2>
-<p>The derivation of the schemes presented in the last chapter went as follows:</p>
+<p>an determine the general form of the entropy solution. We will assume <span class="arithmatex">\(\U \in L_\text{loc}^1(\R \times \R_+, \mathcal U)\)</span> for some <span class="arithmatex">\(\mathcal U \subset \R^m\)</span>, for which <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> makes sense.</p>
+<p>As with the scalar case, <span class="arithmatex">\(\U\)</span> can develop discontinuities in finite time, so we need to interprate <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> in the weak sense:</p>
+<div class="arithmatex">\[
+\begin{equation}
+    \int_{\R_+} \int_\R \U \partial_t \phi + \f(\U) \partial_x \phi \, \dd x \, \dd t
+    + \int_\R \U_0(x) \phi(x, 0) \, \dd x = 0
+    \label{eq:weak_nonlinear_hyperbolic_system}
+\end{equation}
+\]</div>
+<p>for all test functions <span class="arithmatex">\(\phi \in C_c^\infty(\R \times \R_+)\)</span>. Similarly, one can derive the rankine-hugoniot condition: If <span class="arithmatex">\(\U\)</span> is piecewise <span class="arithmatex">\(C^1\)</span> with only jump discontinuities, then <span class="arithmatex">\(\U\)</span> is a weak solution of <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> if and only if it is a classical solution wherever it is <span class="arithmatex">\(C^1\)</span> and satisfies</p>
+<div class="arithmatex">\[
+\begin{equation}
+    s = \frac{[\![\f(\U)]\!]}{[\![\U]\!]}
+    \label{eq:rankine_hugoniot}
+    \tag{RH}
+\end{equation}
+\]</div>
+<p>where <span class="arithmatex">\(s = \gamma'(t)\)</span> is the speed of the discontinuity. We now have <span class="arithmatex">\(2m + 1\)</span> unknowns, <span class="arithmatex">\(\U_L\)</span>, <span class="arithmatex">\(\U_R\)</span>, and <span class="arithmatex">\(s\)</span>, but only <span class="arithmatex">\(m\)</span> equations. The entropy condition will deal with the last <span class="arithmatex">\(m+1\)</span> unknowns.</p>
+<h2 id="structural-properties">Structural properties</h2>
+<p>To develop existence and uniqueness results, we will need to impose some assumptions on <span class="arithmatex">\(\f\)</span>. </p>
+<div class="admonition definition">
+<p class="admonition-title">Definition (Hyperbolic system)</p>
+<p>The system of equations <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> is called hyperbolic if the Jacobian matrix <span class="arithmatex">\(\f'(\U)\)</span> is real diagonizable for all <span class="arithmatex">\(\U \in \mathcal U\)</span>:</p>
+<div class="arithmatex">\[\f'(\U) = R(\U) \Lambda(\U) R(\U)^{-1}\]</div>
+<p>It is called strictly hyperbolic if</p>
+<div class="arithmatex">\[\lambda_1(\U) &lt; \lambda_2(\U) &lt; \ldots &lt; \lambda_m(\U).\]</div>
+</div>
+<div class="admonition definition">
+<p class="admonition-title">Definition</p>
+<p>The <span class="arithmatex">\(j\)</span>-th wave-family is <strong>genuinely nonlinear</strong> if for all <span class="arithmatex">\(\U \in \mathcal U\)</span>,</p>
+<div class="arithmatex">\[\nabla \lambda_j(\U) \cdot \r_j(\U) \neq 0.\]</div>
+<hr />
+<p>It is called <strong>linearly degenerate</strong> if for all <span class="arithmatex">\(\U \in \mathcal U\)</span>,</p>
+<div class="arithmatex">\[\nabla \lambda_j(\U) \cdot \r_j(\U) = 0.\]</div>
+</div>
+<details class="example">
+<summary>Example (Scalar conservation law)</summary>
+<p>For <span class="arithmatex">\(m=1\)</span>, the system reduces to a scalar conservation law. Then, we only have a single eigenvalue <span class="arithmatex">\(\lambda(U) = f'(U) \in \R\)</span> and can choose <span class="arithmatex">\(r(U) = 1\)</span>. Thus, <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> is always hyperbolic.</p>
+<p>Additionally,</p>
+<div class="arithmatex">\[\nabla \lambda(U) \cdot r(U) = f''(U).\]</div>
+<p>We therefore have that it is</p>
 <ul>
-<li><strong>R</strong>econstruction: Recreate <span class="arithmatex">\(U(x,t^n)\)</span> from the cell averages <span class="arithmatex">\(U_j^n\)</span>. Prevoiusly, we used piecewise constant functions.</li>
-<li><strong>E</strong>volution: Solve the superposition of Riemann problems. This can be done approximately (LxF) or exactly (Godunov).</li>
-<li><strong>A</strong>veraging: Average the solutions for each cell.</li>
+<li>genuinely nonlinear if <span class="arithmatex">\(f\)</span> is strictly convex or concave,</li>
+<li>linearly degenerate if <span class="arithmatex">\(f\)</span> is affine.</li>
 </ul>
-<p>The difference in many of the schemes presented is the evolution step. However, one can also increase the accuracy of the reconstruction step. One can for example use higher order interpolation.</p>
-<h3 id="second-order-reconstruction">Second order reconstruction</h3>
-<p>To determine the piecewise affine function, we need some requirements. One can show that the last two steps are conservative. It would be natural to require that the reconstruction too. For the interpolation function <span class="arithmatex">\(p_j\)</span> in the cell <span class="arithmatex">\(\Cell_j\)</span>, we thus require that</p>
-<div class="arithmatex">\[p_j(x) = U_j^n + \sigma_j^n(x - x_j).\]</div>
-<p>or instance, one can apply the standard slope approximation using central, backward, or forward difference methods. However, in the case of the linear advection equation with constant velocity, it can be demonstrated that using the forward difference approach leads to the Lax-Wendroff scheme. Oscillations also arise using the two other methods.</p>
-<h3 id="source-of-oscillations">Source of oscillations</h3>
-<p>The solutions of <span class="arithmatex">\(\eqref{eq:conservation_law}\)</span> are TVD. Thus, they are not oscillatory whenever the initial data is not. Finite volume methods should therefore not introduce oscillations. The averaging operator and suitable Riemann solvers respects TVD. Thus, the source must be the reconstruction step. Consider for example the cell averages</p>
-<div class="arithmatex">\[U_j^n = \begin{cases}
-    1 &amp; j \le 0 \\
-    0 &amp; j &gt; 0.
-\end{cases}\]</div>
-<p>It has total variation <span class="arithmatex">\(\norm{U^n}_{TV} = 1\)</span>. Using the downwind reconstruction, we get</p>
-<div class="arithmatex">\[\sigma_j^n = \begin{cases}
-    0 &amp; j \neq 0 \\
-    -1/2 &amp; j = 0.
-\end{cases}\]</div>
-<p>Thus, the reconstruction overshoots and reaches <span class="arithmatex">\(3/2\)</span>. The total variation is now <span class="arithmatex">\(\norm{p^n}_{TV} = 3/2\)</span>. Similar arguments can be made for the other reconstruction methods. Therefore, we should require that the reconstruction operator is TVD: <span class="arithmatex">\(\norm{p}_{BV} \le \norm{U^{\Dx}}_{BV}\)</span>.</p>
-<h2 id="minmod-limiter">Minmod limiter</h2>
-<p>One such TVD reconstruction operator is the minmod limiter. The problem above at discontinuities occurs whenever the downwind and upwind slopes have opposite signs. One can therefore default to constant interpolation, that is, a slope of zero. This results in the minmod limiter:</p>
-<div class="arithmatex">\[\sigma_j^n = \minmod\qty(\frac{U_{j+1}^n - U_j^n}{\Dx}, \frac{U_j^n - U_{j-1}^n}{\Dx}),\]</div>
-<p>where</p>
-<div class="arithmatex">\[\minmod\{a_k\}_k = \begin{cases}
-    \sign(a_1) \min_k\abs{a_k}, &amp; \sign(a_1) = \dots = \sign(a_n) \\
-    0, &amp; \text{otherwise}.
-\end{cases}\]</div>
+</details>
+<details class="example">
+<summary>Example (Shallow water equations)</summary>
+<p>A model for water waves in a shallow body of water is given by</p>
+<div class="arithmatex">\[\begin{aligned}
+    \partial_t h + \partial_x (hv) &amp;= 0, \\
+    \partial_t (hv) + \partial_x \qty(\frac{1}{2} g h^2 + hv^2) &amp;= 0
+\end{aligned}\]</div>
+<p>where the height <span class="arithmatex">\(h\)</span> and the momentum <span class="arithmatex">\(m:=hv\)</span> are the conserved quantities. We can write this as <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> with</p>
+<div class="arithmatex">\[\U = \begin{pmatrix} h \\ m \end{pmatrix}, \quad \f(\U) = \begin{pmatrix} m \\ \frac{1}{2} g h^2 + \frac{m^2}{h} \end{pmatrix}.\]</div>
+<p>This gives the Jacobian</p>
+<div class="arithmatex">\[\f'(\U) = \begin{pmatrix} 0 &amp; 1 \\ gh - \frac{m^2}{h^2} &amp; \frac{2m}{h} \end{pmatrix},\]</div>
+<p>and the eigenvalues and eiegenvectors</p>
+<div class="arithmatex">\[\lambda_\pm = v \pm c,\quad \r_\pm = \begin{pmatrix} 1 \\ v \pm c \end{pmatrix}.\]</div>
+<p>The values if <span class="arithmatex">\(\U\)</span> for which the equation makes sense are</p>
+<div class="arithmatex">\[\mathcal U = \qty{ (h, m) \in \R^2 \mid h &gt; 0 }.\]</div>
+<p>The families of waves are genuinely nonlinear, as</p>
+<div class="arithmatex">\[\nabla \lambda_\pm \cdot \r_\pm = \mp \frac{3}{2} \sqrt{\frac{g}{h}} \neq 0.\]</div>
+</details>
+<h2 id="simple-solutions">Simple solutions</h2>
+<p>From now on, we will assume that all the families of waves are either genuinely nonlinear or linearly degenerate. Additionally, if the <span class="arithmatex">\(j\)</span>-th family is genuinely nonlinear, we will normalize <span class="arithmatex">\(\r_j\)</span> such that</p>
+<div class="arithmatex">\[\nabla \lambda_j(\U) \cdot \r_j(\U) = 1 \quad \forall \U \in \mathcal U\]</div>
+<p>We will now fix <span class="arithmatex">\(\U_L \in \mathcal U\)</span> and find all <span class="arithmatex">\(U_R\)</span> such that we get a rarefaction wave or a shock wave in the Riemann problem <span class="arithmatex">\(\eqref{eq:riemann_problem}\)</span>.</p>
+<h3 id="rarefaction-waves">Rarefaction waves</h3>
+<p>A rarefaction wave is a smooth solution of <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> connecting <span class="arithmatex">\(\U_L\)</span> and <span class="arithmatex">\(\U_R\)</span>. Recall that the solution is invariant under the transformation <span class="arithmatex">\((x, t) \mapsto (\alpha x, \alpha t)\)</span> so it takes the form <span class="arithmatex">\(\newcommand{\u}{\mathbf{u}}\U(x, t) = \u(x/t)\)</span>, where <span class="arithmatex">\(\u \in C^1(\R, \R^m)\)</span>. Inserting into <span class="arithmatex">\(\eqref{eq:nonlinear_hyperbolic_system}\)</span> gives</p>
+<div class="arithmatex">\[\u'(\xi) f'(u(\xi)) = \xi \u'(\xi).\]</div>
+<p>Then, we either have <span class="arithmatex">\(\u'(\xi) = 0\)</span> or <span class="arithmatex">\(\xi\)</span> is an eigenvalue of the Jacobian <span class="arithmatex">\(f'(\u(\xi))\)</span>. In the latter case, we have that</p>
+<div class="arithmatex">\[\u'(\xi) = \r_j(\u(\xi)), \quad \xi = \lambda_j(\u(\xi))\]</div>
+<p>for some <span class="arithmatex">\(j\)</span>. Now, if there are some <span class="arithmatex">\(\xi_L, \xi_R \in \R\)</span> such that <span class="arithmatex">\(\u(\xi_L) = \U_L\)</span> and <span class="arithmatex">\(\u(\xi_R) = \U_R\)</span>, they must be <span class="arithmatex">\(\xi_L = \lambda_j(\U_L)\)</span> and <span class="arithmatex">\(\xi_R = \lambda_j(\U_R)\)</span>. The rarefaction solution of <span class="arithmatex">\(\eqref{eq:riemann_problem}\)</span> is then given by</p>
+<div class="arithmatex">\[\U(x, t) = \left\{\begin{aligned}
+    \U_L, &amp;&amp;&amp; \frac{x}{t} &lt; \lambda_j(\U_L) \\
+    \u\qty(\frac{x}{t}), &amp;&amp; \lambda_j(\U_L) &lt;  &amp;\frac{x}{t} &lt; \lambda_j(\U_R) \\
+    \U_R, &amp;&amp;  \lambda_j(\U_R) &lt; &amp; \frac{x}{t}
+\end{aligned}\right.\]</div>
 
 
 
