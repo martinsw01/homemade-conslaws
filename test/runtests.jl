@@ -14,6 +14,9 @@ using Test
     @testset "Linear reconstruction tests" begin
         include("linear_reconstruction_test.jl")
     end
+    @testset "Linear system tests" begin
+        include("linear_system_test.jl")
+    end
 end
 
 nothing

@@ -6,4 +6,8 @@ end
 
 (eq::ConstantLinearAdvection)(u) = eq.a * u
 
-compute_max_abs_speed(::ConstantLinearAdvection, U) = abs(a)
+compute_eigenvalues(eq::ConstantLinearAdvection, U) = eq.a
+
+compute_max_abs_eigenvalue(eq::ConstantLinearAdvection, U) = abs(eq.a)
+
+conserved_variables(::ConstantLinearAdvection) = (:U,)

@@ -1,22 +1,30 @@
-using QuadGK
+using QuadGK, StaticArrays
 
 export UniformGrid1D, for_each_cell, get_neighbour_indices, get_dx
 
 
 abstract type Grid1D{BC <: BoundaryCondition} <: Grid end
 
-struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat} <: Grid1D{BC}
+struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: Grid1D{BC}
     dx::Float
     bc::BC
-    cells::Vector{Float}
+    cells::Vector{Cell}
 
     function UniformGrid1D(N, bc::BoundaryCondition, u0, domain)
         x_L, x_R = domain
         dx = (x_R - x_L) / (N+1)
         x = x_L:dx:x_R
-        cells = _calc_average.(u0, x[1:end-1], x[2:end])
 
-        new{typeof(bc), typeof(dx)}(dx, bc, cells)
+        averages = _calc_average.(u0, x[1:end-1], x[2:end])
+
+        if eltype(averages) <: Number
+            return new{typeof(bc), typeof(dx), eltype(averages)}(dx, bc, averages)
+        else
+            conserved_variables::Int64 = length(averages[1])
+            FloatType = eltype(averages[1])
+            cells = [SVector{conserved_variables, FloatType}(averages[j]) for j in 1:N+1]
+            return new{typeof(bc), typeof(dx), eltype(cells)}(dx, bc, cells)
+        end
     end
 end
 
@@ -81,9 +89,7 @@ struct DeferredRange{T <: Integer, F} <: AbstractArray{T, 1}
     function DeferredRange(f, start::T, stop::T) where {T <: Integer}
         new{T, typeof(f)}(f, start, stop)
     end
-    function DeferredRange(f, range::UnitRange)
-        new{eltype(range), typeof(f)}(f, first(range), last(range))
-    end
+    DeferredRange(f, range::UnitRange) = DeferredRange(f, first(range), last(range))
 end
 
 Base.size(r::DeferredRange) = (r.stop - r.start + one(r.start),)
