@@ -83,8 +83,13 @@ end
 end
 
 @views function update_bc!(out, grid::Grid1D{WallBC}, ::ShallowWater1D)
-    out[1:grid.bc] .= ((@SVector [h, -uh]) for (h, uh) in out[2*grid.gc:-1:grid.bc+1])
-    out[end-grid.gc+1:end] .= ((@SVector [h, -uh]) for (h, uh) in out[end-grid.gc:-1:end-2*grid.gc])
+    for i in 1:grid.gc
+        h, uh = out[end-grid.gc - i + 1]
+        out[i] = @SVector [h, -uh]
+
+        h, uh = out[grid.gc + i]
+        out[end - i + 1] = @SVector [h, -uh]
+    end
 end
 
 

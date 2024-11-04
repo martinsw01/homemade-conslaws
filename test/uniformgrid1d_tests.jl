@@ -69,3 +69,15 @@ end
     @test grid.cells ≈ [-2/3, -2/3, 0., 2/3, 2/3]
 end
 
+@testset "Test grid Wall BC" begin
+    bc = WallBC()
+    u0(x) = [1, 1]
+    N = 2
+    x_L, x_R = -1, 1
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R), 2)
+
+    homemade_conslaws.update_bc!(grid, ShallowWater1D(1.))
+
+    @test grid.cells ≈ [[1, -1], [1, -1], [1, 1], [1, 1], [1, 1], [1, -1], [1, -1]]
+end
+
