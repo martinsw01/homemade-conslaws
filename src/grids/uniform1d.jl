@@ -100,4 +100,4 @@ end
 
 cells(grid::UniformGrid1D) = grid.cells
 
-inner_cells(grid::UniformGrid1D, cells=cells(grid)) = cells[grid.gc+1:end-grid.gc]
+inner_cells(grid::UniformGrid1D, cells=cells(grid)) = @view cells[grid.gc+1:end-grid.gc]
