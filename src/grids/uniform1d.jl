@@ -39,7 +39,7 @@ function _calc_average(f, a, b)
 end
 
 function reduce_cells(f, grid::Grid1D, initial_value)
-    inner_cells_indices = eachindex(cells(grid)[grid.gc+1:end-grid.gc])
+    inner_cells_indices = eachindex(cells(grid))[grid.gc+1:end-grid.gc]
     reduce(inner_cells_indices, init=initial_value) do acc, i
         f(acc, cells(grid), i)
     end
@@ -52,15 +52,15 @@ end
 
 
 function for_each_cell(f, grid::Grid1D)
-    for cell_idx in eachindex(cells(grid))#[grid.gc+1:end-grid.gc]
+    for cell_idx in eachindex(cells(grid))
         f(cells(grid), cell_idx)
     end
 end
 
 
-function for_each_inner_cell(f, grid::Grid1D, p=grid.gc, q=p)
-    for cell_idx in eachindex(cells(grid))[p+1:end-q]
-        ileft = cell_idx -p
+function for_each_inner_cell(f, grid::Grid1D; gc=grid.gc, p=gc, q=p)
+    for cell_idx in eachindex(cells(grid))[gc+1:end-gc]
+        ileft = cell_idx - p
         iright = cell_idx + q
         f(cells(grid), ileft, cell_idx, iright)
     end
@@ -84,11 +84,11 @@ end
 
 @views function update_bc!(out, grid::Grid1D{WallBC}, ::ShallowWater1D)
     for i in 1:grid.gc
-        h, uh = out[end-grid.gc - i + 1]
-        out[i] = @SVector [h, -uh]
-
         h, uh = out[grid.gc + i]
-        out[end - i + 1] = @SVector [h, -uh]
+        out[grid.gc-i+1] = @SVector [h, -uh]
+
+        h, uh = out[end-grid.gc-i+1]
+        out[end-grid.gc+i] = @SVector [h, -uh]
     end
 end
 
@@ -100,4 +100,4 @@ end
 
 cells(grid::UniformGrid1D) = grid.cells
 
-inner_cells(grid::UniformGrid1D, cells=cells(grid)) = @view cells[grid.gc+1:end-grid.gc]
+inner_cells(grid::UniformGrid1D, cells=cells(grid)) = cells[grid.gc+1:end-grid.gc]

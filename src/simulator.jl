@@ -25,7 +25,7 @@ end
 
 @views function set_time_derivative!(out, grid::Grid, left, right, eq::Equation, F::NumericalFlux, dt)
     p = number_of_cells(F)
-    for_each_inner_cell(grid, p) do cells, ileft, imiddle, iright
+    for_each_inner_cell(grid; p=p) do cells, ileft, imiddle, iright
         left_minus = right[ileft:imiddle-1]
         right_minus = left[imiddle:iright-1]
         left_plus = right[ileft+1:imiddle]
