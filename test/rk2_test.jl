@@ -19,7 +19,7 @@ using Test
 
     simulate!(simulator, T, dt)
 
-    @test grid.cells ≈ [0., 0., 0.] atol=1e-32
+    @test inner_cells(grid) ≈ [0., 0., 0.] atol=1e-32
 end
 
 @testset "Test one step" begin
@@ -28,7 +28,7 @@ end
     N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    grid.cells[:] = [1., 1., 0., 0.]
+    inner_cells(grid)[:] = [1., 1., 0., 0.]
     dt = grid.dx
     T = dt
     eq = BurgersEQ()
@@ -42,7 +42,7 @@ end
 
 
     grid2 = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    grid2.cells[:] = [1., 1., 0., 0.]
+    inner_cells(grid2)[:] = [1., 1., 0., 0.]
     reconstruction2 = NoReconstruction(grid2)
     timestepper2 = ForwardEuler(grid2)
     system2 = ConservedSystem(eq, reconstruction2, F, timestepper2)
@@ -50,7 +50,7 @@ end
 
     simulate!(simulator2, 2*T, dt)
 
-    @test grid.cells ≈ 0.5 .* ([1., 1., 0., 0.] .+ grid2.cells)
+    @test inner_cells(grid) ≈ 0.5 .* ([1., 1., 0., 0.] .+ inner_cells(grid2))
 
-    @test grid.cells ≈ [127/128, 127/128, 33/128, 33/128]
+    @test inner_cells(grid) ≈ [127/128, 127/128, 33/128, 33/128]
 end

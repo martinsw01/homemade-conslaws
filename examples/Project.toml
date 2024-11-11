@@ -1,5 +1,6 @@
 [deps]
 ElasticArrays = "fdbdab4c-e67f-52f5-8c3f-e7b388dad3d4"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+SinSWE = "495f1f7a-9b77-11ef-05dd-d55cea42b7bb"
 StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 homemade_conslaws = "51a5d24e-3f71-4d70-8917-f6897a702822"

@@ -25,19 +25,18 @@ end
 
 @views function set_time_derivative!(out, grid::Grid, left, right, eq::Equation, F::NumericalFlux, dt)
     p = number_of_cells(F)
-    for_each_cell(grid) do cells, i
-        neighbour_cell_idx = get_neighbour_indices(grid, i, p)
-        left_minus = right[neighbour_cell_idx[1:p]]         # reconstructed value at the right of the cells, left side of cell `i`
-        right_minus = left[neighbour_cell_idx[p+1:end-1]]   # reconstructed value at the left of the cells, right side of cell `i`
-        left_plus = right[neighbour_cell_idx[p+1:end-1]]    # reconstructed value at the right of the cells, right side of cell `i`
-        right_plus = left[neighbour_cell_idx[p+2:end]]      # reconstructed value at the left of the cells, left side of cell `i`
+    for_each_inner_cell(grid; p=p) do cells, ileft, imiddle, iright
+        left_minus = right[ileft:imiddle-1]
+        right_minus = left[imiddle:iright-1]
+        left_plus = right[ileft+1:imiddle]
+        right_plus = left[imiddle+1:iright]
 
-        dx = get_dx(grid, i)
+        dx = get_dx(grid, imiddle)
 
         flux_minus = F(eq, left_minus, right_minus, dx, dt)
         flux_plus = F(eq, left_plus, right_plus, dx, dt)
 
-        out[i] = (flux_minus - flux_plus) / dx
+        out[imiddle] = (flux_minus - flux_plus) / dx
     end
 end
 
