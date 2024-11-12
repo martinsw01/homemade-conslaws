@@ -60,3 +60,40 @@ end
 
     @test inner_cells(grid) ≈ expected_cells
 end
+
+@testset "Test aggregation of states" begin
+    eq = ConstantLinearAdvection()
+    u0(x) = [x > 0, -x > 0]
+    N = 3
+    bc = NeumannBC()
+    grid = UniformGrid1D(N, bc, u0, (-1, 1))
+    dx = grid.dx
+    dt = dx
+    T = dt
+
+    F = CentralUpwind()    
+    reconstruction = NoReconstruction(grid)
+    timestepper = ForwardEuler(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
+
+    U, t = simulate_and_aggregate!(simulator, T, dt)
+
+    expected_cells = reshape(
+        [[0.0, 1.0], [0.0, 1.0], [1.0, 0.0], [1.0, 0.0],
+         [0., 1.], [0., 0.], [0., 0.], [1., 0.]],
+         4, 2
+    )
+
+    @test expected_cells ≈ U
+    @test t ≈ [0., dt]
+
+    U1_expected = [0. 0. 1. 1.; 0. 0. 0. 1.]
+    U2_expected = [1. 1. 0. 0.; 1. 0. 0. 0.]
+
+    U1, U2 = separate_variables(U)
+
+    @test U1 ≈ U1_expected
+    @test U2 ≈ U2_expected
+
+end

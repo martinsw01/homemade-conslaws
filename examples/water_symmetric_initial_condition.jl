@@ -8,7 +8,7 @@ function main()
     q0(x) = @SVector [h0(x), 0]
     N = 100
     bc = WallBC()
-    grid = UniformGrid1D(N, bc, q0, (-1, 1), 2)
+    grid = UniformGrid1D(N, bc, q0, (-1, 1); ghost_cells=2)
     dt = grid.dx
     T = 2.
 
@@ -19,22 +19,14 @@ function main()
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    H = ElasticMatrix(reshape([Q[1] for Q in inner_cells(grid)], :, 1))
-    t = ElasticVector([0.])
-
-    function add_solution(simulator)
-        append!(H, [Q[1] for Q in inner_cells(grid)])
-        append!(t, simulator.t[])
-    end
-
-    simulate!(simulator, T, dt, [add_solution])
+    Q, t = simulate_and_aggregate!(simulator, T, dt)
+    H, UH = separate_variables(Q)
 
     homemade_conslaws.Viz.animate_solution(
-        (H',),
+        (H,),
         "h",
-        -1:grid.dx:1-grid.dx,
-        t,
-        3
+        cell_centers(grid),
+        t
     )
 end
 

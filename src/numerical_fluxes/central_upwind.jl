@@ -12,4 +12,4 @@ function (::CentralUpwind)(eq::Equation, (left,), (right,), dx, dt)
     (aplus .* eq(left) .- aminus .* eq(right) .+ aplus .* aminus .* (right .- left)) ./ (aplus .- aminus)
 end
 
-number_of_cells(::CentralUpwind) = 1
+stencil_size(::CentralUpwind) = 1, 1

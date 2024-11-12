@@ -76,3 +76,31 @@ end
 
     @test inner_cells(grid) ≈ expected_cells
 end
+
+@testset "Test accumulation of states" begin
+    bc = NeumannBC()
+    u0(x) = x < 0 ? 1 : 0
+    N = 2
+    x_L, x_R = -1, 1
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
+    max_dt = grid.dx
+    T = 2*max_dt
+    eq = BurgersEQ()
+    F = LaxFriedrichsFlux()
+    reconstruction = NoReconstruction(grid)
+    timestepper = ForwardEuler(grid)
+    system = ConservedSystem(eq, reconstruction, F, timestepper)
+    simulator = Simulator(system, grid, 0.)
+
+    inner_cells(grid)[:] = [1., 0.5, 0.]
+
+    U, t = simulate_and_aggregate!(simulator, T, max_dt)
+
+    expected_cells = [1. 0.5 0.;
+                      15/16 3/4 5/16;
+                      945/1024 105/128 663/1024]'
+    expected_t = [0., max_dt, T]
+
+    @test U ≈ expected_cells
+    @test t ≈ expected_t
+end

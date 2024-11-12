@@ -38,7 +38,7 @@ end
     u0(x) = x
     N = 2
     x_L, x_R = -1, 1
-    grid = UniformGrid1D(N, bc, u0, (x_L, x_R), 2)
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R), ghost_cells=2)
 
     homemade_conslaws.update_bc!(grid, BurgersEQ())
 
@@ -50,7 +50,7 @@ end
     u0(x) = x
     N = 2
     x_L, x_R = -1, 1
-    grid = UniformGrid1D(N, bc, u0, (x_L, x_R), 2)
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R); ghost_cells=2)
 
     homemade_conslaws.update_bc!(grid, BurgersEQ())
 
@@ -74,7 +74,7 @@ end
     u0(x) = [x, -x]
     N = 2
     x_L, x_R = -1, 1
-    grid = UniformGrid1D(N, bc, u0, (x_L, x_R), 2)
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R); ghost_cells=2)
 
     homemade_conslaws.update_bc!(grid, ShallowWater1D(1.))
 

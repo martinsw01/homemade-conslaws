@@ -1,4 +1,6 @@
-export Simulator, simulate!
+using ElasticArrays
+
+export Simulator, simulate!, simulate_and_aggregate!
 
 struct Simulator{
         SystemType <: System,
@@ -24,8 +26,8 @@ end
 
 
 @views function set_time_derivative!(out, grid::Grid, left, right, eq::Equation, F::NumericalFlux, dt)
-    p = number_of_cells(F)
-    for_each_inner_cell(grid; p=p) do cells, ileft, imiddle, iright
+    p, q = stencil_size(F)
+    for_each_inner_cell(grid; p=p, q=q) do cells, ileft, imiddle, iright
         left_minus = right[ileft:imiddle-1]
         right_minus = left[imiddle:iright-1]
         left_plus = right[ileft+1:imiddle]
@@ -72,4 +74,19 @@ function simulate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=
             callback(simulator)
         end
     end
+end
+
+
+function simulate_and_aggregate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
+    U = ElasticMatrix(reshape(inner_cells(simulator.grid), :, 1))
+    t = ElasticVector([simulator.t[]])
+
+    function collect_state(simulator)
+        append!(U, copy(inner_cells(simulator.grid)))
+        append!(t, simulator.t[])
+    end
+
+    simulate!(simulator, T, max_dt, [collect_state, callbacks...])
+
+    return U, t
 end
