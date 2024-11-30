@@ -1,3 +1,4 @@
+# using Revise
 using homemade_conslaws
 using StaticArrays
 using ElasticArrays
@@ -5,10 +6,10 @@ using ElasticArrays
 function main()
     eq = ShallowWater1D(1.)   # Gravity is 1
     h0(x) = 1. + 0.3exp(-10x^2)
-    q0(x) = @SVector [h0(x), 0]
+    q0(x) = @SVector [h0(x), 0.]
     N = 100
     bc = WallBC()
-    grid = UniformGrid1D(N, bc, q0, (-1, 1); ghost_cells=2)
+    grid = UniformGrid1D(N, bc, q0, (-1, 1))
     dt = grid.dx
     T = 2.
 

@@ -21,19 +21,29 @@ function minmod(a, b, c)
 end
 
 
+function _reconstruct_cell!(left_buffer, right_buffer, left, center, right, idx)
+    downwind = right .- center
+    upwind = center .- left
+    central = 0.5 .* (downwind .+ upwind)
+
+    slope = minmod.(downwind, central, upwind)
+
+    left_buffer[idx] = center .- 0.5 .* slope
+    right_buffer[idx] = center .+ 0.5 .* slope
+end
+
+
 function reconstruct(reconstruction::LinearReconstruction, grid::Grid, cell_averages=cells(grid))
-    for_each_inner_cell(grid; gc=1) do cells, ileft, imiddle, iright
+    for_each_inner_cell(grid; p=1) do cells, ileft, imiddle, iright
         left = cell_averages[ileft]
         center = cell_averages[imiddle]
         right = cell_averages[iright]
 
-        downwind = right .- center
-        upwind = center .- left
-        central = 0.5 .* (downwind .+ upwind)
-        slope = minmod.(downwind, central, upwind)
+        _reconstruct_cell!(reconstruction.left_buffer, reconstruction.right_buffer, left, center, right, imiddle)
+    end
 
-        reconstruction.left_buffer[imiddle] = center .- 0.5 .* slope
-        reconstruction.right_buffer[imiddle] = center .+ 0.5 .* slope
+    for_each_boundary_cell(grid, (cell_averages,)) do stencil, idx
+        _reconstruct_cell!(reconstruction.left_buffer, reconstruction.right_buffer, stencil..., idx)
     end
 
     return reconstruction.left_buffer, reconstruction.right_buffer

@@ -1,3 +1,4 @@
+# using Revise
 using StaticArrays
 using ElasticArrays
 using SinSWE
@@ -9,11 +10,11 @@ function run_SinSWE_simulation(T, N, u0)
     grid = SinSWE.CartesianGrid(N; gc=2, boundary=SinSWE.WallBC())
     
     equation = SinSWE.ShallowWaterEquations1DPure(1., 1.)
-    reconstruction = SinSWE.LinearReconstruction(1.)
+    reconstruction = SinSWE.LinearReconstruction(1.2)
     numericalflux = SinSWE.CentralUpwind(equation)
     timestepper = SinSWE.RungeKutta2()
     conserved_system = SinSWE.ConservedSystem(backend, reconstruction, numericalflux, equation, grid, [])
-    simulator = SinSWE.Simulator(backend, conserved_system, timestepper, grid, cfl=1.)
+    simulator = SinSWE.Simulator(backend, conserved_system, timestepper, grid, cfl=0.2)
     
     x = SinSWE.cell_centers(grid)
     initial = u0.(x)
@@ -24,10 +25,17 @@ function run_SinSWE_simulation(T, N, u0)
     t = ElasticVector([0.])
 
     function collect_state(t_j, simulator)
+        UH_next = [Q[2] for Q in SinSWE.current_interior_state(simulator)]
+        H_next = [Q[1] for Q in SinSWE.current_interior_state(simulator)]
+
         append!(UH, [Q[2] for Q in SinSWE.current_interior_state(simulator)])
         append!(H, [Q[1] for Q in SinSWE.current_interior_state(simulator)])
         append!(t, t_j)
 
+        # energy = reduce(eachindex(UH_next)) do acc, i
+        #     acc + 0.5 * UH_next[i]^2 / H_next[i] + H_next[i]
+        # end
+        # println("Energy: ", energy)
     end
 
     
@@ -39,7 +47,7 @@ end
 function run_homemade_conslaws_simulation(T, N, u0)
     eq = ShallowWater1D(1.)
     bc = WallBC()
-    grid = UniformGrid1D(N, bc, u0, (0, 1), 2)
+    grid = UniformGrid1D(N, bc, u0, (0, 1))
     x = -1.5grid.dx:grid.dx:1+1.5grid.dx
     grid.cells .= u0.(x)
 
@@ -57,9 +65,15 @@ function run_homemade_conslaws_simulation(T, N, u0)
     t = ElasticVector([0.])
 
     function collect_state(simulator)
-        append!(UH, [Q[2] for Q in inner_cells(grid)])
-        append!(H, [Q[1] for Q in inner_cells(grid)])
+        UH_next = [Q[2] for Q in inner_cells(grid)]
+        H_next = [Q[1] for Q in inner_cells(grid)]
+        append!(UH, UH_next)
+        append!(H, H_next)
         append!(t, simulator.t[])
+
+        # energy = reduce_cells(eachindex(UH_next)) do acc, i
+        #     acc + 0.5 * 1
+        # end
     end
 
     simulate!(simulator, T, dt, [collect_state])
@@ -69,10 +83,13 @@ end
 
 u0(x) = @SVector[exp.(-(x - 0.5)^2 / 0.001) .+ 1.5, 0.0 .* x]
 
-N = 50
-T = 2
+N = 100
+T = 10
 H_SinSWE, UH_SinSwe, t_SinSWE, x_SinSWE = run_SinSWE_simulation(T, N, u0);
 H, UH, t, x = run_homemade_conslaws_simulation(T, N-1, u0);
 
+# homemade_conslaws.Viz.animate_solution(
+#     (H_SinSWE, H), ["H_SinSWE" "H"], x_SinSWE, t, 4)
+
 homemade_conslaws.Viz.animate_solution(
-    (H_SinSWE, H), ["H_SinSWE" "H"], x_SinSWE, t, 4)
+    (H_SinSWE,), "H_SinSWE", x_SinSWE, t_SinSWE, T)

@@ -26,15 +26,15 @@ end
 
     reconstruction = LinearReconstruction(grid)
 
-    left, right = homemade_conslaws.reconstruct(reconstruction, grid, [1., 1., 0.5, 0., 0.])
+    left, right = homemade_conslaws.reconstruct(reconstruction, grid, [1., 0.5, 0.])
 
     @test inner_cells(grid, left) ≈ [1., 0.75, 0.]
     @test inner_cells(grid, right) ≈ [1., 0.25, 0.]
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid)
 
-    @test inner_cells(grid, left) ≈ [-1., -1/3, 1/3]
-    @test inner_cells(grid, right) ≈ [-1/3, 1/3, 1.]
+    @test inner_cells(grid, left) ≈ [-2/3, -1/3, 2/3]
+    @test inner_cells(grid, right) ≈ [-2/3, 1/3, 2/3]
 
 end
 
@@ -43,12 +43,12 @@ end
     u0(x) = [x, -x]
     N = 2
     x_L, x_R = -1, 1
-    grid = UniformGrid1D(N, bc, u0, (x_L, x_R); ghost_cells=2)
+    grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
     reconstruction = LinearReconstruction(grid)
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid)
 
-    @test inner_cells(grid, left) ≈ [[-1., 1.], [-1/3, 1/3], [1/3, -1/3]]
-    @test inner_cells(grid, right) ≈ [[-1/3, 1/3], [1/3, -1/3], [1., -1.]]
+    @test inner_cells(grid, left) ≈ [[-2/3, 2/3], [-1/3, 1/3], [2/3, -2/3]]
+    @test inner_cells(grid, right) ≈ [[-2/3, 2/3], [1/3, -1/3], [2/3, -2/3]]
 end

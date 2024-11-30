@@ -24,8 +24,6 @@ using homemade_conslaws
 
     expected_cells = [15/16, 3/4, 5/16]
 
-    inner_cells(grid) ≈ expected_cells
-
     @test inner_cells(grid) ≈ expected_cells
 end
 
