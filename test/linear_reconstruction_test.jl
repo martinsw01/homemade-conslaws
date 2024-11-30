@@ -8,13 +8,13 @@ using homemade_conslaws
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
-    @test inner_cells(grid) ≈ [1., 1., 0., 0.]
+    @test cells(grid) ≈ [1., 1., 0., 0.]
 
     reconstruction = LinearReconstruction(grid)
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid)
 
-    @test inner_cells(grid, left) ≈ [1., 1., 0., 0.] ≈ inner_cells(grid, right)
+    @test left ≈ [1., 1., 0., 0.] ≈ right
 end
 
 @testset "Test smooth reconstruction" begin
@@ -28,13 +28,13 @@ end
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid, [1., 0.5, 0.])
 
-    @test inner_cells(grid, left) ≈ [1., 0.75, 0.]
-    @test inner_cells(grid, right) ≈ [1., 0.25, 0.]
+    @test left ≈ [1., 0.75, 0.]
+    @test right ≈ [1., 0.25, 0.]
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid)
 
-    @test inner_cells(grid, left) ≈ [-2/3, -1/3, 2/3]
-    @test inner_cells(grid, right) ≈ [-2/3, 1/3, 2/3]
+    @test left ≈ [-2/3, -1/3, 2/3]
+    @test right ≈ [-2/3, 1/3, 2/3]
 
 end
 
@@ -49,6 +49,6 @@ end
 
     left, right = homemade_conslaws.reconstruct(reconstruction, grid)
 
-    @test inner_cells(grid, left) ≈ [[-2/3, 2/3], [-1/3, 1/3], [2/3, -2/3]]
-    @test inner_cells(grid, right) ≈ [[-2/3, 2/3], [1/3, -1/3], [2/3, -2/3]]
+    @test left ≈ [[-2/3, 2/3], [-1/3, 1/3], [2/3, -2/3]]
+    @test right ≈ [[-2/3, 2/3], [1/3, -1/3], [2/3, -2/3]]
 end

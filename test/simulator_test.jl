@@ -16,15 +16,15 @@ using homemade_conslaws
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    @test inner_cells(grid) ≈ [1., 0.5, 0.] #rtol=1e-16
+    @test cells(grid) ≈ [1., 0.5, 0.] #rtol=1e-16
 
-    inner_cells(grid)[:] = [1., 0.5, 0.]
+    cells(grid)[:] = [1., 0.5, 0.]
 
     simulate!(simulator, T, dt)
 
     expected_cells = [15/16, 3/4, 5/16]
 
-    @test inner_cells(grid) ≈ expected_cells
+    @test cells(grid) ≈ expected_cells
 end
 
 
@@ -34,7 +34,7 @@ end
     N = 2
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    inner_cells(grid)[:] = [1., 0.5, 0.]
+    cells(grid)[:] = [1., 0.5, 0.]
     max_dt = 2*grid.dx
     T = max_dt
     eq = BurgersEQ()
@@ -48,7 +48,7 @@ end
 
     expected_cells = [297 / 320, 5 / 6, 629 / 960]
 
-    @test inner_cells(grid) ≈ expected_cells
+    @test cells(grid) ≈ expected_cells
 end
 
 @testset "Test riemann problem 2 steps" begin
@@ -66,13 +66,13 @@ end
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    inner_cells(grid)[:] = [1., 0.5, 0.]
+    cells(grid)[:] = [1., 0.5, 0.]
 
     simulate!(simulator, T, max_dt)
 
     expected_cells = [945 / 1024, 105 / 128, 663 / 1024]
 
-    @test inner_cells(grid) ≈ expected_cells
+    @test cells(grid) ≈ expected_cells
 end
 
 @testset "Test accumulation of states" begin
@@ -90,7 +90,7 @@ end
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    inner_cells(grid)[:] = [1., 0.5, 0.]
+    cells(grid)[:] = [1., 0.5, 0.]
 
     U, t = simulate_and_aggregate!(simulator, T, max_dt)
 

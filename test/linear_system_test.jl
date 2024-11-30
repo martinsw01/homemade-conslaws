@@ -23,7 +23,7 @@ homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))
 
-    @test inner_cells(grid) ≈ [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
+    @test cells(grid) ≈ [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
 
     expected_cells = [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
 
@@ -58,7 +58,7 @@ end
 
     expected_cells = [[0., 1.], [0., 0.], [0., 0.], [1., 0.]]
 
-    @test inner_cells(grid) ≈ expected_cells
+    @test cells(grid) ≈ expected_cells
 end
 
 @testset "Test aggregation of states" begin

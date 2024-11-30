@@ -8,7 +8,7 @@ using Test
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
-    @test inner_cells(grid) ≈ [1, 1, 0, 0]
+    @test cells(grid) ≈ [1, 1, 0, 0]
 end
 
 @testset "Test grid periodic BC" begin

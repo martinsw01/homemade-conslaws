@@ -87,11 +87,11 @@ end
 
 
 function simulate_and_aggregate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
-    U = ElasticMatrix(reshape(inner_cells(simulator.grid), :, 1))
+    U = ElasticMatrix(reshape(cells(simulator.grid), :, 1))
     t = ElasticVector([simulator.t[]])
 
     function collect_state(simulator)
-        append!(U, copy(inner_cells(simulator.grid)))
+        append!(U, copy(cells(simulator.grid)))
         append!(t, simulator.t[])
     end
 

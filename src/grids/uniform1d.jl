@@ -1,6 +1,6 @@
 using QuadGK, StaticArrays
 
-export UniformGrid1D, for_each_cell, for_each_inner_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, inner_cells, separate_variables,
+export UniformGrid1D, for_each_cell, for_each_inner_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, cells, separate_variables,
     cell_centers
 
 
@@ -106,5 +106,3 @@ end
 
 
 cells(grid::UniformGrid1D) = grid.cells
-
-inner_cells(grid::UniformGrid1D, cells=cells(grid)) = cells

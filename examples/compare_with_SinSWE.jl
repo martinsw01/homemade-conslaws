@@ -60,13 +60,13 @@ function run_homemade_conslaws_simulation(T, N, u0)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    H = ElasticMatrix(reshape([Q[1] for Q in inner_cells(grid)], :, 1))
-    UH = ElasticMatrix(reshape([Q[2] for Q in inner_cells(grid)], :, 1))
+    H = ElasticMatrix(reshape([Q[1] for Q in cells(grid)], :, 1))
+    UH = ElasticMatrix(reshape([Q[2] for Q in cells(grid)], :, 1))
     t = ElasticVector([0.])
 
     function collect_state(simulator)
-        UH_next = [Q[2] for Q in inner_cells(grid)]
-        H_next = [Q[1] for Q in inner_cells(grid)]
+        UH_next = [Q[2] for Q in cells(grid)]
+        H_next = [Q[1] for Q in cells(grid)]
         append!(UH, UH_next)
         append!(H, H_next)
         append!(t, simulator.t[])
