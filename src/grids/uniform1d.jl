@@ -1,6 +1,6 @@
 using QuadGK, StaticArrays
 
-export UniformGrid1D, for_each_cell, for_each_inner_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, cells, separate_variables,
+export UniformGrid1D, for_each_cell, for_each_interior_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, cells, separate_variables,
     cell_centers
 
 
@@ -43,55 +43,82 @@ function _calc_average(f, a, b)
     quadgk(f, a, b)[1] / (b - a)
 end
 
-function reduce_cells(f, grid::Grid1D, initial_value)
-    inner_cells_indices = eachindex(cells(grid))
-    reduce(inner_cells_indices, init=initial_value) do acc, i
+function _reduce_cells(f, grid::Grid1D, indices, initial_value)
+    reduce(indices, init=initial_value) do acc, i
         f(acc, cells(grid), i)
     end
 end
 
+reduce_cells(f, grid::Grid1D, initial_value) = _reduce_cells(f, grid, eachindex(cells(grid)), initial_value)
 
 function create_buffer(grid::Grid1D)
     similar(cells(grid))
 end
 
 
-function for_each_cell(f, grid::Grid1D)
-    for cell_idx in eachindex(cells(grid))
-        f(cells(grid), cell_idx)
+function _for_each_cell(f, grid::Grid1D, indices)
+    for i in indices
+        f(cells(grid), i)
     end
 end
 
+for_each_cell(f, grid::Grid1D) = _for_each_cell(f, grid, eachindex(cells(grid)))
 
-function for_each_inner_cell(f, grid::Grid1D; p=1, q=p)
-    for cell_idx in eachindex(cells(grid))[p+1:end-q]
+function _for_each_interior_cell(f, grid::Grid1D, indices, p, q)
+    for cell_idx in indices
         ileft = cell_idx - p
         iright = cell_idx + q
         f(cells(grid), ileft, cell_idx, iright)
     end
 end
 
+for_each_interior_cell(f, grid::UniformGrid1D; p=1, q=p) = _for_each_interior_cell(f, grid, eachindex(cells(grid))[p+1:end-q], p, q)
 
-for_each_boundary_cell(f, grid::Grid1D) = for_each_boundary_cell(f, grid, (cells(grid),))
+for_each_boundary_cell(f, grid::Grid1D) = for_each_boundary_cell(f, grid, cells(grid))
 
-function for_each_boundary_cell(f, ::Grid1D{NeumannBC}, inputs)
-    f(((cells[1], cells[1], cells[2]) for cells in inputs)..., 1)
-    f(((cells[end-1], cells[end], cells[end]) for cells in inputs)..., lastindex(inputs[1]))
+function for_each_boundary_cell(f, ::Grid1D{NeumannBC}, cells)
+    f((cells[1], cells[1], cells[2]),
+      1)
+    f((cells[end-1], cells[end], cells[end]),
+      lastindex(cells))
 end
 
-function for_each_boundary_cell(f, ::Grid1D{PeriodicBC}, inputs)
-    f(((cells[end], cells[1], cells[2]) for cells in inputs)..., 1)
-    f(((cells[end-1], cells[end], cells[1]) for cells in inputs)..., lastindex(inputs[1]))
+function for_each_boundary_cell(f, ::Grid1D{NeumannBC}, left_reconstruction, right_reconstruction)
+    f((left_reconstruction[1], right_reconstruction[1], right_reconstruction[2]),
+      (left_reconstruction[1], left_reconstruction[1], left_reconstruction[2]),
+      1)
+    f((left_reconstruction[end-1], left_reconstruction[end], right_reconstruction[end]),
+      (right_reconstruction[end-1], right_reconstruction[end], right_reconstruction[end]),
+      lastindex(left_reconstruction))
 end
 
+function for_each_boundary_cell(f, ::Grid1D{PeriodicBC}, left, right)
+    f((left[end], left[1], left[2]), (right[end], right[1], right[2]), 1)
+    f((left[end-1], left[end], left[1]), (right[end-1], right[end], right[1]), lastindex(left))
+end
+
+function for_each_boundary_cell(f, ::Grid1D{PeriodicBC}, cells)
+    f((cells[end], cells[1], cells[2]), 1)
+    f((cells[end-1], cells[end], cells[1]), lastindex(cells))
+end
 
 function create_wall_ghost_cell(Q)
     @SVector [Q[1], -Q[2]]
 end
 
-function for_each_boundary_cell(f, ::Grid1D{WallBC}, inputs)
-    f(((create_wall_ghost_cell(cells[1]), cells[1], cells[2]) for cells in inputs)..., 1)
-    f(((cells[end-1], cells[end], create_wall_ghost_cell(cells[end])) for cells in inputs)..., lastindex(inputs[1]))
+function for_each_boundary_cell(f, ::Grid1D{WallBC}, left, right)
+    f((create_wall_ghost_cell(right[1]), left[1], left[2]),
+      (create_wall_ghost_cell(left[1]), right[1], right[2]),
+      1)
+    f((left[end-1], left[end], create_wall_ghost_cell(right[end])),
+      (right[end-1], right[end], create_wall_ghost_cell(left[end])),
+      lastindex(left))
+end
+function for_each_boundary_cell(f, ::Grid1D{WallBC}, cells)
+    f((create_wall_ghost_cell(cells[1]), cells[1], cells[2]),
+      1)
+    f((cells[end-1], cells[end], create_wall_ghost_cell(cells[end])),
+      lastindex(cells))
 end
 
 

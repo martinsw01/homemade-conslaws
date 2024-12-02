@@ -34,7 +34,7 @@ end
 
 
 function reconstruct(reconstruction::LinearReconstruction, grid::Grid, cell_averages=cells(grid))
-    for_each_inner_cell(grid; p=1) do cells, ileft, imiddle, iright
+    for_each_interior_cell(grid) do cells, ileft, imiddle, iright
         left = cell_averages[ileft]
         center = cell_averages[imiddle]
         right = cell_averages[iright]
@@ -42,7 +42,7 @@ function reconstruct(reconstruction::LinearReconstruction, grid::Grid, cell_aver
         _reconstruct_cell!(reconstruction.left_buffer, reconstruction.right_buffer, left, center, right, imiddle)
     end
 
-    for_each_boundary_cell(grid, (cell_averages,)) do stencil, idx
+    for_each_boundary_cell(grid, cell_averages) do stencil, idx
         _reconstruct_cell!(reconstruction.left_buffer, reconstruction.right_buffer, stencil..., idx)
     end
 

@@ -10,11 +10,11 @@ function run_SinSWE_simulation(T, N, u0)
     grid = SinSWE.CartesianGrid(N; gc=2, boundary=SinSWE.WallBC())
     
     equation = SinSWE.ShallowWaterEquations1DPure(1., 1.)
-    reconstruction = SinSWE.LinearReconstruction(1.2)
+    reconstruction = SinSWE.LinearReconstruction(1.)
     numericalflux = SinSWE.CentralUpwind(equation)
     timestepper = SinSWE.RungeKutta2()
     conserved_system = SinSWE.ConservedSystem(backend, reconstruction, numericalflux, equation, grid, [])
-    simulator = SinSWE.Simulator(backend, conserved_system, timestepper, grid, cfl=0.2)
+    simulator = SinSWE.Simulator(backend, conserved_system, timestepper, grid, cfl=1.) # Should be cfl=0.2, but it is not yet implemented in homemade_conslaws
     
     x = SinSWE.cell_centers(grid)
     initial = u0.(x)
@@ -28,14 +28,9 @@ function run_SinSWE_simulation(T, N, u0)
         UH_next = [Q[2] for Q in SinSWE.current_interior_state(simulator)]
         H_next = [Q[1] for Q in SinSWE.current_interior_state(simulator)]
 
-        append!(UH, [Q[2] for Q in SinSWE.current_interior_state(simulator)])
-        append!(H, [Q[1] for Q in SinSWE.current_interior_state(simulator)])
+        append!(UH, UH_next)
+        append!(H, H_next)
         append!(t, t_j)
-
-        # energy = reduce(eachindex(UH_next)) do acc, i
-        #     acc + 0.5 * UH_next[i]^2 / H_next[i] + H_next[i]
-        # end
-        # println("Energy: ", energy)
     end
 
     
@@ -48,7 +43,7 @@ function run_homemade_conslaws_simulation(T, N, u0)
     eq = ShallowWater1D(1.)
     bc = WallBC()
     grid = UniformGrid1D(N, bc, u0, (0, 1))
-    x = -1.5grid.dx:grid.dx:1+1.5grid.dx
+    x = cell_centers(grid)
     grid.cells .= u0.(x)
 
     dt = grid.dx
@@ -60,36 +55,21 @@ function run_homemade_conslaws_simulation(T, N, u0)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
 
-    H = ElasticMatrix(reshape([Q[1] for Q in cells(grid)], :, 1))
-    UH = ElasticMatrix(reshape([Q[2] for Q in cells(grid)], :, 1))
-    t = ElasticVector([0.])
+    Q, t = simulate_and_aggregate!(simulator, T, dt)
+    H, UH = separate_variables(Q)
 
-    function collect_state(simulator)
-        UH_next = [Q[2] for Q in cells(grid)]
-        H_next = [Q[1] for Q in cells(grid)]
-        append!(UH, UH_next)
-        append!(H, H_next)
-        append!(t, simulator.t[])
-
-        # energy = reduce_cells(eachindex(UH_next)) do acc, i
-        #     acc + 0.5 * 1
-        # end
-    end
-
-    simulate!(simulator, T, dt, [collect_state])
-
-    return H', UH', t, x[2:end-1]
+    return H, UH, t, x
 end
 
 u0(x) = @SVector[exp.(-(x - 0.5)^2 / 0.001) .+ 1.5, 0.0 .* x]
 
-N = 100
-T = 10
-H_SinSWE, UH_SinSwe, t_SinSWE, x_SinSWE = run_SinSWE_simulation(T, N, u0);
-H, UH, t, x = run_homemade_conslaws_simulation(T, N-1, u0);
+N = 50
+T = 2.
+H_SinSWE, UH_SinSwe, t_SinSWE, x_SinSWE = run_SinSWE_simulation(T, N, u0)
+H, UH, t, x = run_homemade_conslaws_simulation(T, N-1, u0)
 
-# homemade_conslaws.Viz.animate_solution(
-#     (H_SinSWE, H), ["H_SinSWE" "H"], x_SinSWE, t, 4)
+max_abs_difference = maximum(abs.(H_SinSWE .- H)[1:end-1,:])
+@show max_abs_difference
 
 homemade_conslaws.Viz.animate_solution(
     (H_SinSWE,), "H_SinSWE", x_SinSWE, t_SinSWE, T)

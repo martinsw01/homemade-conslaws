@@ -27,7 +27,7 @@ end
 
 @views function set_time_derivative!(out, grid::Grid, left, right, eq::Equation, F::NumericalFlux, dt)
     p, q = stencil_size(F)
-    for_each_inner_cell(grid; p=p, q=q) do cells, ileft, imiddle, iright
+    for_each_interior_cell(grid; p=p, q=q) do cells, ileft, imiddle, iright
         left_minus = (right[ileft],)
         right_minus = (left[imiddle],)
         left_plus = (right[imiddle],)
@@ -41,7 +41,7 @@ end
         out[imiddle] = (flux_minus - flux_plus) / dx
     end
 
-    for_each_boundary_cell(grid, (left, right)) do (LL, ML, RL), (LR, MR, RR), idx
+    for_each_boundary_cell(grid, left, right) do (LL, ML, RL), (LR, MR, RR), idx
         dx = get_dx(grid, idx)
 
         flux_minus = F(eq, (LR,), (ML,), dx, dt)

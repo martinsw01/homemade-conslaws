@@ -27,8 +27,12 @@ homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
 
     expected_cells = [[-2/3, 2/3], [0., 0.], [2/3, -2/3]]
 
-    for_each_inner_cell(grid) do cells, _, cell_idx, _
+    for_each_cell(grid) do cells, cell_idx
         @test cells[cell_idx] ≈ expected_cells[cell_idx] atol=1e-15
+    end
+
+    for_each_interior_cell(grid) do cells, ileft, imiddle, iright
+        @test cells[[ileft, imiddle, iright]] ≈ expected_cells
     end
 
     cell_sum = homemade_conslaws.reduce_cells(grid, 0.) do acc, cells, cell_idx
