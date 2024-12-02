@@ -17,6 +17,9 @@ using Test
     @testset "Linear system tests" begin
         include("linear_system_test.jl")
     end
+    @testset "Test multiple walls" begin
+        include("multiple_walls_test.jl")
+    end
 end
 
 nothing

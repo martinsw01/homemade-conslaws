@@ -26,7 +26,5 @@ function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, ForwardEuler{C
         cells[i] = cells[i] + dt * timestepper.substep_buffer[i]
     end
 
-    update_bc!(grid, equation)
-
     return dt
 end
