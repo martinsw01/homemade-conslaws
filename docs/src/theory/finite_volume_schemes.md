@@ -219,25 +219,26 @@ we know the solution is a shock wave at $x = 1/2t$.
 ```@setup 1
 ENV["GKSwstype"]="nul" #https://discourse.julialang.org/t/deactivate-plot-display-to-avoid-need-for-x-server/19359/2
 using homemade_conslaws.FiniteVolumes: godunov_scheme, lax_friedrichs_scheme, rusanov_scheme
-using homemade_conslaws.Viz: animate_solution
+using homemade_conslaws
+using homemade_conslaws.Viz: animate_solution, animate_solutions
 ```
 
 ```@example 1
 x_L, x_R = -1, 1
-f(U) = U^2/2+1
-df(U) = U
-ω = 0
 N = 50
-dx = (x_R - x_L) / (N + 1)
-x_mid = x_L + 0:dx:x_R
-U0 = x_mid .< 0
-BC(t, U) = [1;; 0]
+u0(x) = x < 0 ? 1. : 0.
+
+grid = UniformGrid1D(N, NeumannBC(), u0, (x_L, x_R))
+system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), GodunovFlux(0.), ForwardEuler(grid))
+simulator = Simulator(system, grid, 0.)
+
+x_mid = cell_centers(grid)
+
 dt = 0.1 # max time step
 T = 1
-U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
+U, t = simulate_and_aggregate!(simulator, T, dt)
 
-animate_solution((U,),
-                 "Approximate solution",
+animate_solution(U', (x, t) -> u0(x - 0.5t),
                  x_mid, t)
 ```
 
@@ -255,11 +256,12 @@ The numerical solution approxumates this well, having a sharp shock at ``x = 1/2
 we expect a rarefaction wave between the curves ``x = -t`` and ``x = t``:
 
 ```@example 1
-U0 = (x_mid .> 0) * 2 .-1
-BC(t, U) = [-1;; 1]
-U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
+u0(x) = (x > 0) * 2 - 1
+grid = UniformGrid1D(N, NeumannBC(), u0, (x_L, x_R))
+simulator = Simulator(system, grid, 0.)
+U, t = simulate_and_aggregate!(simulator, T, dt)
 
-animate_solution((U,),
+animate_solution(U',
                  "Approximate solution",
                  x_mid, t)
 ```
@@ -267,11 +269,13 @@ animate_solution((U,),
 For a more complicated example, ``U_0 = \sin(4\pi x)``, we expect a compound wave:
 
 ```@example 1
-U0 = sin.(4π*x_mid)
-BC(t, U) = [0;; 0]
-U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
+u0(x) = sin(4π*x)
+grid = UniformGrid1D(N, PeriodicBC(), u0, (x_L, x_R))
+simulator = Simulator(system, grid, 0.)
+U, t = simulate_and_aggregate!(simulator, T, dt)
+# U, t = godunov_scheme(f, df, ω, U0, BC, dx, dt, T)
 
-animate_solution((U,),
+animate_solution(U',
                  "Approximate solution",
                  x_mid, t)
 ```
@@ -374,13 +378,15 @@ The solutions are stable and non-oscillatory. Unlike the Roe scheme, it also app
 ```
 
 ```@example 1
-U0 = x_mid .< 0     # hide
-BC(t, U) = [1;; 0]  # hide
+u0(x) = x < 0     # hide
+grid = UniformGrid1D(N, NeumannBC(), u0, (x_L, x_R)) # hide
+system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), LaxFriedrichsFlux(), ForwardEuler(grid)) # hide
+simulator = Simulator(system, grid, 0.) # hide
 dt = 0.1 # max time step    # hide
 T = 1   # hide
-U, t = lax_friedrichs_scheme(f, df, U0, BC, dx, dt, T)    # hide
+U, t = simulate_and_aggregate!(simulator, T, dt)    # hide
 
-animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
+animate_solution(U', (x, t) -> x < 0.5t, x_mid, t) #hide
 ```
 
 ```@raw html
@@ -410,6 +416,13 @@ For the same problem as above with get
 ```
 
 ```@example 1
+U0 = u0.(x_mid) # hide
+ω = 0. # hide
+f(u) = 0.5u^2 # hide
+df(u) = u # hide
+dx = grid.dx # hide
+BC(t, U) = [U[1]; U[end]] # hide
+
 U, t = rusanov_scheme(f, df, U0, BC, dx, dt, T)    # hide
 
 animate_solution(U, (x, t) -> x < 0.5t, x_mid, t) #hide
@@ -422,7 +435,7 @@ U0 = (x_mid .> 0) * 2 .-1 # hide
 BC(t, U) = [-1;; 1] # hide
 U, t = rusanov_scheme(f, df, U0, BC, dx, dt, T) # hide
 
-animate_solution((U,), "Approximation", x_mid, t) # hide
+animate_solution(U, "Approximation", x_mid, t) # hide
 ```
 
 ### Comparison
@@ -435,9 +448,9 @@ U_Rus, t = rusanov_scheme(f, df, U0, BC, dx, dt, T) # hide
 U_LxF, _ = lax_friedrichs_scheme(f, df, U0, BC, dx, dt, T) # hide
 U_God, _ = godunov_scheme(f, df, ω, U0, BC, dx, dt, T) # hide
 
-animate_solution((U_Rus, U_LxF, U_God, x_mid' .< 0.5t), # hide
-                 ["Rusanov" "Lax-Friedrichs" "Godunov" "Exact"], # hide
-                 x_mid, t) # hide
+animate_solutions((U_Rus, U_LxF, U_God, x_mid' .< 0.5t), # hide
+                  ["Rusanov" "Lax-Friedrichs" "Godunov" "Exact"], # hide
+                  x_mid, t) # hide
 ```
 
 

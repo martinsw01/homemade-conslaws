@@ -1,4 +1,4 @@
-export UniformGrid1DWalls
+export UniformGrid1DWalls, walls
 
 
 struct UniformGrid1DWalls{Float <: AbstractFloat, Int <: Integer} <: Grid1D{WallsBC{Float}}
@@ -112,3 +112,10 @@ end
 cells(grid::UniformGrid1DWalls) = grid.cells
 
 get_dx(grid::UniformGrid1DWalls, cell_idx) = grid.dx
+
+@views function walls(grid::UniformGrid1DWalls)
+    x_mid = cell_centers(grid)
+    [[x_mid[start], x_mid[stop]]
+    for (start, stop) in 
+    zip(grid.left_of_walls_indices[1:end-1], grid.right_of_walls_indices[2:end])]
+end

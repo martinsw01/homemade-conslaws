@@ -1,6 +1,6 @@
 using QuadGK, StaticArrays
 
-export UniformGrid1D, for_each_cell, for_each_interior_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, cells, separate_variables,
+export Grid1D, UniformGrid1D, for_each_cell, for_each_interior_cell, for_each_boundary_cell, get_neighbour_indices, get_dx, cells, separate_variables,
     cell_centers
 
 

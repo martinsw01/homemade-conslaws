@@ -23,10 +23,9 @@ function main()
     Q, t = simulate_and_aggregate!(simulator, T, dt)
     H, UH = separate_variables(Q)
 
-    homemade_conslaws.Viz.animate_solution(
-        (H,),
-        "h",
-        cell_centers(grid),
+    homemade_conslaws.Viz.animate_water(
+        H, UH,
+        grid,
         t
     )
 end

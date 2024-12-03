@@ -72,4 +72,4 @@ max_abs_difference = maximum(abs.(H_SinSWE .- H)[1:end-1,:])
 @show max_abs_difference
 
 homemade_conslaws.Viz.animate_solution(
-    (H_SinSWE,), "H_SinSWE", x_SinSWE, t_SinSWE, T)
+    H_SinSWE, "H_SinSWE", x_SinSWE, t_SinSWE, T)
