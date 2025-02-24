@@ -131,5 +131,9 @@ function separate_variables(U::AbstractMatrix{SVector{N, T}}) where {N, T}
     (stacked[i,:,:]' for i in 1:N)
 end
 
+function separate_variables(U::AbstractVector{SVector{N, T}}) where {N, T}
+    [U[i][1] for i in eachindex(U)], [U[i][2] for i in eachindex(U)]
+end
+
 
 cells(grid::UniformGrid1D) = grid.cells

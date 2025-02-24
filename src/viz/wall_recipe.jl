@@ -3,7 +3,7 @@
     start, stop, y_min, y_max = wp.args
     label --> :none
     seriestype --> :shape
-    # fillalpha --> 0.5
+    fillalpha --> 0.2
     fillcolor --> :black
     [[start, start, stop, stop, start]], [[y_min, y_max, y_max, y_min, y_min]]
 end
