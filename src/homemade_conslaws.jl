@@ -24,6 +24,8 @@ include("reconstruction/noreconstruction.jl")
 include("reconstruction/linear_reconstruction.jl")
 include("simulator.jl")
 
+include("autodiff/dual_numbers.jl")
+include("autodiff/forward_diff.jl")
 
 include("viz/viz.jl")
 
