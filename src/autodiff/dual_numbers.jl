@@ -28,12 +28,10 @@ function promote_rule(::Type{DualNumber{d, S}}, ::Type{T}) where {d, S, T<:Real}
 end
 
 function convert(::Type{DualNumber{d, S}}, x::DualNumber{d, T}) where {d, S, T}
-    # println("convert($a, $x)")
     DualNumber(convert(S, x.real), SVector{d, S}(x.dual))
 end
 
 function convert(::Type{DualNumber{d, S}}, x::T) where {d, S, T<:Number}
-    # println("convert($a, $x)")
     DualNumber(convert(S, x), zeros(SVector{d, S}))
 end
 
@@ -88,7 +86,8 @@ end
 function ^(a::DualNumber{d, S}, b::DualNumber{d, T}) where {d, S, T}
     exp(b * log(a))
 end
-Base.:^(x::DualNumber, n::Real) = DualNumber(x.real^n, n * x.real^(n-1) * x.dual)
+Base.:^(a::DualNumber, b::Real) = DualNumber(a.real^b, b * a.real^(b-1) * a.dual)
+Base.:^(a::DualNumber, b::Integer) = DualNumber(a.real^b, b * a.real^(b-1) * a.dual)
 Base.:^(x::Real, y::DualNumber) = x^y.real * DualNumber(1, log(x) * y.dual)
 
 
@@ -108,6 +107,15 @@ for (f, df) in [(:exp, :exp),
     (:asinh, x -> 1 / sqrt(x^2 + 1)),
     (:acosh, x -> 1 / sqrt(x^2 - 1)),
     (:atanh, x -> 1 / (1 - x^2)),
-    (:inv, x -> -1 / x^2)]
+    (:inv, x -> -1 / x^2),
+    (:abs, :sign)]
     @eval Base.$f(x::DualNumber) = DualNumber($f(x.real), $df(x.real) * x.dual)
 end
+
+function Base.isless(x::DualNumber, y::DualNumber)
+    x.real < y.real
+end
+
+
+Base.max(x::DualNumber, y::DualNumber) = max(x.real, y.real)
+Base.min(x::DualNumber, y::DualNumber) = min(x.real, y.real)

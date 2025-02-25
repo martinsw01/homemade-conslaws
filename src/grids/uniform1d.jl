@@ -12,6 +12,13 @@ struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: G
     cells::Vector{Cell}
     domain::Tuple{Float, Float}
 
+    function UniformGrid1D(N, bc::BoundaryCondition, u0, domain)
+        x_L, x_R = domain
+        dx = (x_R - x_L) / (N+1)
+        return new{typeof(bc), typeof(dx), eltype(u0)}(
+            dx, bc, u0, domain
+        )
+    end
     function UniformGrid1D(N, bc::BoundaryCondition, u0::Function, domain)
         x_L, x_R = domain
         dx = (x_R - x_L) / (N+1)

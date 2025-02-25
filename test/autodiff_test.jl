@@ -50,6 +50,7 @@ numbers = [generate_random_pair(4) for _ in 1:10]
         for _ in 1:4
             a, b = rand(1:10), rand()
             @test DualNumber(a, [0])^b ≈ DualNumber(a^b, [0])
+            @test DualNumber(b, [0])^(a) ≈ DualNumber(b^a, [0])
         end
     end
 end
@@ -74,4 +75,25 @@ end
     fx, grad_fx = gradient(f, x)
     @test fx ≈ f(x)
     @test grad_fx ≈ df(x)
+end
+
+@testset "Test on simulation" begin
+    gradient(ones(20)) do u0
+        bc = NeumannBC()
+        N = 10
+        x_L, x_R = -1, 1
+        grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
+        dt = grid.dx
+        T = 1
+        eq = BurgersEQ()
+        F = LaxFriedrichsFlux()
+        reconstruction = NoReconstruction(grid)
+        timestepper = ForwardEuler(grid)
+        system = ConservedSystem(eq, reconstruction, F, timestepper)
+        simulator = Simulator(system, grid, 0.)
+
+        simulate!(simulator, T, dt)
+
+        sum(cells(grid))
+    end
 end
