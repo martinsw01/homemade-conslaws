@@ -88,7 +88,38 @@ nothing # hide
 
 ```@setup 1
 ENV["GKSwstype"]="nul" #https://discourse.julialang.org/t/deactivate-plot-display-to-avoid-need-for-x-server/19359/2
-using homemade_conslaws.central_difference, homemade_conslaws.upwind, homemade_conslaws.Viz
+using homemade_conslaws, homemade_conslaws.Viz
+
+function upwind_scheme(x, t, a::Function, u0::Function)
+    u = zeros(length(t) + 1, length(x))
+    u[1,:] = u0.(x)
+
+    dt = t[2] - t[1]
+    dx = x[2] - x[1]
+    nu = dt/dx
+
+    for n in eachindex(t)
+        a_eval = a.(x, t[n])
+        u[n+1,:] = nu * a_eval .* circshift(u[n,:], 1) + (1 .- nu * a_eval) .* u[n,:]
+    end
+
+    return @view u[2:end, :]
+end
+
+function central_difference_scheme(x, t, u0::Function)
+    u = zeros(length(t) + 1, length(x))
+    u[1,:] = u0.(x)
+
+    dt = t[2] - t[1]
+    dx = x[2] - x[1]
+    nu = dt/(2*dx)
+
+    for n in 1:length(t)
+        u[n+1,:] = u[n,:] - nu * (circshift(u[n,:], -1) - circshift(u[n,:], 1))
+    end
+
+    return @view u[2:end,:]
+end
 ```
 
 and $a = 1$. Since the data is periodic, we impose periodic boundary conditions. Numerically, we implement this by setting
@@ -118,20 +149,21 @@ For the first time step ``n = 1``, we have
 Using a grid of ``50`` mesh points, simulating to time ``T = 3``, we get the following result:
 
 ```@example 1
-x_L, x_R = 0, 1
-T = 3
-N = 100
-dx = (x_R - x_L)/N
-dt = 1 * dx
+x_L, x_R = 0, 1 # hide
+T = 3 # hide
+N = 100 # hide
+dx = (x_R - x_L)/N # hide
+dt = 1 * dx # hide
 
-x = x_L+dx:dx:x_R
-t = dt:dt:T
+x = x_L+dx:dx:x_R # hide
+t = dt:dt:T # hide
 
-U = central_difference.central_difference_scheme(x, t, u0)
+U = central_difference_scheme(x, t, u0) # hide
 
-Viz.animate_solution(U,
-                     (x, t) -> u0(x-t),
-                     x, t)
+Viz.animate_solution(U, # hide
+                     (x, t) -> u0(x-t), # hide
+                     x, t, # hide
+                     6) # hide
 ```
 
 After some time, the solution diverges. Intuitively, the information should propagate from
@@ -189,40 +221,42 @@ difference scheme, which will play a crucial role later.
 Now, we do the same numerical experiment as previously with ``a = 1``:
 
 ```@example 1
-x_L, x_R = 0, 1
-T = 1
-N = 50
-dx = (x_R - x_L)/N
-dt = 1.3 * dx
-x = x_L + dx:dx:x_R
-t = dt:dt:T
+x_L, x_R = 0, 1 # hide
+T = 1 # hide
+N = 50 # hide
+dx = (x_R - x_L)/N # hide
+dt = 1.3 * dx # hide
+x = x_L + dx:dx:x_R # hide
+t = dt:dt:T # hide
 
-a(x, t) = 1
+a(x, t) = 1 # hide
 
-U = upwind.upwind_scheme(x, t, a, u0)
+U = upwind_scheme(x, t, a, u0) # hide
 
 
-Viz.animate_solution(U,
-                    (x, t) -> u0(x-t),
-                    x, t)
+Viz.animate_solution(U, # hide
+                    (x, t) -> u0(x-t), # hide
+                    x, t, # hide
+                    2) # hide
 ```
 
 ```@example 1
-x_L, x_R = 0, 1
-T = 1
-N = 100
-dx = (x_R - x_L)/N
-dt = 0.7 * dx
-x = x_L+dx:dx:x_R
-t = dt:dt:T
+x_L, x_R = 0, 1 # hide
+T = 1 # hide
+N = 100 # hide
+dx = (x_R - x_L)/N # hide
+dt = 0.7 * dx # hide
+x = x_L+dx:dx:x_R # hide
+t = dt:dt:T # hide
 
-a(x, t) = 1
+a(x, t) = 1 # hide
 
-U = upwind.upwind_scheme(x, t, a, u0)
+U = upwind_scheme(x, t, a, u0) # hide
 
-Viz.animate_solution(U,
-                     (x, t) -> u0(x-t),
-                     x, t)
+Viz.animate_solution(U, # hide
+                     (x, t) -> u0(x-t), # hide
+                     x, t, # hide
+                     2) # hide
 ```
 
 We see that stability depends on the relation ``\frac{\Delta t}{\Delta x}``. 
@@ -272,8 +306,8 @@ We now consider the transport equation with ``a = 1`` in the domain ``[0, 1]`` w
 ```
 
 ```@example 1
-u0(x) = x .< 0.5 ? 2 : 1
-a(x, t) = 1
+u0(x) = x .< 0.5 ? 2 : 1 # hide
+a(x, t) = 1 # hide
 
 nothing # hide
 ```
@@ -282,35 +316,37 @@ This yields the discontinuous solution ``U(x, t) = U_0(x - t)``. We use the upwi
 mesh points.
 
 ```@example 1
-x_L, x_R = 0, 1
-T = 0.25
-N = 50
+x_L, x_R = 0, 1 # hide
+T = 0.25 # hide
+N = 50 # hide
 
-dx = (x_R - x_L)/N
-dt = 0.9 * dx
-x = x_L+dx:dx:x_R
-t = dt:dt:T
+dx = (x_R - x_L)/N # hide
+dt = 0.9 * dx # hide
+x = x_L+dx:dx:x_R # hide
+t = dt:dt:T # hide
 
-U = upwind.upwind_scheme(x, t, a, u0)
+U = upwind_scheme(x, t, a, u0) # hide
 
-Viz.animate_solution(U,
-                     (x, t) -> u0(x-t),
-                     x, t)
+Viz.animate_solution(U, # hide
+                     (x, t) -> u0(x-t), # hide
+                     x, t, # hide
+                     1) # hide
 ```
 
 ```@example 1
-x_L, x_R = 0, 1
-T = 0.25
-N = 200
-dx = (x_R - x_L)/N
-dt = 0.9 * dx
+x_L, x_R = 0, 1 # hide
+T = 0.25 # hide
+N = 200 # hide
+dx = (x_R - x_L)/N # hide
+dt = 0.9 * dx # hide
 
-x = x_L+dx:dx:x_R
-t = dt:dt:T
+x = x_L+dx:dx:x_R # hide
+t = dt:dt:T # hide
 
-U = upwind.upwind_scheme(x, t, a, u0)
+U = upwind_scheme(x, t, a, u0) # hide
 
-Viz.animate_solution(U,
-                     (x, t) -> u0(x-t),
-                     x, t)
+Viz.animate_solution(U, # hide
+                     (x, t) -> u0(x-t), # hide
+                     x, t, # hide
+                     1) # hide
 ```
