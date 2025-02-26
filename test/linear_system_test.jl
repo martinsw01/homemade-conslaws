@@ -18,7 +18,7 @@ homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
 
 @testset "Test cell values" begin
     eq = ConstantLinearAdvection()
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in [-2/3, 0, 2/3]]
     N = 2
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))
@@ -44,7 +44,7 @@ end
 
 @testset "Test flux computation" begin
     eq = ConstantLinearAdvection()
-    u0(x) = [x > 0, -x > 0]
+    u0 = [[0, 1], [0, 1], [1, 0], [1, 0]]
     N = 3
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))
@@ -67,7 +67,7 @@ end
 
 @testset "Test aggregation of states" begin
     eq = ConstantLinearAdvection()
-    u0(x) = [x > 0, -x > 0]
+    u0 = [[0, 1], [0, 1], [1, 0], [1, 0]]
     N = 3
     bc = NeumannBC()
     grid = UniformGrid1D(N, bc, u0, (-1, 1))

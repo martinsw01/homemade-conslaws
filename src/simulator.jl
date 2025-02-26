@@ -71,7 +71,7 @@ function perform_step!(simulator::Simulator, max_dt)
     dt = integrate!(simulator.grid, simulator.system,
                (eq, grid, left, right) -> calc_max_dt(eq, grid, left, right, max_dt))
 
-    simulator.t[] += dt
+    simulator.t[] += Real(dt) # May be a dual number
 end
 
 

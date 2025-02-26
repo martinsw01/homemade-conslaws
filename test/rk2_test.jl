@@ -3,7 +3,7 @@ using Test
 
 @testset "Test preserves 0" begin
     bc = NeumannBC()
-    u0(x) = 0
+    u0 = [0., 0., 0.]
     N = 2
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
@@ -24,11 +24,10 @@ end
 
 @testset "Test one step" begin
     bc = NeumannBC()
-    u0(x) = x < 0
+    u0 = [1., 1., 0., 0.]
     N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    cells(grid)[:] = [1., 1., 0., 0.]
     dt = grid.dx
     T = dt
     eq = BurgersEQ()
@@ -42,7 +41,6 @@ end
 
 
     grid2 = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    cells(grid2)[:] = [1., 1., 0., 0.]
     reconstruction2 = NoReconstruction(grid2)
     timestepper2 = ForwardEuler(grid2)
     system2 = ConservedSystem(eq, reconstruction2, F, timestepper2)
