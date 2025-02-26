@@ -3,7 +3,7 @@ using Test
 
 @testset "Test no interior walls" begin
     bc = WallsBC()
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in [-0.6, -0.2, 0.2, 0.6]]
     N = 3
     x_L, x_R = -1, 1
 
@@ -29,7 +29,7 @@ end
 
 @testset "Test two interior walls respectively starting and stopping at interface" begin
     bc = WallsBC([[-0.5, -0.4], [0.4, 0.5]])
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in -0.875:0.25:0.875]
     N = 7
     x_L, x_R = -1, 1
 
@@ -46,7 +46,7 @@ end
 
 @testset "Test one interior wall entirely contained in cell" begin
     bc = WallsBC([[0.1, 0.2]])
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in [-0.6, -0.2, 0.2, 0.6]]
     N = 3
     x_L, x_R = -1, 1
 
@@ -64,7 +64,7 @@ end
 
 @testset "Test wall covering multiple cells" begin
     bc = WallsBC([[-0.4, 0.4]])
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in -0.875:0.25:0.875]
     N = 7
     x_L, x_R = -1, 1
     grid = UniformGrid1DWalls(N, bc, u0, (x_L, x_R))
@@ -81,7 +81,7 @@ end
 
 @testset "Test infinitesimal wall" begin
     bc = WallsBC([[0., 0.]])
-    u0(x) = [x, -x]
+    u0 = [[x, -x] for x in [-0.6, -0.2, 0.2, 0.6]]
     N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1DWalls(N, bc, u0, (x_L, x_R))
@@ -95,7 +95,6 @@ end
 function simulate_simple_wall_bc(N, T, F, q0, x_L, x_R, eq)
     bc = WallBC()
     grid = UniformGrid1D(N, bc, q0, (x_L, x_R))
-    cells(grid)[:] = q0.(cell_centers(grid))
     dt = grid.dx
 
     reconstruction = NoReconstruction(grid)
@@ -110,7 +109,7 @@ end
 
 
 function simulate_new_walls_bc(N, T, F, q0_left, x_L, x_mid, x_R, eq)
-    q0(x) = x <= x_mid ? q0_left(x) : [1., 0.]
+    q0 = [q0_left..., repeat([[1., 0.]], length(q0_left))...]
 
     bc = WallsBC([[x_mid, x_mid]])
     grid = UniformGrid1DWalls(N, bc, q0, (x_L, x_R))
@@ -134,7 +133,7 @@ end
     x_L, x_mid, x_R = -1., 0., 1.
     N = 4
     T = 50.
-    q0_left(x) = [1. + 0.1x, 0.5x]
+    q0_left = [[1. + 0.1x, 0.5x] for x in -0.9:0.2:-0.1]
 
     eq = ShallowWater1D(1.)
     F = CentralUpwind()
