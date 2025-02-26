@@ -12,25 +12,20 @@ struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: G
     cells::Vector{Cell}
     domain::Tuple{Float, Float}
 
-    function UniformGrid1D(N, bc::BoundaryCondition, u0::Function, domain)
+    function UniformGrid1D(N, bc, u0, domain)
         x_L, x_R = domain
         dx = (x_R - x_L) / (N+1)
-        x = x_L:dx:x_R
-
-        averages = _calc_average.(u0, x[1:end-1], x[2:end])
-
-        if eltype(averages) <: Number
-            return new{typeof(bc), typeof(dx), eltype(averages)}(
-                dx, bc, averages, domain
-            )
-        else
-            conserved_variables::Int64 = length(averages[1])
-            FloatType = eltype(averages[1])
-            cells = [SVector{conserved_variables, FloatType}(average) for average in averages]
-            return new{typeof(bc), typeof(dx), eltype(cells)}(
-                dx, bc, cells, domain
-            )
-        end
+        return new{typeof(bc), typeof(dx), eltype(u0)}(
+            dx, bc, u0[:], domain
+        )
+    end
+    function UniformGrid1D(N, bc, u0::AbstractVector{<:AbstractVector{T}}, domain) where T
+        x_L, x_R = domain
+        dx = (x_R - x_L) / (N+1)
+        d = length(u0[1])
+        return new{typeof(bc), typeof(dx), SVector{d, T}}(
+            dx, bc, SVector{d, T}.(u0), domain
+        )
     end
 end
 
@@ -39,8 +34,9 @@ function cell_centers(grid::UniformGrid1D)
     x_L + 0.5grid.dx:grid.dx:x_R - 0.5grid.dx
 end
 
-function _calc_average(f, a, b)
-    quadgk(f, a, b)[1] / (b - a)
+function cell_centers(N, x_l, x_r)
+    dx = (x_r - x_l) / (N + 1)
+    x_l + 0.5dx:dx:x_r - 0.5dx
 end
 
 function _reduce_cells(f, grid::Grid1D, indices, initial_value)

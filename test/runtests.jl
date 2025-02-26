@@ -22,4 +22,10 @@ using Test
     end
 end
 
+@testset "Autodiff tests" begin
+    @testset "Test autodiff" begin
+        include("autodiff_test.jl")
+    end
+end
+
 nothing

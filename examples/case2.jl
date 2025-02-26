@@ -79,7 +79,7 @@ end
 function simulate_with_wall_bc(T, N, H0)
     eq = ShallowWater1D(9.81)
 
-    q0(x) = [H0(x), 0.]
+    q0 = [[H0(x), 0.] for x in cell_centers(N, 0., 5.)]
     # bc = WallsBC([[4.,4. +(1/(2N))]])
     bc = WallsBC([[4., 4.5]])
     grid = UniformGrid1DWalls(N, bc, q0, (0., 5.))
