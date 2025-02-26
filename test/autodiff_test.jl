@@ -103,3 +103,25 @@ end
         sum(cells(grid))
     end
 end
+
+@testset "Test on water simulation" begin
+    gradient([0.]) do (u0, )
+        bc = WallsBC([[0.,0.]])
+        q0 = [[exp(-(x - 0.5)^2 / 0.001) .+ 1.5, u0] for x in range(-1, 1, length=20)] 
+        grid = UniformGrid1DWalls(19, bc, q0, (-1, 1))
+        dt = grid.dx
+        T = 1
+
+        F = CentralUpwind()
+
+        eq = ShallowWater1D(1.)
+        reconstruction = NoReconstruction(grid)
+        timestepper = ForwardEuler(grid)
+        system = ConservedSystem(eq, reconstruction, F, timestepper)
+        simulator = Simulator(system, grid, 0.)
+
+        simulate!(simulator, T, dt)
+
+        maximum(uh for (h, uh) in cells(grid))
+    end
+end

@@ -1,6 +1,6 @@
 import Base: convert, promote_rule
 import Base: +, *, -, /, ^
-import Base: ≈
+import Base: ≈, isless
 
 export DualNumber
 
@@ -18,6 +18,9 @@ struct DualNumber{d, T <: Number} <: Number
     end
 end
 
+function Base.Real(x::DualNumber)
+    x.real
+end
 
 function promote_rule(::Type{DualNumber{d, S}}, ::Type{DualNumber{d, T}}) where {d, S, T}
     DualNumber{d, promote_type(S, T)}
@@ -118,5 +121,12 @@ for (f, df) in [(:exp, :exp),
 end
 
 
-Base.max(x::DualNumber, y::DualNumber) = max(x.real, y.real)
-Base.min(x::DualNumber, y::DualNumber) = min(x.real, y.real)
+function Base.isless(x::DualNumber{d, S}, y::DualNumber{d, T}) where {d, S, T}
+    isless(x.real, y.real)
+end
+function Base.isless(x::DualNumber, y::Real)
+    isless(x.real, y)
+end
+function Base.isless(x::Real, y::DualNumber)
+    isless(x, y.real)
+end

@@ -4,7 +4,7 @@ export UniformGrid1DWalls, walls
 struct UniformGrid1DWalls{Float <: AbstractFloat, CellFloat <: Number, Index <: Integer} <: Grid1D{WallsBC{Float}}
     dx::Float
     bc::WallsBC{Float}
-    cells::Vector{SVector{2, Float}}
+    cells::Vector{SVector{2, CellFloat}}
     domain::Tuple{Float, Float}
 
     left_of_walls_indices::Vector{Index}
@@ -12,24 +12,11 @@ struct UniformGrid1DWalls{Float <: AbstractFloat, CellFloat <: Number, Index <: 
     cells_not_containing_walls_indices::Vector{Index}
     interior_cells_indices::Vector{Index}
 
-    function UniformGrid1DWalls(N, bc::BoundaryCondition, u0::Function, domain)
+    function UniformGrid1DWalls(N, bc, u0, domain)
         x_L, x_R = domain
         dx = (x_R - x_L) / (N+1)
 
-        cells = [SVector{2, typeof(dx)}(u0(x)...) for x in _cell_centers(x_L, x_R, dx)]
-
-        left_indices, right_indices = _compute_wall_neighbour_indices(bc, N, dx, x_L, x_R)
-        cells_not_containing_walls_indices = _compute_inner_cells_indices(left_indices, right_indices, N)
-        inner_cells_indices = _compute_inner_cell_indices(cells_not_containing_walls_indices, left_indices, right_indices)
-
-        return new{typeof(dx), typeof(dx), typeof(N)}(
-            dx, bc, cells, domain,left_indices, right_indices, cells_not_containing_walls_indices, inner_cells_indices
-        )
-    end
-    function UniformGrid1DWalls(N, bc, u0::AbstractVector{<:AbstractVector{CellFloat}}, domain) where CellFloat
-        x_L, x_R = domain
-        dx = (x_R - x_L) / (N+1)
-
+        CellFloat = eltype(eltype(u0))
         cells = SVector{2, CellFloat}.(u0)
 
         left_indices, right_indices = _compute_wall_neighbour_indices(bc, N, dx, x_L, x_R)
