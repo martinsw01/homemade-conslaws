@@ -21,6 +21,8 @@ numbers = [generate_random_pair(4) for _ in 1:10]
             ab = op(DualNumber(a...), DualNumber(b...))
             ab2 = DualNumber(op(a_real, b_real), op(a_dual, b_dual))
             @test ab == ab2
+
+            @test op(DualNumber(a...), b_real) == DualNumber(op(a_real, b_real), a_dual) == op(b_real, DualNumber(a...))
         end
     end
 
@@ -48,9 +50,13 @@ numbers = [generate_random_pair(4) for _ in 1:10]
 
     @testset "Test powers" begin
         for _ in 1:4
-            a, b = rand(1:10), rand()
-            @test DualNumber(a, [0])^b ≈ DualNumber(a^b, [0])
-            @test DualNumber(b, [0])^(a) ≈ DualNumber(b^a, [0])
+            a, b = rand(1:5), rand(1:5)
+
+            @test a^b ≈
+                DualNumber(a, [0])^b ≈
+                a^DualNumber(b, [0]) ≈
+                DualNumber(a^b, [0]) ≈
+                DualNumber(a, [0])^Float64(b)
         end
     end
 end

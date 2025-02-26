@@ -38,7 +38,12 @@ end
 function ≈(x::DualNumber{d, S}, y::DualNumber{d, T}; kwargs...) where {d, S, T}
     isapprox(x.real, y.real; kwargs...) && isapprox(x.dual, y.dual; kwargs...)
 end
-    
+function ≈(x::DualNumber, y::T; kwargs...) where T <: Real
+    isapprox(x.real, y; kwargs...) && all(isapprox.(x.dual, zero(eltype(x.dual)); kwargs...))
+end
+function ≈(x::T, y::DualNumber; kwargs...) where T <: Real
+    y ≈ x
+end 
 
 function +(a::DualNumber{d, S}, b::DualNumber{d, T}) where {d, S, T}
     DualNumber(a.real + b.real, a.dual + b.dual)
@@ -110,10 +115,6 @@ for (f, df) in [(:exp, :exp),
     (:inv, x -> -1 / x^2),
     (:abs, :sign)]
     @eval Base.$f(x::DualNumber) = DualNumber($f(x.real), $df(x.real) * x.dual)
-end
-
-function Base.isless(x::DualNumber, y::DualNumber)
-    x.real < y.real
 end
 
 
