@@ -42,7 +42,7 @@ end
 function run_homemade_conslaws_simulation(T, N, u0)
     eq = ShallowWater1D(1.)
     bc = WallBC()
-    grid = UniformGrid1D(N, bc, u0, (0, 1))
+    grid = UniformGrid1D(N, bc, u0.(cell_centers(N, 0, 1)), (0, 1))
     x = cell_centers(grid)
     grid.cells .= u0.(x)
 

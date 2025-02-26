@@ -9,7 +9,7 @@ function main()
     q0(x) = @SVector [h0(x), 0.]
     N = 100
     bc = WallBC()
-    grid = UniformGrid1D(N, bc, q0, (-1, 1))
+    grid = UniformGrid1D(N, bc, q0.(cell_centers(N, -1, 1)), (-1, 1))
     dt = grid.dx
     T = 2.
 
