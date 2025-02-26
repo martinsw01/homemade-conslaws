@@ -1,6 +1,3 @@
-coverage:
-  paths:
-    - "src"  # Include only the src directory in the coverage report
-
 ignore:
   - "src/viz"
+  - "examples"
