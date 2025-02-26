@@ -4,7 +4,7 @@ using Test
 @testset "Test preserves 0" begin
     bc = NeumannBC()
     u0 = [0., 0., 0.]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     dt = grid.dx
@@ -25,7 +25,7 @@ end
 @testset "Test one step" begin
     bc = NeumannBC()
     u0 = [1., 1., 0., 0.]
-    N = 3
+    N = 4
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     dt = grid.dx

@@ -4,7 +4,7 @@ using homemade_conslaws
 @testset "Test shock reconstruction" begin
     bc = NeumannBC()
     u0 = [1., 1., 0., 0.]
-    N = 3
+    N = 4
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
@@ -20,7 +20,7 @@ end
 @testset "Test smooth reconstruction" begin
     bc = NeumannBC()
     u0 = [-2/3, 0, 2/3]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
@@ -41,7 +41,7 @@ end
 @testset "Test system reconstruction" begin
     bc = NeumannBC()
     u0 = [[x, -x] for x in [-2/3, 0, 2/3]]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 

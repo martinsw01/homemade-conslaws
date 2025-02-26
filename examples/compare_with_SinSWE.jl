@@ -66,7 +66,7 @@ u0(x) = @SVector[exp.(-(x - 0.5)^2 / 0.001) .+ 1.5, 0.0 .* x]
 N = 50
 T = 2.
 H_SinSWE, UH_SinSwe, t_SinSWE, x_SinSWE = run_SinSWE_simulation(T, N, u0)
-H, UH, t, x = run_homemade_conslaws_simulation(T, N-1, u0)
+H, UH, t, x = run_homemade_conslaws_simulation(T, N, u0)
 
 max_abs_difference = maximum(abs.(H_SinSWE .- H)[1:end-1,:])
 @show max_abs_difference

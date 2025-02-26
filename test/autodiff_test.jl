@@ -84,9 +84,9 @@ end
 end
 
 @testset "Test on simulation" begin
-    gradient(ones(20)) do u0
+    N = 10
+    gradient(ones(N)) do u0
         bc = NeumannBC()
-        N = 10
         x_L, x_R = -1, 1
         grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
         dt = grid.dx
@@ -105,10 +105,11 @@ end
 end
 
 @testset "Test on water simulation" begin
+    N = 20
     gradient([0.]) do (u0, )
         bc = WallsBC([[0.,0.]])
-        q0 = [[exp(-(x - 0.5)^2 / 0.001) .+ 1.5, u0] for x in range(-1, 1, length=20)] 
-        grid = UniformGrid1DWalls(19, bc, q0, (-1, 1))
+        q0 = [[exp(-(x - 0.5)^2 / 0.001) .+ 1.5, u0] for x in range(-1, 1, length=N)] 
+        grid = UniformGrid1DWalls(N, bc, q0, (-1, 1))
         dt = grid.dx
         T = 1
 

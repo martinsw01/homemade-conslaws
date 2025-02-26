@@ -14,14 +14,14 @@ struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: G
 
     function UniformGrid1D(N, bc, u0, domain)
         x_L, x_R = domain
-        dx = (x_R - x_L) / (N+1)
+        dx = (x_R - x_L) / N
         return new{typeof(bc), typeof(dx), eltype(u0)}(
             dx, bc, u0[:], domain
         )
     end
     function UniformGrid1D(N, bc, u0::AbstractVector{<:AbstractVector{T}}, domain) where T
         x_L, x_R = domain
-        dx = (x_R - x_L) / (N+1)
+        dx = (x_R - x_L) / N
         d = length(u0[1])
         return new{typeof(bc), typeof(dx), SVector{d, T}}(
             dx, bc, SVector{d, T}.(u0), domain
@@ -35,7 +35,7 @@ function cell_centers(grid::UniformGrid1D)
 end
 
 function cell_centers(N, x_l, x_r)
-    dx = (x_r - x_l) / (N + 1)
+    dx = (x_r - x_l) / N
     x_l + 0.5dx:dx:x_r - 0.5dx
 end
 

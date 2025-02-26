@@ -4,7 +4,7 @@ using homemade_conslaws
 @testset "Test riemann problem single step" begin
     bc = NeumannBC()
     u0 = [1., 0.5, 0.]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     dt = grid.dx
@@ -27,7 +27,7 @@ end
 @testset "Test cfl condition" begin
     bc = NeumannBC()
     u0 = [1., 0.5, 0.]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     max_dt = 2*grid.dx
@@ -49,7 +49,7 @@ end
 @testset "Test riemann problem 2 steps" begin
     bc = NeumannBC()
     u0 = [1., 0.5, 0.]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     max_dt = grid.dx
@@ -71,7 +71,7 @@ end
 @testset "Test accumulation of states" begin
     bc = NeumannBC()
     u0 = [1., 0.5, 0.]
-    N = 2
+    N = 3
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
     max_dt = grid.dx

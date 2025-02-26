@@ -112,7 +112,7 @@ end
 
 
 function main_wall_bc()
-    H_left, H_right, UH_left, UH_right, t, _ = simulate_with_wall_bc(T, N-1, H0_tall)
+    H_left, H_right, UH_left, UH_right, t, _ = simulate_with_wall_bc(T, N, H0_tall)
     xf = compute_cell_faces(N, 0., 5.)
 
     # homemade_conslaws.Viz.plot_water_walls_bc(H_left, H_right, UH_left, UH_right, xf, 4., "case_2_wave_wall_bc")
@@ -121,7 +121,7 @@ function main_wall_bc()
     homemade_conslaws.Viz.plot_time_step(t[2:end], diff(t), "time-step_case_2_wall_bc")
 end
 function main_wall_bc2(h0, name)
-    H_left, H_right, UH_left, UH_right, t, _ = simulate_with_wall_bc2(T, N-1, h0)
+    H_left, H_right, UH_left, UH_right, t, _ = simulate_with_wall_bc2(T, N, h0)
     xf = compute_cell_faces(N, 0., 5.)
 
     A = zeros(6)

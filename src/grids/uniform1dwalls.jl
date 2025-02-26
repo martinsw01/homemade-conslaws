@@ -14,7 +14,7 @@ struct UniformGrid1DWalls{Float <: AbstractFloat, CellFloat <: Number, Index <: 
 
     function UniformGrid1DWalls(N, bc, u0, domain)
         x_L, x_R = domain
-        dx = (x_R - x_L) / (N+1)
+        dx = (x_R - x_L) / N
 
         CellFloat = eltype(eltype(u0))
         cells = SVector{2, CellFloat}.(u0)
@@ -40,7 +40,7 @@ function _compute_wall_neighbour_indices(bc::WallsBC, N::Int, dx, x_L, x_R) wher
     right_of_walls_indices = Vector{Int}(undef, length(bc.walls)+1)
 
     right_of_walls_indices[1] = 1
-    left_of_walls_indices[end] = N + 1
+    left_of_walls_indices[end] = N
 
     for (i, (left, right)) in enumerate(bc.walls)
         left_of_walls_indices[i] = floor(Int, (left - x_L) / dx)
@@ -59,7 +59,7 @@ end
 
 function _compute_inner_cells_indices(left_of_walls_indices, right_of_walls_indices, N)
     number_of_indices = _compute_number_of_indices_covered_by_walls(left_of_walls_indices, right_of_walls_indices)
-    indices = Vector{typeof(N)}(undef, N + 1 - number_of_indices)
+    indices = Vector{typeof(N)}(undef, N - number_of_indices)
 
     i=1
 

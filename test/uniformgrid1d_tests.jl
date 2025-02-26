@@ -4,7 +4,7 @@ using Test
 @testset "Test grid periodic BC" begin
     bc = PeriodicBC()
     u0 = [-0.5, 0.5]
-    N = 1
+    N = 2
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
@@ -20,7 +20,7 @@ end
 @testset "Test grid neumann BC" begin
     bc = NeumannBC()
     u0 = [-0.5, 0.5]
-    N = 1
+    N = 2
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
@@ -36,7 +36,7 @@ end
 @testset "Test grid Wall BC" begin
     bc = WallBC()
     u0 = [[-0.5, 0.5], [0.5, -0.5]]
-    N = 1
+    N = 2
     x_L, x_R = -1, 1
     grid = UniformGrid1D(N, bc, u0, (x_L, x_R))
 
