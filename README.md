@@ -1,36 +1,16 @@
-# Finite volume schemes for conservation laws
+[![CI](https://github.com/martinsw01/homemade-conslaws/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/martinsw01/homemade-conslaws/actions/workflows/ci.yaml)
+[![Documentation](https://github.com/martinsw01/homemade-conslaws/actions/workflows/documentation.yml/badge.svg)](https://github.com/martinsw01/homemade-conslaws/actions/workflows/documentation.yml)
+[![codecov](https://codecov.io/github/martinsw01/homemade-conslaws/graph/badge.svg?token=3PBN592V8D)](https://codecov.io/github/martinsw01/homemade-conslaws)
 
-## Plan for coding
+# Homemade Conslaws
 
-The supervisors suggests to begin experimenting with implementing some finite volume schemes in order to get familiar with the numerics and Julia.
-The following equations gives invcreasing difficoulty.
+This is a package in Julia written for my specialization project during the last year of my master's degree in applied physics and mathematics at NTNU. The project aims to get an intuition about conservation laws and their numerical finite volume (FVM) solutions. Furthermore, a FVM solver inspired by SINTEF Digital's solver, [`SinFVM.jl`](https://github.com/sintefmath/SinFVM.jl) (previously `SinSWE.jl`) is implemented in order to investigate computational difficulties with shallow water simulations.
 
-- [ ] Advection equation
-- [ ] Burgers' equation
-- [ ] Shallow-water equations
+One of these problems can be seen in the following animation:
 
-## Methods
+![Animation demonstrating computational difficulties](example_computational_difficulties.gif)
 
-* Lax-Friedrich
-* Lax-Wendrof
-* Central-upwind (se also Section 4.5 in gpu-conslaws (2))
+The CFL-condition may in some situations severilly restrict the time step size, potentially making the simulation very slow. This and other problems are describe din detail in the final report, which can be found [here](https://martinsw01.github.io/homemade-conslaws/dev/final_report).
 
-It will also be beneficial to read about automatic differentiation (AD). The supervisors suggests reading the relevant chapters of Torjei's master thesis and play around with the Julia package ForwardDiff.jl.
-
-## Reading material
-
-### Textbooks and lecture notes
-
-1. Lecture notes from Sid Mishra for [Numerical methods for conservation laws
-and related equations](https://www.uio.no/studier/emner/matnat/math/MAT-IN9240/h17/pensumliste/numcl_notes.pdf), mainly chapters 1 - 5
-2. "How to Solve Systems of Conservation Laws Numerically Using the Graphics Processor as a High-Performance Computational Engine" by Knut-Andreas and previous colleagues at SINTEF. Good introduction to numerical solutions of conservation laws.
-3. "Finite-Volume Methods for Hyperbolic Problems" by LeVeque - textbook that can be used to look up theory or as a third alternative to the above.
-
-
-### Relevant articles for motivation or for later
-
-4. Kurganov, Noelle and Petrova - central-upwind scheme, relevant for the flood simulation (see also ch 4.5 in (2) above).
-5. Kurganov, Petrova - variant of central-upwind for shallow-water equations
-6. Brodtkorb, Sætra, Altinakar - Written by those from SINTEF that were in the US to simulate dam breach and flood. Uses the numerical method from Kurganov, Petrova
-7. Fernandez-Pato et al. - Rainfall/runoff simulation with 2D full shallow water equations
+<!-- SINTEFs approach makes the solver very general and flexible. One may choose between different numerical fluxes, limiters, time integrators, equations, and boundary conditions, which one may easily implement themselves. Further, it is meant to run in parallel on the GPU, which is outside the scope of this project. -->
 
