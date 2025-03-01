@@ -1,5 +1,11 @@
 export RK2
 
+"""
+    RK2{Cells}
+
+A second order Runge-Kutta time-stepping scheme, a strong stability preserving version of the standard RK2 scheme,
+applying two steps of the forward Euler scheme. Preallocates two buffers to store intermediate values.
+"""
 struct RK2{Cells} <: TimeStepper
     substep_buffers::Vector{Cells}
 
@@ -9,8 +15,7 @@ struct RK2{Cells} <: TimeStepper
     end
 end
 
-function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, RK2{Cells}}, compute_max_dt) where {E, R, NF, Cells}
-    timestepper = system.timestepper
+function integrate!(grid::Grid, timestepper::RK2, system, compute_max_dt)
     equation = system.eq
     F = system.numerical_flux
     reconstruction = system.reconstruction

@@ -11,7 +11,7 @@ using homemade_conslaws
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -34,7 +34,7 @@ end
     T = max_dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -56,7 +56,7 @@ end
     T = 2*max_dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -78,7 +78,7 @@ end
     T = 2*max_dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)

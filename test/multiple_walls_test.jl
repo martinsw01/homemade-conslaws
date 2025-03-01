@@ -97,7 +97,7 @@ function simulate_simple_wall_bc(N, T, F, q0, x_L, x_R, eq)
     grid = UniformGrid1D(N, bc, q0, (x_L, x_R))
     dt = grid.dx
 
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -115,7 +115,7 @@ function simulate_new_walls_bc(N, T, F, q0_left, x_L, x_mid, x_R, eq)
     grid = UniformGrid1DWalls(N, bc, q0, (x_L, x_R))
     dt = grid.dx
 
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = ForwardEuler(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)

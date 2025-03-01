@@ -22,6 +22,7 @@ theme:
   features:
     - content.tabs.link # Proof and theorem/lemma/... are on the same tab
     - navigation.instant
+    - navigation.indexes
     - navigation.tabs
     - navigation.tabs.sticky
 
@@ -35,6 +36,14 @@ nav:
     - Second order schemes: "theory/2nd_order_schemes.md"
     - Nonlinear hyperbolic systems in one dimension: "theory/nonlinear_hyperbolic_systems.md"
   - Final Report: "final_report.md"
+  - Docs:
+    - docs/index.md
+    - Equation: "docs/equation.md"
+    - Grid: "docs/grid.md"
+    - Boundary condition: "docs/bc.md"
+    - Numerical flux: "docs/numerical_flux.md"
+    - Reconstruction: "docs/reconstruction.md"
+    - Time stepper: "docs/timestepper.md"
 
 markdown_extensions:
   - admonition

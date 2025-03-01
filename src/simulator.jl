@@ -3,7 +3,7 @@ using ElasticArrays
 export Simulator, simulate!, simulate_and_aggregate!
 
 struct Simulator{
-        SystemType <: System,
+        SystemType <: ConservedSystem,
         GridType <: Grid,
         Float <: AbstractFloat
     }
@@ -11,7 +11,7 @@ struct Simulator{
     grid::GridType
     t::Base.RefValue{Float}
     function Simulator(
-            system::System,
+            system::ConservedSystem,
             grid::Grid,
             t::Float=zero(Float)
         ) where Float <: AbstractFloat
@@ -68,7 +68,7 @@ end
 
 
 function perform_step!(simulator::Simulator, max_dt)
-    dt = integrate!(simulator.grid, simulator.system,
+    dt = integrate!(simulator.grid, simulator.system.timestepper, simulator.system,
                (eq, grid, left, right) -> calc_max_dt(eq, grid, left, right, max_dt))
 
     simulator.t[] += Real(dt) # May be a dual number

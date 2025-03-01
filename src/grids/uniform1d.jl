@@ -6,6 +6,9 @@ export Grid1D, UniformGrid1D, for_each_cell, for_each_interior_cell, for_each_bo
 
 abstract type Grid1D{BC <: BoundaryCondition} <: Grid end
 
+"""
+    UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: Grid1D{BC}
+"""
 struct UniformGrid1D{BC <: BoundaryCondition, Float <: AbstractFloat, Cell} <: Grid1D{BC}
     dx::Float
     bc::BC

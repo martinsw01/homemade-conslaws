@@ -1,5 +1,10 @@
 export ForwardEuler
 
+"""
+    ForwardEuler{Cells}
+
+The standard first order TVD forward Euler time-stepping scheme. Preallocates a buffer to store the time derivatives.
+"""
 struct ForwardEuler{Cells} <: TimeStepper
     substep_buffer::Cells
 
@@ -10,9 +15,8 @@ struct ForwardEuler{Cells} <: TimeStepper
 end
 
 
-function integrate!(grid::Grid, system::ConservedSystem{E, R, NF, ForwardEuler{Cells}}, compute_max_dt) where {E, R, NF, Cells}
+function integrate!(grid::Grid, timestepper::ForwardEuler, system, compute_max_dt)
     equation = system.eq
-    timestepper = system.timestepper
     reconstruction = system.reconstruction
     F = system.numerical_flux
     

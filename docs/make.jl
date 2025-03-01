@@ -1,4 +1,5 @@
 using Documenter, DocumenterMarkdown
+using homemade_conslaws
 
 makedocs(
     sitename="Homemade Conslaws";
@@ -13,7 +14,14 @@ makedocs(
             "Second order schemes" => "theory/2nd_order_schemes.md",
             "Nonlinear hyperbolic systems" => "theory/nonlinear_hyperbolic_systems.md"
         ],
-        "Final Report" => "final_report.md"
+        "Final Report" => "final_report.md",
+        "Docs" => [
+            "Grid" => "docs/grid.md",
+            "Boundary Condition" => "docs/bc.md",
+            "Numerical Flux" => "docs/numerical_flux.md",
+            "Reconstruction" => "docs/reconstruction.md",
+            "Time Stepper" => "docs/timestepper.md",
+        ]
     ]
 )
 

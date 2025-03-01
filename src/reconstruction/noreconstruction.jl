@@ -1,17 +1,12 @@
 export NoReconstruction
 
-struct NoReconstruction{Cells} <: Reconstruction
-    reconstruction_buffer::Cells
+"""
+    NoReconstruction
 
-    function NoReconstruction(grid::Grid)
-        buffer = create_buffer(grid)
-        new{typeof(buffer)}(buffer)
-    end
-end
+Zeroth order reconstruction, i.e. the cell averages are used as the left and right values at the cell interfaces.
+"""
+struct NoReconstruction <: Reconstruction end
 
-function reconstruct(r::NoReconstruction, grid::Grid, cell_averages=cells(grid))
-    for_each_cell(grid) do cells, cell_idx
-        r.reconstruction_buffer[cell_idx] = cell_averages[cell_idx]
-    end
-    return r.reconstruction_buffer, r.reconstruction_buffer
+function reconstruct(::NoReconstruction, grid::Grid, cell_averages=cells(grid))
+    return cell_averages, cell_averages
 end

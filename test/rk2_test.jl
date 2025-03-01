@@ -11,7 +11,7 @@ using Test
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = RK2(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -32,7 +32,7 @@ end
     T = dt
     eq = BurgersEQ()
     F = LaxFriedrichsFlux()
-    reconstruction = NoReconstruction(grid)
+    reconstruction = NoReconstruction()
     timestepper = RK2(grid)
     system = ConservedSystem(eq, reconstruction, F, timestepper)
     simulator = Simulator(system, grid, 0.)
@@ -41,7 +41,7 @@ end
 
 
     grid2 = UniformGrid1D(N, bc, u0, (x_L, x_R))
-    reconstruction2 = NoReconstruction(grid2)
+    reconstruction2 = NoReconstruction()
     timestepper2 = ForwardEuler(grid2)
     system2 = ConservedSystem(eq, reconstruction2, F, timestepper2)
     simulator2 = Simulator(system2, grid2, 0.)

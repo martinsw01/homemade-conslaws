@@ -1,6 +1,10 @@
 export UniformGrid1DWalls, walls
 
+"""
+    UniformGrid1DWalls{Float <: AbstractFloat, CellFloat <: Number, Index <: Integer} <: Grid1D{WallsBC{Float}}
 
+A uniform grid in 1D with walls starting and stopping at cell interfaces, specified by the [`homemade_conslaws.WallsBC`](@ref) boundary condition.
+"""
 struct UniformGrid1DWalls{Float <: AbstractFloat, CellFloat <: Number, Index <: Integer} <: Grid1D{WallsBC{Float}}
     dx::Float
     bc::WallsBC{Float}

@@ -1,6 +1,12 @@
 export ConservedSystem
 
-struct ConservedSystem{EquationType <: Equation, ReconstructionType <: Reconstruction, NumericalFluxType <: NumericalFlux, TimeStepperType <: TimeStepper} <: System
+"""
+    ConservedSystem{EquationType <: Equation, ReconstructionType <: Reconstruction, NumericalFluxType <: NumericalFlux, TimeStepperType <: TimeStepper}
+
+A wrapper around the objects (equation, reconstruction, numerical flux, and time stepper)
+needed to solve a conservation law.
+"""
+struct ConservedSystem{EquationType <: Equation, ReconstructionType <: Reconstruction, NumericalFluxType <: NumericalFlux, TimeStepperType <: TimeStepper}
     eq::EquationType
     reconstruction::ReconstructionType
     numerical_flux::NumericalFluxType

@@ -93,7 +93,7 @@ end
         T = 1
         eq = BurgersEQ()
         F = LaxFriedrichsFlux()
-        reconstruction = NoReconstruction(grid)
+        reconstruction = NoReconstruction()
         timestepper = ForwardEuler(grid)
         system = ConservedSystem(eq, reconstruction, F, timestepper)
         simulator = Simulator(system, grid, 0.)
@@ -116,7 +116,7 @@ end
         F = CentralUpwind()
 
         eq = ShallowWater1D(1.)
-        reconstruction = NoReconstruction(grid)
+        reconstruction = NoReconstruction()
         timestepper = ForwardEuler(grid)
         system = ConservedSystem(eq, reconstruction, F, timestepper)
         simulator = Simulator(system, grid, 0.)

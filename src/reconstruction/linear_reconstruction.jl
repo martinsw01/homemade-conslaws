@@ -1,5 +1,11 @@
 export LinearReconstruction
 
+
+"""
+    LinearReconstruction{Cells}
+
+Second order reconstruction using the minmod slope. Preallocates buffers for the left and right reconstructed values.
+"""
 struct LinearReconstruction{Cells} <: Reconstruction
     left_buffer::Cells
     right_buffer::Cells
