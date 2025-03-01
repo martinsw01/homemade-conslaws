@@ -229,7 +229,7 @@ x = cell_centers(N, x_L, x_R)
 u0(x) = x < 0 ? 1. : 0.
 
 grid = UniformGrid1D(N, NeumannBC(), u0.(x), (x_L, x_R))
-system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), GodunovFlux(0.), ForwardEuler(grid))
+system = ConservedSystem(BurgersEQ(), NoReconstruction(), GodunovFlux(0.), ForwardEuler(grid))
 simulator = Simulator(system, grid, 0.)
 
 dt = 0.1 # max time step
@@ -378,7 +378,7 @@ The solutions are stable and non-oscillatory. Unlike the Roe scheme, it also app
 ```@example 1
 u0(x) = x < 0 ? 1. : 0.     # hide
 grid = UniformGrid1D(N, NeumannBC(), u0.(x), (x_L, x_R)) # hide
-system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), LaxFriedrichsFlux(), ForwardEuler(grid)) # hide
+system = ConservedSystem(BurgersEQ(), NoReconstruction(), LaxFriedrichsFlux(), ForwardEuler(grid)) # hide
 simulator = Simulator(system, grid, 0.) # hide
 dt = 0.1 # max time step    # hide
 T = 1   # hide
@@ -426,7 +426,7 @@ homemade_conslaws.stencil_size(::RusanovFlux) = (1, 1) # hide
 
 
 grid = UniformGrid1D(N, NeumannBC(), u0.(x), (x_L, x_R)) # hide
-system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), RusanovFlux(), ForwardEuler(grid)) # hide
+system = ConservedSystem(BurgersEQ(), NoReconstruction(), RusanovFlux(), ForwardEuler(grid)) # hide
 simulator = Simulator(system, grid, 0.) # hide
 dt = 0.1 # max time step    # hide
 T = 1   # hide
@@ -453,7 +453,7 @@ U0 = (x .> 0) * 2 .- 1. # hide
 # U, t = rusanov_scheme(f, df, U0, BC, dx, dt, T) # hide
 
 grid = UniformGrid1D(N, NeumannBC(), U0, (x_L, x_R)) # hide
-system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), RusanovFlux(), ForwardEuler(grid)) # hide
+system = ConservedSystem(BurgersEQ(), NoReconstruction(), RusanovFlux(), ForwardEuler(grid)) # hide
 simulator = Simulator(system, grid, 0.) # hide
 dt = 0.1 # max time step    # hide
 T = 1   # hide
@@ -469,7 +469,7 @@ U0 = Float64.(x .< 0)     # hide
 
 function solve(flux) # hide
     grid = UniformGrid1D(N, NeumannBC(), U0, (x_L, x_R)) # hide
-    system = ConservedSystem(BurgersEQ(), NoReconstruction(grid), flux, ForwardEuler(grid)) # hide
+    system = ConservedSystem(BurgersEQ(), NoReconstruction(), flux, ForwardEuler(grid)) # hide
     simulator = Simulator(system, grid, 0.) # hide
     dt = 0.1 # max time step    # hide
     T = 1   # hide

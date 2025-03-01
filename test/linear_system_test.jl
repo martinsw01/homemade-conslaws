@@ -13,8 +13,6 @@ homemade_conslaws.compute_eigenvalues(eq::ConstantLinearAdvection, U) = eq.eigva
 
 homemade_conslaws.compute_max_abs_eigenvalue(eq::ConstantLinearAdvection, U) = maximum(abs.(eq.eigvals))
 
-homemade_conslaws.conserved_variables(::ConstantLinearAdvection) = (:U,)
-
 
 @testset "Test cell values" begin
     eq = ConstantLinearAdvection()

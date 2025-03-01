@@ -34,7 +34,7 @@ U0 = u0.(x)
 grid = UniformGrid1D(N, bc, U0, (x_L, x_R))
 
 F = LaxFriedrichsFlux()
-reconstruction = NoReconstruction(grid)
+reconstruction = NoReconstruction()
 timestepper = ForwardEuler(grid)
 nothing # hide
 ```
