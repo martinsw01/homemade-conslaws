@@ -1,6 +1,8 @@
 using Documenter, DocumenterMarkdown
 using homemade_conslaws
 
+include("code_block.jl")
+
 makedocs(
     sitename="Homemade Conslaws";
     # draft = true, # for livereload. Disables code execution in @example blocks
@@ -24,6 +26,8 @@ makedocs(
         ]
     ]
 )
+
+format_codeblocks_in_folder!("docs/build")
 
 if "deploy" in ARGS
     deploydocs(
