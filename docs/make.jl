@@ -8,8 +8,9 @@ makedocs(
     # draft = true, # for livereload. Disables code execution in @example blocks
     format = Markdown(),
     pages = [
-        "Conservation Laws" => "index.md",
+        "index.md",
         "Theory" => [
+            "theory/index.md",
             "Linear transport equations" => "theory/linear_transport_eqs.md",
             "Scalar conservation laws" => "theory/scalar_cons_laws.md",
             "Finite volume schemes" => "theory/finite_volume_schemes.md",
@@ -18,6 +19,7 @@ makedocs(
         ],
         "Final Report" => "final_report.md",
         "Docs" => [
+            "docs/index.md",
             "Grid" => "docs/grid.md",
             "Boundary Condition" => "docs/bc.md",
             "Numerical Flux" => "docs/numerical_flux.md",

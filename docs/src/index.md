@@ -1,27 +1,9 @@
 # Homemade Conslaws
 
-## Conservation laws
+This is a package in Julia written for my specialization project during the last year of my master's degree in applied physics and mathematics at NTNU. The project aims to get an intuition about conservation laws and their numerical finite volume (FVM) solutions. Furthermore, a FVM solver inspired by SINTEF Digital's solver, [`SinFVM.jl`](https://github.com/sintefmath/SinFVM.jl) (previously `SinSWE.jl`) is implemented in order to investigate computational difficulties with shallow water simulations.
 
-Let ``\boldsymbol U`` be a quantity defined on a domain ``\Omega \subset \R^n``. For any subdomain ``\omega \subset \Omega``, the temporal rate of change of ``\bm U`` is equal to the amount of ``\bm U`` created or destroyed and the flux going through the boundary ``\partial \omega``. It can be described mathematically by
+One of these problems can be seen in the following animation:
 
-```math
-    \dv{t} \int_{\omega} \bm U \dd \x
-    = - \int_{\partial \omega} \bm F \cdot \bm \nu \dd \s
-    + \int_{\omega} \bm S \dd \x,
-```
+<img class="ignore-theme" src="example\_computational\_difficulties.gif" alt="Animation demonstrating computational difficulties">
 
-where ``\bm F`` is the flux and ``\bm S`` is the source term. By the Gauss divergence theorem, we can rewrite this as
-
-```math
-    \dv{t} \int_{\omega} \bm U \dd \x
-    + \int_{\omega} \div {\bm F} \dd \x
-    = \int_{\omega} \bm S \dd \x.
-```
-
-Since this equation holds for all subdomains ``\omega \subseteq \Omega``, we can write
-
-```math
-    \bm U_t + \div {\bm F} = \bm S \quad \text{ in } \Omega \times \R_+
-```
-
-We call this equation a conservation law.
+The CFL-condition may in some situations severilly restrict the time step size, potentially making the simulation very slow. This and other problems are describe din detail in the final report, which can be found [here](https://martinsw01.github.io/homemade-conslaws/dev/final_report).

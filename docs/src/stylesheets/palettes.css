@@ -85,6 +85,9 @@
     --md-typeset-a-color: var(--md-accent-fg-color);
 }
 
+img.ignore-theme {
+    filter: none;
+}
 
 .md-typeset__table table th,
 .md-typeset__table table td {
