@@ -54,7 +54,7 @@ for_each_interior_cell(grid; p=1, q=1) do cells, (left_idx, center_idx, right_id
     left_reconstruction[idx] = center - 0.5 * (right - center)
     right_reconstruction[idx] = center + 0.5 * (right - center)
 end
-````
+```
 """
 function for_each_interior_cell end
 

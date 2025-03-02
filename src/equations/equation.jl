@@ -51,7 +51,7 @@ given the CFL condition.
 ```julia-console
 julia> eq = BurgersEQ();
 julia> compute_max_abs_eigenvalue(eq, -2)
--2
+2
 julia> compute_max_abs_eigenvalue(eq, 0)
 0
 julia> compute_max_abs_eigenvalue(eq, 2)
