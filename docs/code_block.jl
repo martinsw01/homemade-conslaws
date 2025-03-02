@@ -5,6 +5,7 @@ function _convert_to_pygments_classes(html)
     substitutes = [
         "hljl-oB" => "o",
         "hljl-nfB" => "mf",
+        "hljl-nB" => "gp",
         "class='hljl-" => "class='",
     ]
     reduce(substitutes; init=html) do html, (pattern, replacement)
@@ -16,9 +17,9 @@ _wrap_in_div(html) = "<div class='highlight'><pre><span></span><code>$(html[20:e
 
 Base.replace(f::Function, A, r::Regex) = replace(A, r => f)
 
-function _highlight_code(code)
+function _highlight_code(code, lexer)
     io = IOBuffer()
-    highlight(io, MIME("text/html"), code, Lexers.JuliaLexer)
+    highlight(io, MIME("text/html"), code, lexer)
     String(take!(io))
 end
 
@@ -26,12 +27,21 @@ function _hljl_to_pygments(html)
     html |> _convert_to_pygments_classes |> _wrap_in_div
 end
 
+function _determine_code_and_lexer(codeblock)
+    if codeblock[4:16] == "julia-console"
+        codeblock[17:end-4], Lexers.JuliaConsoleLexer
+    else
+        codeblock[10:end-4], Lexers.JuliaLexer
+    end
+end
+
 function _highlight_code_blocks(content::String)
-    code_block_regex = r"```julia\n(.*?)\n```"s
+    code_block_regex = r"```julia(.*?)\n```"s
 
     replace(content, code_block_regex) do match
-        code = match[10:end-4]
-        code |> _highlight_code |> _hljl_to_pygments
+        code, lexer = _determine_code_and_lexer(match)
+        hljl_highlighted_code = _highlight_code(code, lexer)
+        _hljl_to_pygments(hljl_highlighted_code)
     end
 end
 
