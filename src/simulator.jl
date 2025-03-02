@@ -2,12 +2,13 @@ using ElasticArrays
 
 export Simulator, simulate!, simulate_and_aggregate!
 
-struct Simulator{
-        SystemType <: ConservedSystem,
-        GridType <: Grid,
-        Float <: AbstractFloat
-    }
-    system::SystemType
+"""
+    Simulator{GridType <: Grid, Float <: AbstractFloat}
+
+A type representing a simulation of a conservation law on a grid. The simulation is described by a `ConservedSystem` and a `GridType`.
+"""
+struct Simulator{GridType <: Grid, Float <: AbstractFloat}
+    system::ConservedSystem
     grid::GridType
     t::Base.RefValue{Float}
     function Simulator(
@@ -16,7 +17,7 @@ struct Simulator{
             t::Float=zero(Float)
         ) where Float <: AbstractFloat
 
-        new{typeof(system), typeof(grid), Float}(
+        new{typeof(grid), Float}(
             system,
             grid,
             Base.RefValue(t)
@@ -75,6 +76,36 @@ function perform_step!(simulator::Simulator, max_dt)
 end
 
 
+"""
+    simulate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
+
+Simulate the system described by `simulator` until time `T` using a time step size of at most `max_dt`. The `callbacks` are called at each time step.
+The cell averages are mutated in place.
+
+# Example
+```julia
+eq = BurgersEQ()
+bc = NeumannBC()
+
+N = 20
+x_L, x_R = 0.0, 1.0
+x = cell_centers(N, x_L, x_R)
+u0(x) = x .< 0.5 ? 1.0 : 0.0
+U0 = u0.(x)
+grid = UniformGrid1D(N, bc, U0, (x_L, x_R))
+
+F = LaxFriedrichsFlux()
+reconstruction = NoReconstruction()
+timestepper = ForwardEuler(grid)
+
+system = ConservedSystem(eq, reconstruction, F, timestepper)
+simulator = Simulator(system, grid, 0.)
+
+simulate!(simulator, 1., 0.1)
+
+U = cells(grid)
+```
+"""
 function simulate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
     while simulator.t[] < T
         perform_step!(simulator, max_dt)
@@ -86,6 +117,36 @@ function simulate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=
 end
 
 
+"""
+    simulate_and_aggregate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
+
+The same as [`simulate!`](@ref) but keeps track of and returns the cell averages and time at each time step.
+
+# Example
+```julia
+eq = BurgersEQ()
+bc = NeumannBC()
+
+N = 20
+x_L, x_R = 0.0, 1.0
+x = cell_centers(N, x_L, x_R)
+u0(x) = x .< 0.5 ? 1.0 : 0.0
+U0 = u0.(x)
+grid = UniformGrid1D(N, bc, U0, (x_L, x_R))
+
+F = LaxFriedrichsFlux()
+reconstruction = NoReconstruction()
+timestepper = ForwardEuler(grid)
+
+system = ConservedSystem(eq, reconstruction, F, timestepper)
+simulator = Simulator(system, grid, 0.)
+
+U, t = simulate_and_aggregate!(simulator, 1., 0.1)
+
+u(x, t) = u0(x-0.5t)
+Viz.animate_solution(U', u, grid, t, 2)
+```
+"""
 function simulate_and_aggregate!(simulator::Simulator, T, max_dt, callbacks::Vector{Callback}=[]) where Callback
     U = ElasticMatrix(reshape(cells(simulator.grid), :, 1))
     t = ElasticVector([simulator.t[]])

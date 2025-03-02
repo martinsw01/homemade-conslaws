@@ -1,15 +1,28 @@
 # Docs
 
-In order to make a solve a conservation law, we need to specify the following:
+In order to make a solve a conservation law, need to construct instances of the following types:
 
-- What equation we are solving,
-- on what kind of grid,
-- what initial conditions to use,
-- what boundary conditions to use,
-- what numerical flux to use,
-- how to reconstruct the solution,
-- how to evolve the solution in time.
+| Abstract type | Implementations |
+| :------------ | :-------------- |
+| [`Equation`](@ref)      | [`BurgersEQ`](@ref), [`ShallowWater1D`](@ref) |
+| [`BoundaryCondition`](@ref) | [`PeriodicBC`](@ref), [`NeumannBC`](@ref), [`WallBC`](@ref), [`WallsBC`](@ref) |
+| [`Grid`](@ref)          | [`UniformGrid1D`](@ref), [`UniformGrid1DWalls`](@ref) |
+| [`Reconstruction`](@ref) | [`NoReconstruction`](@ref), [`LinearReconstruction`](@ref) |
+| [`NumericalFlux`](@ref)  | [`LaxFriedrichsFlux`](@ref), [`RusanovFlux`](@ref), [`GodunovFlux`](@ref), [`CentralUpwind`](@ref) |
+| [`TimeStepper`](@ref)    | [`ForwardEuler`](@ref), [`RK2`](@ref) |
 
+gather them in a [`ConservedSystem`](@ref) and [`Simulator`](@ref) object:
+
+```julia
+system = ConservedSystem(equation, reconstruction, numerical_flux, timestepper)
+simulator = Simulator(system, grid, t0)
+```
+
+and solve in place using [`simulate!`](@ref) or [`simulate_and_aggregate!`](@ref):
+
+```julia
+simulate!(simulator, T, max_dt, callbacks)
+```
 
 ## Example
 
@@ -58,12 +71,4 @@ Viz.animate_solution(U', u, grid, t, 2)
 
 ## Extending the functionallity
 
-The `homemade_conslaws` package is designed to be easily extensible. This is done by extending the abstract types
-
-
-- [`homemade_conslaws.Equation`](@ref)
-- [`homemade_conslaws.Grid`](@ref)
-- [`homemade_conslaws.Reconstruction`](@ref)
-- [`homemade_conslaws.NumericalFlux`](@ref)
-- [`homemade_conslaws.TimeStepper`](@ref)
-- [`homemade_conslaws.BoundaryCondition`](@ref)
+The package `homemade_conslaws` is designed to be easily extensible, making heavy use of multiple dispatch. This is done by implementing the abstract types in the [table](#docs) above. 

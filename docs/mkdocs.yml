@@ -44,6 +44,7 @@ nav:
     - Numerical flux: "docs/numerical_flux.md"
     - Reconstruction: "docs/reconstruction.md"
     - Time stepper: "docs/timestepper.md"
+    - Simulator: "docs/simulator.md"
 
 markdown_extensions:
   - admonition

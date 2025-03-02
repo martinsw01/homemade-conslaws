@@ -8,10 +8,28 @@ Grid
 
 An implementation of `Grid` should provide the following functions:
 
-```@autodocs
-Modules = [homemade_conslaws]
-Pages = ["grids/grid.jl"]
-Order = [:function]
+```@docs
+cell_centers
+```
+---
+```@docs
+cells
+```
+---
+```@docs
+for_each_boundary_cell
+```
+---
+```@docs
+for_each_interior_cell
+```
+---
+```@docs
+for_each_cell
+```
+---
+```@docs
+create_buffer
 ```
 
 ## Implementations

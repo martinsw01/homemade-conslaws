@@ -5,7 +5,7 @@ export WallsBC
 """
     WallsBC{Float <: AbstractFloat}
 
-Simulates walls starting and stopping at cell interfaces. Equivalent to [`homemade_conslaws.WallBC`](@ref) when no walls are given.
+Simulates walls starting and stopping at cell interfaces. Equivalent to [`WallBC`](@ref) when no walls are given.
 """
 struct WallsBC{Float <: AbstractFloat} <: BoundaryCondition
     walls::Vector{SVector{2, Float}}

@@ -6,7 +6,7 @@ BoundaryCondition
 
 ## Dispatch functions
 
-It is done by implementing [`homemade_conslaws.for_each_boundary_cell`](@ref) for subtypes of `BoundaryCondition`.
+It is done by implementing [`for_each_boundary_cell`](@ref) for subtypes of `BoundaryCondition`.
 
 ## Implementations
 

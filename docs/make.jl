@@ -23,6 +23,7 @@ makedocs(
             "Numerical Flux" => "docs/numerical_flux.md",
             "Reconstruction" => "docs/reconstruction.md",
             "Time Stepper" => "docs/timestepper.md",
+            "Simulator" => "docs/simulator.md",
         ]
     ]
 )
