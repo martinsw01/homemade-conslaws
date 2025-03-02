@@ -813,7 +813,7 @@
 </code></pre></div>
 
 <p>A type representing a simulation of a conservation law on a grid. The simulation is described by a <code>ConservedSystem</code> and a <code>GridType</code>.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/simulator.jl#L5-L9' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/simulator.jl#L5-L9' class='documenter-source'>source</a><br></p>
 <p><a id='homemade_conslaws.simulate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback' href='#homemade_conslaws.simulate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback'>#</a>
 <strong><code>homemade_conslaws.simulate!</code></strong> &mdash; <em>Method</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>simulate!</span><span class='p'>(</span><span class='n'>simulator</span><span class='o'>::</span><span class='n'>Simulator</span><span class='p'>,</span><span class='t'> </span><span class='n'>T</span><span class='p'>,</span><span class='t'> </span><span class='n'>max_dt</span><span class='p'>,</span><span class='t'> </span><span class='n'>callbacks</span><span class='o'>::</span><span class='nf'>Vector</span><span class='p'>{</span><span class='n'>Callback</span><span class='p'>}</span><span class='o'>=</span><span class='p'>[])</span><span class='t'> </span><span class='kp'>where</span><span class='t'> </span><span class='n'>Callback</span>
@@ -843,7 +843,7 @@
 </span><span class='n'>U</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>cells</span><span class='p'>(</span><span class='n'>grid</span><span class='p'>)</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/simulator.jl#L79-L108' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/simulator.jl#L79-L108' class='documenter-source'>source</a><br></p>
 <p><a id='homemade_conslaws.simulate_and_aggregate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback' href='#homemade_conslaws.simulate_and_aggregate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback'>#</a>
 <strong><code>homemade_conslaws.simulate_and_aggregate!</code></strong> &mdash; <em>Method</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>simulate_and_aggregate!</span><span class='p'>(</span><span class='n'>simulator</span><span class='o'>::</span><span class='n'>Simulator</span><span class='p'>,</span><span class='t'> </span><span class='n'>T</span><span class='p'>,</span><span class='t'> </span><span class='n'>max_dt</span><span class='p'>,</span><span class='t'> </span><span class='n'>callbacks</span><span class='o'>::</span><span class='nf'>Vector</span><span class='p'>{</span><span class='n'>Callback</span><span class='p'>}</span><span class='o'>=</span><span class='p'>[])</span><span class='t'> </span><span class='kp'>where</span><span class='t'> </span><span class='n'>Callback</span>
@@ -874,14 +874,14 @@
 </span><span class='n'>Viz</span><span class='o'>.</span><span class='nf'>animate_solution</span><span class='p'>(</span><span class='n'>U</span><span class='o'>&#39;</span><span class='p'>,</span><span class='t'> </span><span class='n'>u</span><span class='p'>,</span><span class='t'> </span><span class='n'>grid</span><span class='p'>,</span><span class='t'> </span><span class='n'>t</span><span class='p'>,</span><span class='t'> </span><span class='ni'>2</span><span class='p'>)</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/simulator.jl#L120-L149' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/simulator.jl#L120-L149' class='documenter-source'>source</a><br></p>
 <p><a id='homemade_conslaws.ConservedSystem' href='#homemade_conslaws.ConservedSystem'>#</a>
 <strong><code>homemade_conslaws.ConservedSystem</code></strong> &mdash; <em>Type</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>ConservedSystem</span><span class='p'>{</span><span class='n'>EquationType</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>Equation</span><span class='p'>,</span><span class='t'> </span><span class='n'>ReconstructionType</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>Reconstruction</span><span class='p'>,</span><span class='t'> </span><span class='n'>NumericalFluxType</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>NumericalFlux</span><span class='p'>,</span><span class='t'> </span><span class='n'>TimeStepperType</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>TimeStepper</span><span class='p'>}</span>
 </code></pre></div>
 
 <p>A wrapper around the objects (equation, reconstruction, numerical flux, and time stepper) needed to solve a conservation law.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/system.jl#L3-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/system.jl#L3-L8' class='documenter-source'>source</a><br></p>
 
 
 
