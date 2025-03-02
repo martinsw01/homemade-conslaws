@@ -212,7 +212,7 @@
   
     
   
-  Conservation Laws
+  Home
 
       </a>
     </li>
@@ -226,7 +226,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../theory/linear_transport_eqs/" class="md-tabs__link">
+        <a href="../../theory/" class="md-tabs__link">
           
   
     
@@ -328,7 +328,7 @@
         
   
   <span class="md-ellipsis">
-    Conservation Laws
+    Home
     
   </span>
   
@@ -346,6 +346,10 @@
   
     
     
+      
+        
+          
+        
       
         
       
@@ -370,8 +374,10 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../theory/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Theory
@@ -379,8 +385,14 @@
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -388,6 +400,8 @@
             Theory
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -973,7 +987,7 @@
 <div class='highlight'><pre><span></span><code><span class='nf'>NumericalFlux</span><span class='p'>()</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/numerical_flux.jl#L3-L5' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/numerical_flux.jl#L3-L5' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
@@ -984,7 +998,7 @@
 </code></pre></div>
 
 <p>Gives a tuple of the number of left and right cells needed to compute the numerical flux.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/numerical_flux.jl#L8-L12' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/numerical_flux.jl#L8-L12' class='documenter-source'>source</a><br></p>
 <p><a id='Implementations'></a></p>
 <p><a id='Implementations-1'></a></p>
 <h2 id="implementations">Implementations</h2>
@@ -1000,7 +1014,7 @@
 <div class="arithmatex">\[
     F^\text{LxF}(U_L, U_R) = \frac{1}{2} \Big(f(U_L) + f(U_R)\Big) - \frac{\Dx}{2\Dt} (U_R - U_L)
 \]</div>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/laxfriedrichs.jl#L3-L12' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/laxfriedrichs.jl#L3-L12' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Rusanov-flux'></a></p>
 <p><a id='Rusanov-flux-1'></a></p>
@@ -1014,7 +1028,7 @@
 <div class="arithmatex">\[
     F^\text{Rus}(U_L, U_R) = \frac{1}{2} \Big(F(U_L) + F(U_R)\Big) - \lambda (U_R - U_L)
 \]</div>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/rusanov.jl#L3-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/rusanov.jl#L3-L11' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Godunov-flux'></a></p>
 <p><a id='Godunov-flux-1'></a></p>
@@ -1028,7 +1042,7 @@
 <div class="arithmatex">\[
     F^\text{God}(U_L, U_R) = \max\Big\{f\big(\max\{U_L, \omega\}\big), f\big(\min\{U_L, \omega\}\big)\Big\}
 \]</div>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/godunov.jl#L3-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/godunov.jl#L3-L11' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Central-upwind-flux'></a></p>
 <p><a id='Central-upwind-flux-1'></a></p>
@@ -1043,7 +1057,7 @@
     F(Q_L, Q_R) = \frac{a^+ F(Q_L) - a^- F(Q_R)}{a^+ - a^-} + \frac{a^+ a^- (Q_R - Q_L)}{a^+ - a^-},
 \]</div>
 <p>where <span class="arithmatex">\(a^+ = \max(\lambda(Q_L), \lambda(Q_R), 0)\)</span> and <span class="arithmatex">\(a^- = \min(\lambda(Q_L), \lambda(Q_R), 0)\)</span> are the maximum and minimum eigenvalues of the Jacobian matrix of the flux function.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/numerical_fluxes/central_upwind.jl#L3-L13' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/numerical_fluxes/central_upwind.jl#L3-L13' class='documenter-source'>source</a><br></p>
 
 
 

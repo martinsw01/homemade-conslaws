@@ -212,7 +212,7 @@
   
     
   
-  Conservation Laws
+  Home
 
       </a>
     </li>
@@ -226,7 +226,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../theory/linear_transport_eqs/" class="md-tabs__link">
+        <a href="../../theory/" class="md-tabs__link">
           
   
     
@@ -328,7 +328,7 @@
         
   
   <span class="md-ellipsis">
-    Conservation Laws
+    Home
     
   </span>
   
@@ -346,6 +346,10 @@
   
     
     
+      
+        
+          
+        
       
         
       
@@ -370,8 +374,10 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../theory/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Theory
@@ -379,8 +385,14 @@
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -388,6 +400,8 @@
             Theory
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -890,7 +904,7 @@
 </code></pre></div>
 
 <p>A type representing a grid. Contains the cell averages and determines how to loop over the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
@@ -901,7 +915,7 @@
 </code></pre></div>
 
 <p>Returns the cell centers of the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L18-L22' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L18-L22' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.cells' href='#homemade_conslaws.cells'>#</a>
 <strong><code>homemade_conslaws.cells</code></strong> &mdash; <em>Function</em>.</p>
@@ -909,7 +923,7 @@
 </code></pre></div>
 
 <p>Returns the cell averages of the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L11-L15' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L11-L15' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.for_each_boundary_cell' href='#homemade_conslaws.for_each_boundary_cell'>#</a>
 <strong><code>homemade_conslaws.for_each_boundary_cell</code></strong> &mdash; <em>Function</em>.</p>
@@ -936,7 +950,7 @@
 </span><span class='k'>end</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L61-L87' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L61-L87' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.for_each_interior_cell' href='#homemade_conslaws.for_each_interior_cell'>#</a>
 <strong><code>homemade_conslaws.for_each_interior_cell</code></strong> &mdash; <em>Function</em>.</p>
@@ -954,7 +968,7 @@
 </span><span class='k'>end</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L40-L58' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L40-L58' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.for_each_cell' href='#homemade_conslaws.for_each_cell'>#</a>
 <strong><code>homemade_conslaws.for_each_cell</code></strong> &mdash; <em>Function</em>.</p>
@@ -969,7 +983,7 @@
 </span><span class='k'>end</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L25-L37' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L25-L37' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.create_buffer' href='#homemade_conslaws.create_buffer'>#</a>
 <strong><code>homemade_conslaws.create_buffer</code></strong> &mdash; <em>Function</em>.</p>
@@ -977,7 +991,7 @@
 </code></pre></div>
 
 <p>Preallocates a buffer of the same shape as the cells of the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/grid.jl#L108-L112' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/grid.jl#L108-L112' class='documenter-source'>source</a><br></p>
 <p><a id='Implementations'></a></p>
 <p><a id='Implementations-1'></a></p>
 <h2 id="implementations">Implementations</h2>
@@ -986,7 +1000,7 @@
 <div class='highlight'><pre><span></span><code><span class='nf'>UniformGrid1D</span><span class='p'>{</span><span class='n'>BC</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>BoundaryCondition</span><span class='p'>,</span><span class='t'> </span><span class='n'>Float</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>AbstractFloat</span><span class='p'>,</span><span class='t'> </span><span class='n'>Cell</span><span class='p'>}</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='nf'>Grid1D</span><span class='p'>{</span><span class='n'>BC</span><span class='p'>}</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/uniform1d.jl#L9-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/uniform1d.jl#L9-L11' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.UniformGrid1DWalls' href='#homemade_conslaws.UniformGrid1DWalls'>#</a>
 <strong><code>homemade_conslaws.UniformGrid1DWalls</code></strong> &mdash; <em>Type</em>.</p>
@@ -994,7 +1008,7 @@
 </code></pre></div>
 
 <p>A uniform grid in 1D with walls starting and stopping at cell interfaces, specified by the <a href="../bc/#homemade_conslaws.WallsBC"><code>WallsBC</code></a> boundary condition.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/grids/uniform1dwalls.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/grids/uniform1dwalls.jl#L3-L7' class='documenter-source'>source</a><br></p>
 
 
 

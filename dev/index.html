@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="theory/linear_transport_eqs/">
+        <link rel="next" href="theory/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Conservation Laws
+              Home
             
           </span>
         </div>
@@ -212,7 +212,7 @@
   
     
   
-  Conservation Laws
+  Home
 
       </a>
     </li>
@@ -226,7 +226,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="theory/linear_transport_eqs/" class="md-tabs__link">
+        <a href="theory/" class="md-tabs__link">
           
   
     
@@ -331,56 +331,16 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Conservation Laws
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Conservation Laws
+    Home
     
   </span>
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#conservation-laws" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conservation laws
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -394,6 +354,10 @@
   
     
     
+      
+        
+          
+        
       
         
       
@@ -418,8 +382,10 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="theory/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Theory
@@ -427,8 +393,14 @@
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -436,6 +408,8 @@
             Theory
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -825,23 +799,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#conservation-laws" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conservation laws
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -859,26 +816,10 @@
 <p><a id='Homemade-Conslaws'></a></p>
 <p><a id='Homemade-Conslaws-1'></a></p>
 <h1 id="homemade-conslaws">Homemade Conslaws</h1>
-<p><a id='Conservation-laws'></a></p>
-<p><a id='Conservation-laws-1'></a></p>
-<h2 id="conservation-laws">Conservation laws</h2>
-<p>Let <span class="arithmatex">\(\boldsymbol U\)</span> be a quantity defined on a domain <span class="arithmatex">\(\Omega \subset \R^n\)</span>. For any subdomain <span class="arithmatex">\(\omega \subset \Omega\)</span>, the temporal rate of change of <span class="arithmatex">\(\bm U\)</span> is equal to the amount of <span class="arithmatex">\(\bm U\)</span> created or destroyed and the flux going through the boundary <span class="arithmatex">\(\partial \omega\)</span>. It can be described mathematically by</p>
-<div class="arithmatex">\[
-    \dv{t} \int_{\omega} \bm U \dd \x
-    = - \int_{\partial \omega} \bm F \cdot \bm \nu \dd \s
-    + \int_{\omega} \bm S \dd \x,
-\]</div>
-<p>where <span class="arithmatex">\(\bm F\)</span> is the flux and <span class="arithmatex">\(\bm S\)</span> is the source term. By the Gauss divergence theorem, we can rewrite this as</p>
-<div class="arithmatex">\[
-    \dv{t} \int_{\omega} \bm U \dd \x
-    + \int_{\omega} \div {\bm F} \dd \x
-    = \int_{\omega} \bm S \dd \x.
-\]</div>
-<p>Since this equation holds for all subdomains <span class="arithmatex">\(\omega \subseteq \Omega\)</span>, we can write</p>
-<div class="arithmatex">\[
-    \bm U_t + \div {\bm F} = \bm S \quad \text{ in } \Omega \times \R_+
-\]</div>
-<p>We call this equation a conservation law.</p>
+<p>This is a package in Julia written for my specialization project during the last year of my master's degree in applied physics and mathematics at NTNU. The project aims to get an intuition about conservation laws and their numerical finite volume (FVM) solutions. Furthermore, a FVM solver inspired by SINTEF Digital's solver, <a href="https://github.com/sintefmath/SinFVM.jl"><code>SinFVM.jl</code></a> (previously <code>SinSWE.jl</code>) is implemented in order to investigate computational difficulties with shallow water simulations.</p>
+<p>One of these problems can be seen in the following animation:</p>
+<p><img class="ignore-theme" src="example_computational_difficulties.gif" alt="Animation demonstrating computational difficulties"></p>
+<p>The CFL-condition may in some situations severilly restrict the time step size, potentially making the simulation very slow. This and other problems are describe din detail in the final report, which can be found <a href="https://martinsw01.github.io/homemade-conslaws/dev/final_report">here</a>.</p>
 
 
 

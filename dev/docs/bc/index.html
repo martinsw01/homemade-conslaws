@@ -212,7 +212,7 @@
   
     
   
-  Conservation Laws
+  Home
 
       </a>
     </li>
@@ -226,7 +226,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../theory/linear_transport_eqs/" class="md-tabs__link">
+        <a href="../../theory/" class="md-tabs__link">
           
   
     
@@ -328,7 +328,7 @@
         
   
   <span class="md-ellipsis">
-    Conservation Laws
+    Home
     
   </span>
   
@@ -346,6 +346,10 @@
   
     
     
+      
+        
+          
+        
       
         
       
@@ -370,8 +374,10 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../theory/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Theory
@@ -379,8 +385,14 @@
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -388,6 +400,8 @@
             Theory
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -974,7 +988,7 @@
 </code></pre></div>
 
 <p>Describes the boundary conditions for a conservation law. It is passed to the grid, determining how to handle the boundaries.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/bc/boundary_condition.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/bc/boundary_condition.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
@@ -991,7 +1005,7 @@
 </code></pre></div>
 
 <p>First-order approximation of the Neumann boundary condition.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/bc/neumann.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/bc/neumann.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Periodic-boundary-condition'></a></p>
 <p><a id='Periodic-boundary-condition-1'></a></p>
@@ -1002,7 +1016,7 @@
 </code></pre></div>
 
 <p>Implements a periodic boundary condition by wrapping the domain.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/bc/periodic.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/bc/periodic.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Wall-boundary-condition'></a></p>
 <p><a id='Wall-boundary-condition-1'></a></p>
@@ -1013,7 +1027,7 @@
 </code></pre></div>
 
 <p>Implements a wall boundary condition, in the sense that the water height is reflected and momentum is reflected and negating, simulating an opposite and equal wave.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/bc/wall.jl#L3-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/bc/wall.jl#L3-L8' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Multiple-walls-boundary-condition'></a></p>
 <p><a id='Multiple-walls-boundary-condition-1'></a></p>
@@ -1024,7 +1038,7 @@
 </code></pre></div>
 
 <p>Simulates walls starting and stopping at cell interfaces. Equivalent to <a href="./#homemade_conslaws.WallBC"><code>WallBC</code></a> when no walls are given.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/bc/walls.jl#L5-L9' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/bc/walls.jl#L5-L9' class='documenter-source'>source</a><br></p>
 
 
 

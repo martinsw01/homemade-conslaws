@@ -212,7 +212,7 @@
   
     
   
-  Conservation Laws
+  Home
 
       </a>
     </li>
@@ -226,7 +226,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../theory/linear_transport_eqs/" class="md-tabs__link">
+        <a href="../../theory/" class="md-tabs__link">
           
   
     
@@ -328,7 +328,7 @@
         
   
   <span class="md-ellipsis">
-    Conservation Laws
+    Home
     
   </span>
   
@@ -346,6 +346,10 @@
   
     
     
+      
+        
+          
+        
       
         
       
@@ -370,8 +374,10 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../theory/" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Theory
@@ -379,8 +385,14 @@
   </span>
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
@@ -388,6 +400,8 @@
             Theory
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -938,7 +952,7 @@
 </code></pre></div>
 
 <p>Specifies how to advance the solution forward in time.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/timesteppers/timestepper.jl#L4-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/timesteppers/timestepper.jl#L4-L8' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
@@ -949,7 +963,7 @@
 </code></pre></div>
 
 <p>Advance the solution forward in time, mutating the cell averages in place. Returns the time step size used.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/timesteppers/timestepper.jl#L12-L16' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/timesteppers/timestepper.jl#L12-L16' class='documenter-source'>source</a><br></p>
 <p><a id='Implementations'></a></p>
 <p><a id='Implementations-1'></a></p>
 <h2 id="implementations">Implementations</h2>
@@ -962,7 +976,7 @@
 </code></pre></div>
 
 <p>The standard first order TVD forward Euler time-stepping scheme. Preallocates a buffer to store the time derivatives.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/timesteppers/forwardeuler.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/timesteppers/forwardeuler.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='RK2'></a></p>
 <p><a id='RK2-1'></a></p>
@@ -973,7 +987,7 @@
 </code></pre></div>
 
 <p>A second order Runge-Kutta time-stepping scheme, a strong stability preserving version of the standard RK2 scheme, applying two steps of the forward Euler scheme. Preallocates two buffers to store intermediate values.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/ba5bcdc3d5012f0d1c26e98d3a6e972bd4e99015/src/timesteppers/rk2.jl#L3-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e6fab7143966bd4df1043c324204e794c05489c9/src/timesteppers/rk2.jl#L3-L8' class='documenter-source'>source</a><br></p>
 
 
 
