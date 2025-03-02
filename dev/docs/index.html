@@ -554,6 +554,8 @@
       
         
       
+        
+      
     
     
       
@@ -731,6 +733,28 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="simulator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -801,16 +825,50 @@
 <p><a id='Docs'></a></p>
 <p><a id='Docs-1'></a></p>
 <h1 id="docs">Docs</h1>
-<p>In order to make a solve a conservation law, we need to specify the following:</p>
-<ul>
-<li>What equation we are solving,</li>
-<li>on what kind of grid,</li>
-<li>what initial conditions to use,</li>
-<li>what boundary conditions to use,</li>
-<li>what numerical flux to use,</li>
-<li>how to reconstruct the solution,</li>
-<li>how to evolve the solution in time.</li>
-</ul>
+<p>In order to make a solve a conservation law, need to construct instances of the following types:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Abstract type</th>
+<th style="text-align: left;">Implementations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><a href="equation/#homemade_conslaws.Equation"><code>Equation</code></a></td>
+<td style="text-align: left;"><a href="equation/#homemade_conslaws.BurgersEQ"><code>BurgersEQ</code></a>, <a href="equation/#homemade_conslaws.ShallowWater1D"><code>ShallowWater1D</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="bc/#homemade_conslaws.BoundaryCondition"><code>BoundaryCondition</code></a></td>
+<td style="text-align: left;"><a href="bc/#homemade_conslaws.PeriodicBC"><code>PeriodicBC</code></a>, <a href="bc/#homemade_conslaws.NeumannBC"><code>NeumannBC</code></a>, <a href="bc/#homemade_conslaws.WallBC"><code>WallBC</code></a>, <a href="bc/#homemade_conslaws.WallsBC"><code>WallsBC</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="grid/#homemade_conslaws.Grid"><code>Grid</code></a></td>
+<td style="text-align: left;"><a href="grid/#homemade_conslaws.UniformGrid1D"><code>UniformGrid1D</code></a>, <a href="grid/#homemade_conslaws.UniformGrid1DWalls"><code>UniformGrid1DWalls</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="reconstruction/#homemade_conslaws.Reconstruction"><code>Reconstruction</code></a></td>
+<td style="text-align: left;"><a href="reconstruction/#homemade_conslaws.NoReconstruction"><code>NoReconstruction</code></a>, <a href="reconstruction/#homemade_conslaws.LinearReconstruction"><code>LinearReconstruction</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="numerical_flux/#homemade_conslaws.NumericalFlux"><code>NumericalFlux</code></a></td>
+<td style="text-align: left;"><a href="numerical_flux/#homemade_conslaws.LaxFriedrichsFlux"><code>LaxFriedrichsFlux</code></a>, <a href="numerical_flux/#homemade_conslaws.RusanovFlux"><code>RusanovFlux</code></a>, <a href="numerical_flux/#homemade_conslaws.GodunovFlux"><code>GodunovFlux</code></a>, <a href="numerical_flux/#homemade_conslaws.CentralUpwind"><code>CentralUpwind</code></a></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="timestepper/#homemade_conslaws.TimeStepper"><code>TimeStepper</code></a></td>
+<td style="text-align: left;"><a href="timestepper/#homemade_conslaws.ForwardEuler"><code>ForwardEuler</code></a>, <a href="timestepper/#homemade_conslaws.RK2"><code>RK2</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>gather them in a <a href="simulator/#homemade_conslaws.ConservedSystem"><code>ConservedSystem</code></a> and <a href="simulator/#homemade_conslaws.Simulator"><code>Simulator</code></a> object:</p>
+<div class='highlight'><pre><span></span><code><span class='n'>system</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>ConservedSystem</span><span class='p'>(</span><span class='n'>equation</span><span class='p'>,</span><span class='t'> </span><span class='n'>reconstruction</span><span class='p'>,</span><span class='t'> </span><span class='n'>numerical_flux</span><span class='p'>,</span><span class='t'> </span><span class='n'>timestepper</span><span class='p'>)</span><span class='t'>
+</span><span class='n'>simulator</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>Simulator</span><span class='p'>(</span><span class='n'>system</span><span class='p'>,</span><span class='t'> </span><span class='n'>grid</span><span class='p'>,</span><span class='t'> </span><span class='n'>t0</span><span class='p'>)</span>
+</code></pre></div>
+
+<p>and solve in place using <a href="simulator/#homemade_conslaws.simulate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback"><code>simulate!</code></a> or <a href="simulator/#homemade_conslaws.simulate_and_aggregate!-Union{Tuple{Callback}, Tuple{Simulator, Any, Any}, Tuple{Simulator, Any, Any, Vector{Callback}}} where Callback"><code>simulate_and_aggregate!</code></a>:</p>
+<div class='highlight'><pre><span></span><code><span class='nf'>simulate!</span><span class='p'>(</span><span class='n'>simulator</span><span class='p'>,</span><span class='t'> </span><span class='n'>T</span><span class='p'>,</span><span class='t'> </span><span class='n'>max_dt</span><span class='p'>,</span><span class='t'> </span><span class='n'>callbacks</span><span class='p'>)</span>
+</code></pre></div>
+
 <p><a id='Example'></a></p>
 <p><a id='Example-1'></a></p>
 <h2 id="example">Example</h2>
@@ -846,15 +904,7 @@
 <p><a id='Extending-the-functionallity'></a></p>
 <p><a id='Extending-the-functionallity-1'></a></p>
 <h2 id="extending-the-functionallity">Extending the functionallity</h2>
-<p>The <code>homemade_conslaws</code> package is designed to be easily extensible. This is done by extending the abstract types</p>
-<ul>
-<li><a href="equation/#homemade_conslaws.Equation"><code>homemade_conslaws.Equation</code></a></li>
-<li><a href="grid/#homemade_conslaws.Grid"><code>homemade_conslaws.Grid</code></a></li>
-<li><a href="reconstruction/#homemade_conslaws.Reconstruction"><code>homemade_conslaws.Reconstruction</code></a></li>
-<li><a href="numerical_flux/#homemade_conslaws.NumericalFlux"><code>homemade_conslaws.NumericalFlux</code></a></li>
-<li><a href="timestepper/#homemade_conslaws.TimeStepper"><code>homemade_conslaws.TimeStepper</code></a></li>
-<li><a href="bc/#homemade_conslaws.BoundaryCondition"><code>homemade_conslaws.BoundaryCondition</code></a></li>
-</ul>
+<p>The package <code>homemade_conslaws</code> is designed to be easily extensible, making heavy use of multiple dispatch. This is done by implementing the abstract types in the <a href="#docs">table</a> above. </p>
 
 
 

@@ -554,6 +554,8 @@
       
         
       
+        
+      
     
     
       
@@ -832,6 +834,28 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simulator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -950,11 +974,11 @@
 </code></pre></div>
 
 <p>Describes the boundary conditions for a conservation law. It is passed to the grid, determining how to handle the boundaries.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/bc/boundary_condition.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/bc/boundary_condition.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
-<p>It is done by implementing <a href="../grid/#homemade_conslaws.for_each_boundary_cell"><code>homemade_conslaws.for_each_boundary_cell</code></a> for subtypes of <code>BoundaryCondition</code>.</p>
+<p>It is done by implementing <a href="../grid/#homemade_conslaws.for_each_boundary_cell"><code>for_each_boundary_cell</code></a> for subtypes of <code>BoundaryCondition</code>.</p>
 <p><a id='Implementations'></a></p>
 <p><a id='Implementations-1'></a></p>
 <h2 id="implementations">Implementations</h2>
@@ -967,7 +991,7 @@
 </code></pre></div>
 
 <p>First-order approximation of the Neumann boundary condition.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/bc/neumann.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/bc/neumann.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Periodic-boundary-condition'></a></p>
 <p><a id='Periodic-boundary-condition-1'></a></p>
@@ -978,7 +1002,7 @@
 </code></pre></div>
 
 <p>Implements a periodic boundary condition by wrapping the domain.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/bc/periodic.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/bc/periodic.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Wall-boundary-condition'></a></p>
 <p><a id='Wall-boundary-condition-1'></a></p>
@@ -989,7 +1013,7 @@
 </code></pre></div>
 
 <p>Implements a wall boundary condition, in the sense that the water height is reflected and momentum is reflected and negating, simulating an opposite and equal wave.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/bc/wall.jl#L3-L8' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/bc/wall.jl#L3-L8' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='Multiple-walls-boundary-condition'></a></p>
 <p><a id='Multiple-walls-boundary-condition-1'></a></p>
@@ -999,8 +1023,8 @@
 <div class='highlight'><pre><span></span><code><span class='nf'>WallsBC</span><span class='p'>{</span><span class='n'>Float</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>AbstractFloat</span><span class='p'>}</span>
 </code></pre></div>
 
-<p>Simulates walls starting and stopping at cell interfaces. Equivalent to <a href="./#homemade_conslaws.WallBC"><code>homemade_conslaws.WallBC</code></a> when no walls are given.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/bc/walls.jl#L5-L9' class='documenter-source'>source</a><br></p>
+<p>Simulates walls starting and stopping at cell interfaces. Equivalent to <a href="./#homemade_conslaws.WallBC"><code>WallBC</code></a> when no walls are given.</p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/bc/walls.jl#L5-L9' class='documenter-source'>source</a><br></p>
 
 
 

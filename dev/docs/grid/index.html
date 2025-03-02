@@ -554,6 +554,8 @@
       
         
       
+        
+      
     
     
       
@@ -790,6 +792,28 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simulator/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulator
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -866,7 +890,7 @@
 </code></pre></div>
 
 <p>A type representing a grid. Contains the cell averages and determines how to loop over the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L3-L7' class='documenter-source'>source</a><br></p>
 <p><a id='Dispatch-functions'></a></p>
 <p><a id='Dispatch-functions-1'></a></p>
 <h2 id="dispatch-functions">Dispatch functions</h2>
@@ -877,14 +901,16 @@
 </code></pre></div>
 
 <p>Returns the cell centers of the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L18-L22' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L18-L22' class='documenter-source'>source</a><br></p>
+<hr />
 <p><a id='homemade_conslaws.cells' href='#homemade_conslaws.cells'>#</a>
 <strong><code>homemade_conslaws.cells</code></strong> &mdash; <em>Function</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>cells</span><span class='p'>(</span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>)</span>
 </code></pre></div>
 
 <p>Returns the cell averages of the grid.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L11-L15' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L11-L15' class='documenter-source'>source</a><br></p>
+<hr />
 <p><a id='homemade_conslaws.for_each_boundary_cell' href='#homemade_conslaws.for_each_boundary_cell'>#</a>
 <strong><code>homemade_conslaws.for_each_boundary_cell</code></strong> &mdash; <em>Function</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>for_each_boundary_cell</span><span class='p'>(</span><span class='n'>f</span><span class='p'>,</span><span class='t'> </span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>,</span><span class='t'> </span><span class='n'>cells</span><span class='p'>)</span><span class='t'>
@@ -892,28 +918,59 @@
 </code></pre></div>
 
 <p>Calls <code>f</code> on the the stencils centered at the boundary cells and their indices.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L40-L45' class='documenter-source'>source</a><br></p>
-<p><a id='homemade_conslaws.for_each_cell' href='#homemade_conslaws.for_each_cell'>#</a>
-<strong><code>homemade_conslaws.for_each_cell</code></strong> &mdash; <em>Function</em>.</p>
-<div class='highlight'><pre><span></span><code><span class='nf'>for_each_cell</span><span class='p'>(</span><span class='n'>f</span><span class='p'>,</span><span class='t'> </span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>)</span>
+<p><strong>Example</strong></p>
+<p>Compute the forward difference reconstruction of the boundary cells </p>
+<div class='highlight'><pre><span></span><code><span class='n'>left_reconstruction</span><span class='p'>,</span><span class='t'> </span><span class='n'>right_reconstruction</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='o'>...</span><span class='t'> </span><span class='cs'># Preallocated buffers</span><span class='t'>
+</span><span class='nf'>for_each_boundary_cell</span><span class='p'>(</span><span class='n'>grid</span><span class='p'>,</span><span class='t'> </span><span class='nf'>cells</span><span class='p'>(</span><span class='n'>grid</span><span class='p'>))</span><span class='t'> </span><span class='k'>do</span><span class='t'> </span><span class='p'>(</span><span class='n'>left</span><span class='p'>,</span><span class='t'> </span><span class='n'>center</span><span class='p'>,</span><span class='t'> </span><span class='n'>right</span><span class='p'>),</span><span class='t'> </span><span class='n'>idx</span><span class='t'>
+    </span><span class='n'>left_reconstruction</span><span class='p'>[</span><span class='n'>idx</span><span class='p'>]</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='n'>center</span><span class='t'> </span><span class='o'>-</span><span class='t'> </span><span class='mf'>0.5</span><span class='t'> </span><span class='o'>*</span><span class='t'> </span><span class='p'>(</span><span class='n'>right</span><span class='t'> </span><span class='o'>-</span><span class='t'> </span><span class='n'>center</span><span class='p'>)</span><span class='t'>
+    </span><span class='n'>right_reconstruction</span><span class='p'>[</span><span class='n'>idx</span><span class='p'>]</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='n'>center</span><span class='t'> </span><span class='o'>+</span><span class='t'> </span><span class='mf'>0.5</span><span class='t'> </span><span class='o'>*</span><span class='t'> </span><span class='p'>(</span><span class='n'>right</span><span class='t'> </span><span class='o'>-</span><span class='t'> </span><span class='n'>center</span><span class='p'>)</span><span class='t'>
+</span><span class='k'>end</span>
 </code></pre></div>
 
-<p>Calls <code>f</code> on the cells of the grid and each cell index.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L25-L29' class='documenter-source'>source</a><br></p>
+<p>Compute the temporal derivative of the cell averages at the boundary cells.</p>
+<div class='highlight'><pre><span></span><code><span class='n'>out</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='o'>...</span><span class='t'> </span><span class='cs'># Preallocated buffer</span><span class='t'>
+</span><span class='nf'>for_each_boundary_cell</span><span class='p'>(</span><span class='n'>grid</span><span class='p'>,</span><span class='t'> </span><span class='n'>left_reconstruction</span><span class='p'>,</span><span class='t'> </span><span class='n'>right_reconstruction</span><span class='p'>)</span><span class='t'> </span><span class='k'>do</span><span class='t'> </span><span class='p'>(</span><span class='n'>lleft</span><span class='p'>,</span><span class='t'> </span><span class='n'>lcenter</span><span class='p'>,</span><span class='t'> </span><span class='n'>lright</span><span class='p'>),</span><span class='t'> </span><span class='p'>(</span><span class='n'>rleft</span><span class='p'>,</span><span class='t'> </span><span class='n'>rcenter</span><span class='p'>,</span><span class='t'> </span><span class='n'>rright</span><span class='p'>),</span><span class='t'> </span><span class='n'>idx</span><span class='t'>
+    </span><span class='n'>left_flux</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>F</span><span class='p'>(</span><span class='n'>rcenter</span><span class='p'>,</span><span class='t'> </span><span class='n'>lright</span><span class='p'>,</span><span class='t'> </span><span class='n'>dx</span><span class='p'>,</span><span class='t'> </span><span class='n'>dt</span><span class='p'>)</span><span class='t'>
+    </span><span class='n'>right_flux</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>F</span><span class='p'>(</span><span class='n'>rleft</span><span class='p'>,</span><span class='t'> </span><span class='n'>lcenter</span><span class='p'>,</span><span class='t'> </span><span class='n'>dx</span><span class='p'>,</span><span class='t'> </span><span class='n'>dt</span><span class='p'>)</span><span class='t'>
+    </span><span class='n'>out</span><span class='p'>[</span><span class='n'>idx</span><span class='p'>]</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='p'>(</span><span class='n'>left_flux</span><span class='t'> </span><span class='o'>-</span><span class='t'> </span><span class='n'>right_flux</span><span class='p'>)</span><span class='t'> </span><span class='o'>/</span><span class='t'> </span><span class='n'>dx</span><span class='t'>
+</span><span class='k'>end</span>
+</code></pre></div>
+
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L61-L87' class='documenter-source'>source</a><br></p>
+<hr />
 <p><a id='homemade_conslaws.for_each_interior_cell' href='#homemade_conslaws.for_each_interior_cell'>#</a>
 <strong><code>homemade_conslaws.for_each_interior_cell</code></strong> &mdash; <em>Function</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>for_each_interior_cell</span><span class='p'>(</span><span class='n'>f</span><span class='p'>,</span><span class='t'> </span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>;</span><span class='t'> </span><span class='n'>p</span><span class='o'>=</span><span class='ni'>1</span><span class='p'>,</span><span class='t'> </span><span class='n'>q</span><span class='o'>=</span><span class='n'>p</span><span class='p'>)</span>
 </code></pre></div>
 
 <p>Calls <code>f</code> on the cells and the index of every interior cell its <code>p</code> and <code>q</code> left and right neighbours, specified by the stencil size of the numerical flux.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L32-L37' class='documenter-source'>source</a><br></p>
-<p><a id='homemade_conslaws.reduce_cells' href='#homemade_conslaws.reduce_cells'>#</a>
-<strong><code>homemade_conslaws.reduce_cells</code></strong> &mdash; <em>Function</em>.</p>
-<div class='highlight'><pre><span></span><code><span class='nf'>reduce_cells</span><span class='p'>(</span><span class='n'>f</span><span class='p'>,</span><span class='t'> </span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>,</span><span class='t'> </span><span class='n'>initial_value</span><span class='p'>)</span>
+<p><strong>Example</strong></p>
+<p>Compute the forward difference reconstruction of the interior cells:</p>
+<p>`julia left_reconstruction, right_reconstruction = ... # Preallocated buffers for_each_interior_cell(grid; p=1, q=1) do cells, (left_idx, center_idx, right_idx)     left, center, right = cells[left_idx], cells[center_idx], cells[right_idx]     left_reconstruction[idx] = center - 0.5 * (right - center)     right_reconstruction[idx] = center + 0.5 * (right - center) end``</p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L40-L58' class='documenter-source'>source</a><br></p>
+<hr />
+<p><a id='homemade_conslaws.for_each_cell' href='#homemade_conslaws.for_each_cell'>#</a>
+<strong><code>homemade_conslaws.for_each_cell</code></strong> &mdash; <em>Function</em>.</p>
+<div class='highlight'><pre><span></span><code><span class='nf'>for_each_cell</span><span class='p'>(</span><span class='n'>f</span><span class='p'>,</span><span class='t'> </span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>)</span>
 </code></pre></div>
 
-<p>Reduces the cells of the grid using the function <code>f</code> and the initial value <code>initial_value</code>. Used to compute the maximum time step given by the CFL condition.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/grid.jl#L48-L53' class='documenter-source'>source</a><br></p>
+<p>Calls <code>f</code> on the cells of the grid and each cell index.</p>
+<p><strong>Example</strong></p>
+<div class='highlight'><pre><span></span><code><span class='cs'># Set all cells to zero</span><span class='t'>
+</span><span class='nf'>for_each_cell</span><span class='p'>(</span><span class='n'>grid</span><span class='p'>)</span><span class='t'> </span><span class='k'>do</span><span class='t'> </span><span class='n'>cells</span><span class='p'>,</span><span class='t'> </span><span class='n'>idx</span><span class='t'>
+    </span><span class='n'>cells</span><span class='p'>[</span><span class='n'>idx</span><span class='p'>]</span><span class='t'> </span><span class='o'>=</span><span class='t'> </span><span class='nf'>zero</span><span class='p'>(</span><span class='nf'>eltype</span><span class='p'>(</span><span class='n'>cells</span><span class='p'>))</span><span class='t'>
+</span><span class='k'>end</span>
+</code></pre></div>
+
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L25-L37' class='documenter-source'>source</a><br></p>
+<hr />
+<p><a id='homemade_conslaws.create_buffer' href='#homemade_conslaws.create_buffer'>#</a>
+<strong><code>homemade_conslaws.create_buffer</code></strong> &mdash; <em>Function</em>.</p>
+<div class='highlight'><pre><span></span><code><span class='nf'>create_buffer</span><span class='p'>(</span><span class='o'>::</span><span class='n'>Grid</span><span class='p'>)</span>
+</code></pre></div>
+
+<p>Preallocates a buffer of the same shape as the cells of the grid.</p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/grid.jl#L108-L112' class='documenter-source'>source</a><br></p>
 <p><a id='Implementations'></a></p>
 <p><a id='Implementations-1'></a></p>
 <h2 id="implementations">Implementations</h2>
@@ -922,15 +979,15 @@
 <div class='highlight'><pre><span></span><code><span class='nf'>UniformGrid1D</span><span class='p'>{</span><span class='n'>BC</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>BoundaryCondition</span><span class='p'>,</span><span class='t'> </span><span class='n'>Float</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>AbstractFloat</span><span class='p'>,</span><span class='t'> </span><span class='n'>Cell</span><span class='p'>}</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='nf'>Grid1D</span><span class='p'>{</span><span class='n'>BC</span><span class='p'>}</span>
 </code></pre></div>
 
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/uniform1d.jl#L9-L11' class='documenter-source'>source</a><br></p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/uniform1d.jl#L9-L11' class='documenter-source'>source</a><br></p>
 <hr />
 <p><a id='homemade_conslaws.UniformGrid1DWalls' href='#homemade_conslaws.UniformGrid1DWalls'>#</a>
 <strong><code>homemade_conslaws.UniformGrid1DWalls</code></strong> &mdash; <em>Type</em>.</p>
 <div class='highlight'><pre><span></span><code><span class='nf'>UniformGrid1DWalls</span><span class='p'>{</span><span class='n'>Float</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>AbstractFloat</span><span class='p'>,</span><span class='t'> </span><span class='n'>CellFloat</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>Number</span><span class='p'>,</span><span class='t'> </span><span class='n'>Index</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='n'>Integer</span><span class='p'>}</span><span class='t'> </span><span class='o'>&lt;:</span><span class='t'> </span><span class='nf'>Grid1D</span><span class='p'>{</span><span class='nf'>WallsBC</span><span class='p'>{</span><span class='n'>Float</span><span class='p'>}}</span>
 </code></pre></div>
 
-<p>A uniform grid in 1D with walls starting and stopping at cell interfaces, specified by the <a href="../bc/#homemade_conslaws.WallsBC"><code>homemade_conslaws.WallsBC</code></a> boundary condition.</p>
-<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/a9a0e55c8b9acacb4b6d21fa13ab35df96ccbd4b/src/grids/uniform1dwalls.jl#L3-L7' class='documenter-source'>source</a><br></p>
+<p>A uniform grid in 1D with walls starting and stopping at cell interfaces, specified by the <a href="../bc/#homemade_conslaws.WallsBC"><code>WallsBC</code></a> boundary condition.</p>
+<p><a target='_blank' href='https://github.com/martinsw01/homemade-conslaws/blob/e1f79ef05445717e66f1167b55b70c6ebfc54192/src/grids/uniform1dwalls.jl#L3-L7' class='documenter-source'>source</a><br></p>
 
 
 

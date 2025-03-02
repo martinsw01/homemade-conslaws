@@ -57,7 +57,7 @@
     --md-code-hl-name-color:var(--md-code-fg-color);
     --md-code-hl-punctuation-color:var(--md-default-fg-color--light);
     --md-code-hl-comment-color:#555d6a;
-    --md-code-hl-generic-color:var(--md-default-fg-color--light);
+    --md-code-hl-generic-color:#2fb170;/*var(--md-default-fg-color--light);*/
     --md-code-hl-variable-color:var(--md-default-fg-color--light);
     --md-typeset-color:var(--md-default-fg-color);
     --md-typeset-color:var(--md-default-fg-color);
@@ -83,4 +83,10 @@
     --md-accent-fg-color:hsl(var(--md-hue), 100%, 57%);
 
     --md-typeset-a-color: var(--md-accent-fg-color);
+}
+
+
+.md-typeset__table table th,
+.md-typeset__table table td {
+    font-size: 0.8rem;
 }
